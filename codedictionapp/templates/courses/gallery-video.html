@@ -1,0 +1,105 @@
+{% extends 'courses/layouts/layout.html' %}
+{% load static %}
+
+{% block metatags %}
+<title>About</title>
+{% endblock metatags %}
+
+{% block main %}
+    <!-- Header Banner -->
+    <section class="banner-header section-padding bg-img bg-fixed bg-img-position-top" data-overlay-dark="7" data-background="images/slider/5.jpg">
+        <div class="v-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center mt-60">
+                        <h1>Video Gallery</h1>
+                        <ul class="breadcrumbs">
+                            <li><a href="#">Home</a></li>
+                            <li>Video Gallery</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Video Gallery -->
+    <section class="video-gallery section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-30">
+                    <div class="item">
+                        <div class="img"> 
+                            <img src="images/gallery/v1.png" alt="">
+                        </div>
+                        <a class="vid" href="https://youtu.be/52Mw2TrcZBs"> 
+                            <span class="video-icon"> <i class="fa-solid fa-play"></i></span> 
+                        </a>
+                        <div class="text">
+                            <h4>Branding Design</h4>
+                            <p>Design</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 mb-30">
+                    <div class="item">
+                        <div class="img"> 
+                            <img src="images/gallery/v2.jpg" alt="">
+                        </div>
+                        <a class="vid" href="https://youtu.be/52Mw2TrcZBs"> 
+                            <span class="video-icon"> <i class="fa-solid fa-play"></i></span> 
+                        </a>
+                        <div class="text">
+                            <h4>Product Design</h4>
+                            <p>Branding</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 mb-30">
+                    <div class="item">
+                        <div class="img"> 
+                            <img src="images/gallery/v3.jpg" alt="">
+                        </div>
+                        <a class="vid" href="https://youtu.be/52Mw2TrcZBs"> 
+                            <span class="video-icon"> <i class="fa-solid fa-play"></i></span> 
+                        </a>
+                        <div class="text">
+                            <h4>Card Design</h4>
+                            <p>Corporate</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 mb-30">
+                    <div class="item">
+                        <div class="img"> 
+                            <img src="images/gallery/v4.jpg" alt="">
+                        </div>
+                        <a class="vid" href="https://youtu.be/52Mw2TrcZBs"> 
+                            <span class="video-icon"> <i class="fa-solid fa-play"></i></span> 
+                        </a>
+                        <div class="text">
+                            <h4>Corporate Design</h4>
+                            <p>Branding</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Lets Talk -->
+    <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="images/banner2.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>We develop digital future</h6>
+                    <h5><span>Let's</span> Talk?</h5> 
+                    <a href="tel:+8001234567" class="btn-1 mt-30"> <i class="fa-solid fa-phone"></i> 800 123 4567</a> 
+                    <a href="contact.html" class="btn-5 mt-30"> <i class="fa-solid fa-paper-plane"></i> Make an enquiry</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock main %}

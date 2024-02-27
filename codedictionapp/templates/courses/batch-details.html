@@ -1,0 +1,78 @@
+{% extends 'courses/layouts/layout.html' %}
+{% load static %}
+
+{% block metatags %}
+{% autoescape off %}
+{{batch.meta_data}}
+{% endautoescape %}
+{% endblock metatags %}
+
+{% block main %}
+    <!-- Header Banner -->
+    <section class="banner-header section-padding bg-img bg-fixed" data-overlay-dark="7" data-background="{% static "courses/images/blog/b1.jpg" %}">
+        <div class="v-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center mt-60">
+                        <h1>{{batch.batch_name}}</h1>
+                        <ul class="breadcrumbs">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Batch</a></li>
+                            <li>{{batch.batch_name}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Project Page  -->
+    <section class="section-padding work-single">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <h5>Summary</h5>
+                    {% autoescape off %}
+                    {{batch.description}}
+                    {% endautoescape %}
+                </div>
+                <div class="col-lg-3 offset-lg-1 col-md-12">
+                    <h5>Details</h5>
+                    <ul class="content s-list s-list-divider">
+                        <li class="author">
+                            <strong><a style="color:#28D366" href="{% url 'app.courses.details' batch.course.course_category.slug batch.course.slug %}">{{batch.course.name}}</a></strong>
+                        </li>
+                        <li class="date">
+                            <strong>Start From</strong>
+                            <span>{{batch.start_at}}</span>
+                        </li>
+                        <li class="date">
+                            <strong>Batch Time</strong>
+                            <span>{{batch.batch_time}}</span>
+                        </li>
+                        <li class="category">
+                            <strong>Language</strong>
+                            <span>{{batch.language}}</span>
+                        </li>
+                    </ul>
+                    <a href="https://wa.me/8218444136?text=Hello, I want to join '{{batch.batch_name}}'" target="_blank" class="btn-1 mt-15"> Enroll Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Lets Talk -->
+    <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="{% static "courses/images/banner2.jpg" %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>We develop digital future</h6>
+                    <h5><span>Let's</span> Talk?</h5>
+                    <a href="tel:+918218444136" class="btn-1 mt-30"> <i class="fa-solid fa-phone"></i>+91-8218444136</a>
+                    <a href="https://wa.me/8218444136?text=Hello, Can I know more..." target="_blank" class="btn-5 mt-30"> <i class="fa-solid fa-paper-plane"></i> Make an enquiry</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock main %}

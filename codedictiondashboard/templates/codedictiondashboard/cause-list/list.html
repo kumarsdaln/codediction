@@ -1,0 +1,369 @@
+{% extends 'courtmasterdashboard/layouts/layout.html' %}
+{% load static %}
+{% load mathematical_tags %}
+{% load orm_tags %}
+
+{% block metatags %}
+    <meta charset="utf-8">
+    <title>My Subscriptions | Steex - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Minimal Admin & Dashboard Template" name="description">
+    <meta content="Themesbrand" name="author">
+{% endblock %}
+
+{% block css %}
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static "courtmasterdashboard/assets/images/favicon.ico" %}">
+
+    <!-- Fonts css load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link id="fontsLink" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- Layout config Js -->
+    <script src="{% static "courtmasterdashboard/assets/js/layout.js" %}"></script>
+    <!-- Bootstrap Css -->
+    <link href="{% static "courtmasterdashboard/assets/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css">
+    <!-- Icons Css -->
+    <link href="{% static "courtmasterdashboard/assets/css/icons.min.css" %}" rel="stylesheet" type="text/css">
+    <!-- App Css-->
+    <link href="{% static "courtmasterdashboard/assets/css/app.min.css" %}" rel="stylesheet" type="text/css">
+    <!-- custom Css-->
+    <link href="{% static "courtmasterdashboard/assets/css/custom.min.css" %}" rel="stylesheet" type="text/css">
+    <style>
+        .search-box label{
+            position: absolute;
+            left: 43px;
+            top: -11px;
+            background: #fff;
+            border: var(--tb-border-width) solid var(--tb-border-color-translucent);
+            padding: 0px 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0">Cause List</h4>
+
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="{% url 'app.dashboard' %}">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="{% url 'app.dashboard.template' %}">Templates</a></li>
+                                        <li class="breadcrumb-item active">Category</li>
+                                    </ol>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form>
+                                        <div class="row g-3">
+                                        <div class="col-xxl-3">
+                                            <div class="search-box">
+                                                <label for="party">Party</label>
+                                                <input type="text" class="form-control search" id="party" name="party" placeholder="Search By Party" value="{{filters.filter_list.party}}">
+                                                <i class="ri-search-line search-icon"></i>
+                                            </div>
+                                        </div><!--end col-->
+                                        <div class="col-xxl-3">
+                                            <div class="search-box">
+                                                <label for="party">Advocate</label>
+                                                <input type="text" class="form-control search" name="advocate" placeholder="Search By Advocate" value="{{filters.filter_list.advocate}}">
+                                                <i class="ri-search-line search-icon"></i>
+                                            </div>
+                                        </div><!--end col-->
+                                        <div class="col-xxl-3">
+                                            <div class="search-box">
+                                                <label for="party">Bench</label>
+                                                <input type="text" class="form-control search"name="bench" placeholder="Search By Bench" value="{{filters.filter_list.bench}}">
+                                                <i class="ri-search-line search-icon"></i>
+                                            </div>
+                                        </div><!--end col-->
+                                        <div class="col-xxl-3">
+                                            <div class="search-box">
+                                                <label for="party">Court No.</label>
+                                                <input type="text" class="form-control search" name="court" placeholder="Search By Court" value="{{filters.filter_list.court}}">
+                                                <i class="ri-search-line search-icon"></i>
+                                            </div>
+                                        </div><!--end col-->
+                                        <div class="col-xxl-3 col-sm-6">
+                                            <div>
+                                                <select class="form-control" id="idadvancesupple" data-choices data-choices-search-false data-choices-removeItem name="list_type">
+                                                    <option value="">Select Advance/Supplemantry</option>
+                                                    <option value="a" {% if filters.filter_list.list_type == 'a' %}selected{% endif %}>Advance</option>
+                                                    <option value="s" {% if filters.filter_list.list_type == 's' %}selected{% endif %}>Supplementary</option>
+                                                </select>
+                                            </div>
+                                        </div><!--end col-->
+                                        <div class="col-xxl-3">
+                                            <div class="search-box">
+                                                <label for="date">Date</label>
+                                                <input type="date" class="form-control search" name="date" placeholder="DD-MM-YYYY" value="{{filters.filter_list.date}}">
+                                                <i class="ri-search-line search-icon"></i>
+                                            </div>
+                                        </div><!--end col-->
+                                        <div class="col-xxl-1 col-sm-6">
+                                            <button type="submit" class="btn btn-secondary w-100" onclick="filterData();"><i class="bi bi-funnel align-baseline me-1"></i> Filters</button>
+                                        </div><!--end col-->
+                                        </div><!--end row-->
+                                    </form>
+                                </div>
+                            </div><!--end card-->
+                        </div><!--end col-->
+                        <div class="col-lg-12">
+                            <div class="row align-items-center mb-3">
+                                <div class="col-sm">
+                                    <div class="text-muted text-center text-sm-start">
+                                        Showing <span class="fw-semibold">{{object_list.count}}</span> of <span class="fw-semibold">{{total_results}}</span> Results
+                                    </div>
+                                </div><!--end col-->
+                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                    <div class="pagination-wrap hstack justify-content-center gap-2">
+                                        
+                                        
+                                        <ul class="pagination listjs-pagination mb-0">
+                                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                                            {% comment %} <li class="active"><a class="page" href="#" data-i="1" data-page="10">1</a></li>
+                                            <li><a class="page" href="#" data-i="2" data-page="10">2</a></li> {% endcomment %}
+                                        </ul>
+                                        {% if page_obj.has_previous %}
+                                        <a class="page-item pagination-prev" href="?page={{ page_obj.previous_page_number }}{{filters.filter_str}}">
+                                            Previous
+                                        </a>
+                                        {% else %}
+                                        <a class="page-item pagination-prev disabled" href="#">
+                                            Previous
+                                        </a>
+                                        {% endif %}
+                                        {% if page_obj.has_next %}
+                                        <a class="page-item pagination-next" href="?page={{ page_obj.next_page_number }}{{filters.filter_str}}">
+                                            Next
+                                        </a>
+                                        {% else %}
+                                        <a class="page-item pagination-next disabled" href="#">
+                                            Next
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                            <div class="table-responsive">
+                                <!-- Striped Rows -->
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Serial No.</th>
+                                            <th scope="col">Item No</th>
+                                            <th scope="col">Case No.</th>
+                                            <th scope="col">Party Name</th>
+                                            <th scope="col">Advocate Name</th>
+                                            <th scope="col">Case Stage</th>
+                                            <th scope="col">Advance/Supplemantry</th>
+                                            <th scope="col"></th>
+                                            <th scope="col">Court No.</th>
+                                            <th scope="col">Bench</th>
+                                            <th scope="col">Virtual Link</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for causelist in object_list %}
+                                        <tr id="causelist-{{causelist.id}}">
+                                            <th scope="row">{{page_obj.number|add:'-1'|multiply:paginate_by|add:forloop.counter}}</th>
+                                            <td>{{causelist.item_number}}</td>
+                                            <td>{{causelist.case_no}}</td>
+                                            <td>{{causelist.party_name}}</td>
+                                            <td>{{causelist.advocate_name}}</td>
+                                            <td>{{causelist.case_stage}}</td>
+                                            <td>{{causelist.get_list_type_display}}</td>
+                                            <td>
+                                                {% with date=causelist.date|date:'Y-m-d' %}
+                                                {% with s_fiter_args='{"list_type":"s"'|add:',"date":"'|add:date|add:'"}' %}
+                                                    {% if causelist.court.causelist_set|in_filter_by:s_fiter_args %}
+                                                    <p>Supplementary Items :- {{causelist.court.causelist_set|in_filter_by:s_fiter_args|min_val:'item_number'}}-{{causelist.court.causelist_set|in_filter_by:s_fiter_args|max_val:'item_number'}}</p>
+                                                    {% endif %}
+                                                    {% comment %} <ul>
+                                                        {% for s_related_causelist in causelist.court.causelist_set|in_filter_by:s_fiter_args %}
+                                                        <li>{{ s_related_causelist.item_number }} - {{ s_related_causelist.party_name }}</li>
+                                                        {% endfor %}
+                                                    </ul> {% endcomment %}
+                                                {% endwith %}
+                                                {% with a_fiter_args='{"list_type":"a"'|add:',"date":"'|add:date|add:'"}' %}
+                                                    {% if causelist.court.causelist_set|in_filter_by:a_fiter_args %}
+                                                    <p>Advance Items :- {{causelist.court.causelist_set|in_filter_by:a_fiter_args|min_val:'item_number'}}-{{causelist.court.causelist_set|in_filter_by:a_fiter_args|max_val:'item_number'}}</p>
+                                                    {% endif %}
+                                                    {% comment %} <ul>
+                                                        {% for a_related_causelist in causelist.court.causelist_set|in_filter_by:a_fiter_args %}
+                                                        <li>{{ a_related_causelist.item_number }} - {{ a_related_causelist.party_name }}</li>
+                                                        {% endfor %}
+                                                    </ul> {% endcomment %}
+                                                {% endwith %}
+                                                {% if causelist.list_type == 'a' %}
+                                                   {% with s_fiter_args='{"list_type":"s"'|add:',"date":"'|add:date|add:'"}' %}
+                                                       {% if causelist.court.causelist_set|in_filter_by:s_fiter_args %}
+                                                       <p>Effective Item :- {{causelist.court.causelist_set|in_filter_by:s_fiter_args|max_val:'item_number'|add:causelist.item_number}}</p>
+                                                       {% else %}
+                                                        <p>Effective Item :- {{causelist.item_number}}</p>
+                                                       {% endif %}
+                                                   {% endwith %}
+                                                {% endif %}
+                                                {% if causelist.list_type == 's' %}
+                                                   {% with a_fiter_args='{"list_type":"a"'|add:',"date":"'|add:date|add:'"}' %}
+                                                      
+                                                      {% if causelist.court.causelist_set|in_filter_by:a_fiter_args %}
+                                                        {% with max_value_adv=causelist.court.causelist_set|in_filter_by:a_fiter_args|max_val:'item_number' %}
+                                                        <p>Effective Item :- {{causelist.item_number|subtract:max_value_adv}}</p>
+                                                        {% endwith %}
+                                                      {% else %}
+                                                        <p>Effective Item :- {{causelist.item_number}}</p>
+                                                      {% endif %}
+                                                      
+                                                   {% endwith %}
+                                                {% endif %} 
+                                                {% endwith %}
+                                           </td>
+                                            <td>{{causelist.court.court_no}}</td>
+                                            <td>{{causelist.court.bench}}</td>
+                                            <td>{{causelist.court.virtual_link}}</td>
+                                            <td>{{causelist.date|date:'d-m-Y'}}</td>
+                                            <td>
+                                                <a class="btn btn-warning" href="{% url 'app.dashboard.causelist.edit' causelist.id %}"><i class="bi bi-pencil align-baseline me-1"></i></a>
+                                                <button class="btn btn-danger delete-item" data-action="{% url 'app.dashboard.causelist.delete' causelist.id %}" data-removeitem="causelist-{{causelist.id}}" data-bs-toggle="modal" data-bs-target="#deleteRecordModal"><i class="bi bi-trash align-baseline me-1"></i></button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <div class="noresult" style="display: none">
+                                    <div class="text-center py-4">
+                                        <i class="ph-magnifying-glass fs-1 text-primary"></i>
+                                        <h5 class="mt-2">Sorry! No Result Found</h5>
+                                        <p class="text-muted mb-0">We've searched more than 164+ courses We did not find any courses for you search.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mb-3">
+                                <div class="col-sm">
+                                    <div class="text-muted text-center text-sm-start">
+                                        Showing <span class="fw-semibold">{{object_list.count}}</span> of <span class="fw-semibold">{{total_results}}</span> Results
+                                    </div>
+                                </div><!--end col-->
+                                <div class="col-sm-auto mt-3 mt-sm-0">
+                                    <div class="pagination-wrap hstack justify-content-center gap-2">
+                                        
+                                        
+                                        <ul class="pagination listjs-pagination mb-0">
+                                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                                            {% comment %} <li class="active"><a class="page" href="#" data-i="1" data-page="10">1</a></li>
+                                            <li><a class="page" href="#" data-i="2" data-page="10">2</a></li> {% endcomment %}
+                                        </ul>
+                                        {% if page_obj.has_previous %}
+                                        <a class="page-item pagination-prev" href="?page={{ page_obj.previous_page_number }}{{filters.filter_str}}">
+                                            Previous
+                                        </a>
+                                        {% else %}
+                                        <a class="page-item pagination-prev disabled" href="#">
+                                            Previous
+                                        </a>
+                                        {% endif %}
+                                        {% if page_obj.has_next %}
+                                        <a class="page-item pagination-next" href="?page={{ page_obj.next_page_number }}{{filters.filter_str}}">
+                                            Next
+                                        </a>
+                                        {% else %}
+                                        <a class="page-item pagination-next disabled" href="#">
+                                            Next
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div><!--end col-->
+                            </div><!--end row-->
+        
+                        </div><!--end col-->
+                    </div><!--end row-->
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <script>document.write(new Date().getFullYear())</script> © Steex.
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-end d-none d-sm-block">
+                                Design & Develop by Themesbrand
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end main content-->
+{% endblock %}
+
+{% block popups %}
+    <!-- deleteRecordModal -->
+    <div id="deleteRecordModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-md-5">
+                    <div class="text-center">
+                        <div class="text-danger">
+                            <i class="bi bi-trash display-5"></i>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="mb-2">Are you sure ?</h4>
+                            <p class="text-muted mx-3 mb-0">Are you sure you want to remove this record ?</p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-center mt-4 pt-2 mb-2">
+                        <button type="button" class="btn w-sm btn-light btn-hover" data-bs-dismiss="modal">Close</button>
+                        <a href="javascript:;" class="btn w-sm btn-danger btn-hover" id="delete-record">Yes, Delete It!</a>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /deleteRecordModal -->
+{% endblock %}
+
+{% block js %}
+    {% include "courtmasterdashboard/Fetch/delete.html" %}
+    <!-- JAVASCRIPT -->
+    <script src="{% static "courtmasterdashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "courtmasterdashboard/assets/libs/simplebar/simplebar.min.js" %}"></script>
+    <script src="{% static "courtmasterdashboard/assets/js/plugins.js" %}"></script>
+    
+    <!-- List Js -->
+    <script src="{% static "courtmasterdashboard/assets/libs/list.js/list.min.js" %}"></script>
+
+    <!--Learning student subscriptions init js-->
+    <script src="{% static "courtmasterdashboard/assets/js/pages/learning-student-subscriptions.init.js" %}"></script>
+
+    <!-- App js -->
+    <script src="{% static "courtmasterdashboard/assets/js/app.js" %}"></script>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'courses/layouts/layout.html' %}
+{% load static %}
+
+{% block metatags %}
+{% autoescape off %}
+{{blog.meta_data}}
+{% endautoescape %}
+{% endblock metatags %}
+
+{% block main %}
+    <!-- Header Banner -->
+    <section class="banner-header section-padding bg-img bg-fixed" data-overlay-dark="7" data-background="{% static 'courses/images/blog/b1.jpg' %}">
+        <div class="v-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center mt-60">
+                        <h1>{{blog.title}}</h1>
+                        <ul class="breadcrumbs">
+                            <li><a href="{% url 'app.index' %}">Home</a></li>
+                            <li><a href="{% url 'app.blog' %}">Blog</a></li>
+                            <li>{{blog.title}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Post Page  -->
+    <section class="blog section-padding post-page">
+        <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1 col-md-12">
+            <div class="row mb-30">
+                <div class="col-md-12">
+                    <img src="{{blog.image.url}}" class="mb-30" alt="">
+                    <div class="category"><a href="{% url 'app.blog.bycategory' blog.category.slug %}"><div>{{blog.category.name}}</div></a><div class="divider"></div><span>{{blog.uploaded_at}}</span></div>
+                    <h5>{{blog.subtitle}}</h5>
+                    {% autoescape off %}
+                    {{blog.description}}
+                    {% endautoescape %}
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Lets Talk -->
+    <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="images/banner2.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>We develop digital future</h6>
+                    <h5><span>Let's</span> Talk?</h5> 
+                    <a href="tel:+8001234567" class="btn-1 mt-30"> <i class="fa-solid fa-phone"></i> 800 123 4567</a> 
+                    <a href="contact.html" class="btn-5 mt-30"> <i class="fa-solid fa-paper-plane"></i> Make an enquiry</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock main %}

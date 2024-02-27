@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block metatags %}
+    {% endblock metatags %}
+    <link rel="icon" type="image/png" href="{% static 'courses/images/favicon.png' %}" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&amp;family=Hind&amp;family=Poppins:wght@400;500;600;700;800;900&amp;display=swap">
+    <link rel="stylesheet" href="{% static 'courses/css/plugins.css' %}" />
+    <link rel="stylesheet" href="{% static 'courses/css/style.css' %}">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader-bg"></div>
+    <div id="preloader">
+        <div id="preloader-status">
+            <div class="preloader-position loader"> <span></span> </div>
+        </div>
+    </div>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <!-- Logo -->
+            <div class="logo-wrapper">
+                <a class="logo" href="{% url 'app.index' %}"> <img src="{% static 'courses/images/logo-light.png' %}" data-image="{% static 'courses/images/logo-light.png' %}" class="logo-img" alt="codediction"> </a>
+                <!-- <a href="index.html" class="logo"><h2>Acens<span>.</span></h2></a> -->
+            </div>
+            <!-- Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"><i class="fa-regular fa-bars"></i></span> </button>
+            <!-- Menu -->
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"> <a class="nav-link active" href="{% url 'app.index' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'app.services' %}">Services</a></li>
+                    {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'app.about' %}">About</a></li> {% endcomment %}
+                    {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'app.blog' %}">Blog</a></li> {% endcomment %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'app.contact' %}">Contact</a></li>
+                </ul>
+                <!-- Call -->
+                <div class="navbar-right">
+                    <div class="wrap">
+                        <div class="icon"> <i class="fa-solid fa-phone"></i> </div>
+                        <div class="text">
+                            <p>Call Us Today</p>
+                            <h5><a href="tel:+918218444136">+91-8218444136</a></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% block main %}
+    {% endblock main %}
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- top -->
+        <div class="top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 mb-45">
+                        <img src="{% static 'courses/images/logo-light.png' %}" alt="codediction">
+                        
+                        <p>Lorem amacus suscipit oremen miss theousan magnaz donec miss the dranaris convais nisan.</p>
+                        <div class="social"> <a href="https://www.instagram.com/kumar_aln/"><i class="fa-brands fa-instagram"></i></a> <a href="https://wa.me/8218444136?text=Hello"><i class="fa-brands fa-whatsapp"></i></a> <a href="https://www.linkedin.com/in/kumaraln/"><i class="fa-brands fa-linkedin"></i></a> </div>
+                    </div>
+                    <div class="col-md-3 mb-45">
+                        <h5>Quick Links</h5>
+                        <ul class="list list-unstyled">
+                            <li><a href="{% url 'app.index' %}">Home</a></li>
+                            <li><a href="{% url 'app.services' %}">Services</a></li>
+                            <li><a href="{% url 'app.contact' %}">Contact</a></li>
+                            {% comment %} <li><a href="{% url 'app.about' %}">About</a></li> {% endcomment %}
+                            {% comment %} <li><a href="{% url 'app.blog' %}">Blog</a></li> {% endcomment %}
+                        </ul>
+                    </div>
+                    <div class="col-md-3 mb-45">
+                        <h5>Contact Info</h5>
+                        <p>158, Sant Nagar, East of Kailash
+                            <br>Delhi, India
+                        </p>
+                        <div class="phone"><a href="tel:+918218444136">+91-8218444136</a></div>
+                        <div class="mail"><a href="mailto:codediction@gmail.com">codediction@gmail.com</a></div>
+                    </div>
+                    <div class="col-md-3 mb-45">
+                        <h5>Subscribe</h5>
+                        <p>Subscribe to our newsletter. Stay informed about technology news and events with our newsletter.</p>
+                        <div class="subscribe">
+                            <form id="newsletter-form">
+                                {% csrf_token %}
+                                <input type="email" id="email_newsletter" name="newsletter" placeholder="Your email" required>
+                                <button id="send_newsletter" type="button"><i class="fa-solid fa-paper-plane"></i></button>
+                            </form>
+                            <div class="form-errors text-danger" id="newsletter_error" style="display:none">
+                               Please Enter Valid Email
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- bottom -->
+        <div class="bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="horizontal-link">
+                            <ul class="rest">
+                                {% comment %} <li class="mr-30"> <a href="pg-mission.html">Privacy policy</a> </li>
+                                <li class="mr-30"> <a href="pg-mission.html">Legal notice</a> </li>
+                                <li> <a href="pg-mission.html">Terms of service</a> </li> {% endcomment %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="copyrights full-width d-flex justify-content-end">
+                            <p>© 2024 All Rights Reserved, by <span class="underline"><a href="https://alfrik.com" target="_blank">Alfrik</a></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- jQuery -->
+    <script src="{% static 'courses/js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'courses/js/jquery-migrate-3.4.1.min.js' %}"></script>
+    <script src="{% static 'courses/js/modernizr-2.6.2.min.js' %}"></script>
+    <script src="{% static 'courses/js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'courses/js/jquery.isotope.v3.0.2.js' %}"></script>
+    <script src="{% static 'courses/js/popper.min.js' %}"></script>
+    <script src="{% static 'courses/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'courses/js/scrollIt.min.js' %}"></script>
+    <script src="{% static 'courses/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'courses/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'courses/js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'courses/js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static 'courses/js/YouTubePopUp.js' %}"></script>
+    <script src="{% static 'courses/js/jquery.easing.1.3.js' %}"></script>
+    <script src="{% static 'courses/js/smooth-scroll.min.js' %}"></script>
+    <script src="{% static 'courses/js/wow.js' %}"></script>
+    <script src="{% static 'courses/js/custom.js' %}"></script>
+    <script>
+        var submitBtn = document.getElementById('send_newsletter');
+        submitBtn.onclick = function() {
+            var _token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+            var email  = document.getElementById('email_newsletter').value;
+            console.log('j');
+            submitForm(_token, email);
+        }
+        function submitForm(_token, email){
+            const formData = new FormData();
+            formData.append('csrfmiddlewaretoken', _token);
+            formData.append('email', email);
+            fetch("{% url 'app.newsletter.sendform' %}", {
+              method: 'POST',
+              body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if(result.status == true){
+                    document.getElementById('newsletter_error').style.display = 'none';
+                    document.getElementById('newsletter-form').innerHTML = `
+                    <div id="newsletter-success" class="newsletter-success success" style="
+                                border: 2px solid #28d366;
+                                padding: 16px 60px 17px 16px;
+                                text-align: center;
+                                font-size: 20px;
+                                border-radius: 30px;">
+                                    Subscribed
+                                </div>`;
+                } else {
+                    document.getElementById('newsletter_error').style.display = 'block';
+                }
+            })
+        }
+    </script>
+</body>
+</html>

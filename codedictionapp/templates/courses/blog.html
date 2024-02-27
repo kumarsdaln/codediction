@@ -1,0 +1,98 @@
+{% extends 'courses/layouts/layout.html' %}
+{% load static %}
+
+{% block metatags %}
+<title>Blog | News</title>
+{% endblock metatags %}
+
+{% block main %}
+    <!-- Header Banner -->
+    <section class="banner-header section-padding bg-img bg-fixed" data-overlay-dark="5" data-background="{% static "courses/images/slider/2.jpg" %}">
+        <div class="v-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center mt-60">
+                        <h1>Blog</h1>
+                        <ul class="breadcrumbs">
+                            <li><a href="{% url 'app.index' %}">Home</a></li>
+                            <li>Blog</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Blog -->
+    <section class="blog section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- blog content -->
+                <div class="col-lg-8 col-md-12">
+                    {% for blog in blogs %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="item">
+                                <div class="img ">
+                                    <a href="{% url 'app.blog.details' blog.category.slug blog.slug %}"> <img src="{{blog.image.url}}" alt=""> </a>
+                                    <div class="date">
+                                        <a href="{% url 'app.blog.details' blog.category.slug blog.slug %}"> <span>{{blog.uploaded_at|date:'M'}}</span> <i>{{blog.uploaded_at|date:'d'}}</i> </a>
+                                    </div>
+                                </div>
+                                <div class="wrap">
+                                    <div class="category">
+                                        <a href="{% url 'app.blog.details' blog.category.slug blog.slug %}">{{blog.category.name}}</a><div class="divider"></div>{{blog.uploaded_at}}
+                                    </div>
+                                    <h4><a href="{% url 'app.blog.details' blog.category.slug blog.slug %}">{{blog.title}}</a></h4>
+                                    <p>{{blog.brief}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- blog sidebar -->
+                <div class="col-lg-4 col-md-12">
+                    <div class="row blog-sidebar">
+                        <div class="col-md-12">
+                            <div class="item">
+                                <div class="search">
+                                    <form>
+                                        <input type="text" name="search" placeholder="Type here ...">
+                                        <button type="submit"><i class="fa-regular fa-magnifying-glass" aria-hidden="true"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="item">
+                                <div class="text"> <h5>Tags</h5> </div>
+                                <ul class="tags">
+                                    {% for b_category in blog_categories %}
+                                    <li><a href="{% url 'app.blog.bycategory' b_category.slug %}">{{b_category.name}}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Lets Talk -->
+    <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="{% static "courses/images/banner2.jpg" %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>We develop digital future</h6>
+                    <h5><span>Let's</span> Talk?</h5>
+                    <a href="tel:+918218444136" class="btn-1 mt-30"> <i class="fa-solid fa-phone"></i>+91-8218444136</a>
+                    <a href="https://wa.me/8218444136?text=Hello, Can I know more..." target="_blank" class="btn-5 mt-30"> <i class="fa-solid fa-paper-plane"></i> Make an enquiry</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock main %}

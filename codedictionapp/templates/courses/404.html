@@ -1,0 +1,54 @@
+{% extends 'courses/layouts/layout.html' %}
+{% load static %}
+
+{% block metatags %}
+<title>404</title>
+{% endblock metatags %}
+
+{% block main %}
+    <!-- Header Banner -->
+    <section class="banner-header section-padding bg-img bg-fixed" data-overlay-dark="5" data-background="{% static 'courses/images/slider/2.jpg' %}">
+        <div class="v-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center mt-60">
+                        <h1>404 Not Found</h1>
+                        <ul class="breadcrumbs">
+                            <li><a href="#">Home</a></li>
+                            <li>Not Found</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- 404 Page -->
+    <section class="not-found section-padding">
+        <div class="container">
+            <div class="row mb-45">
+                <div class="col-md-12 text-center">
+                    <h2>404</h2>
+                    <h1 class="wow" data-splitting>Page Not Found</h1>
+                    <p class="wow" data-splitting>The page you are looking for was moved, removed, renamed or never existed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Lets Talk -->
+    <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="{% static "courses/images/banner2.jpg" %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>We develop digital future</h6>
+                    <h5><span>Let's</span> Talk?</h5>
+                    <a href="tel:+918218444136" class="btn-1 mt-30"> <i class="fa-solid fa-phone"></i>+91-8218444136</a>
+                    <a href="https://wa.me/8218444136?text=Hello, Can I know more..." target="_blank" class="btn-5 mt-30"> <i class="fa-solid fa-paper-plane"></i> Make an enquiry</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock main %}

@@ -1,0 +1,252 @@
+{% extends 'codedictiondashboard/layouts/layout.html' %}
+{% load static %}
+{% load mathematical_tags %}
+{% load orm_tags %}
+
+{% block metatags %}
+    <meta charset="utf-8">
+    <title>My Courses | Steex - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Minimal Admin & Dashboard Template" name="description">
+    <meta content="Themesbrand" name="author">
+{% endblock %}
+
+{% block css %}
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'codedictiondashboard/assets/images/favicon.ico' %}">
+
+    <!-- Fonts css load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link id="fontsLink" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- Layout config Js -->
+    <script src="{% static 'codedictiondashboard/assets/js/layout.js' %}"></script>
+    <!-- Bootstrap Css -->
+    <link href="{% static 'codedictiondashboard/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- Icons Css -->
+    <link href="{% static 'codedictiondashboard/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- App Css-->
+    <link href="{% static 'codedictiondashboard/assets/css/app.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- custom Css-->
+    <link href="{% static 'codedictiondashboard/assets/css/custom.min.css' %}" rel="stylesheet" type="text/css">
+    <style>
+        .blog-img{
+            width:100%; height:202px; object-fit:cover
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0">My Courses</h4>
+
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Students</a></li>
+                                        <li class="breadcrumb-item active">My Courses</li>
+                                    </ol>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-xl-9 col-lg-8">
+                            <div class="card">
+                                <div class="card-body d-flex gap-3 align-items-center">
+                                    <h6 class="card-title flex-grow-1 mb-0">My Courses <span class="badge bg-dark-subtle text-body align-baseline ms-1">23</span></h6>
+                                    <div class="flex-shrink-0">
+                                        <a href="apps-student-subscriptions.html" class="btn btn-primary"><i class="bi bi-bag align-baseline me-1"></i> Upgrade Courses</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                {% for object in object_list %}
+                                <div class="col-lg-12">
+                                    <div class="card overflow-hidden">
+                                        <div class="row g-0">
+                                            <div class="col-xl-3 col-md-4">
+                                                <div class="card-body bg-info-subtle text-center learning-widgets d-flex align-items-center justify-content-center h-100 p-0">
+                                                    <img src="{{object.image.url}}" alt="" class="blog-img">
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-xl-9 col-md-8">
+                                                <div class="card-body">
+                                                    <div class="d-flex mb-3 align-items-center">
+                                                        <div class="flex-grow-1">
+                                                            <span class="badge bg-success-subtle text-success">Beginner</span>
+                                                        </div>
+                                                        <div class="flex-shrink-0 fs-lg fw-medium">
+                                                            $425.36
+                                                        </div>
+                                                    </div>
+                                                    <h5 class="text-truncate text-capitalize"><a href="{% url 'app.dashboard.courses.batches.view' object.slug %}" class="text-reset">{{object.batch_name}}</a></h5>
+                                                    <p class="text-muted">{{object.course.name}}</p>
+                                                    <ul class="d-flex align-items-center gap-2 flex-wrap list-unstyled mb-0">
+                                                        <li>
+                                                            <p class="text-muted mb-0"><i class="bi bi-clock align-baseline text-primary me-1"></i> {{object.start_at}}</p>
+                                                        </li>
+                                                        <li>
+                                                            <p class="text-muted mb-0"><i class="ph ph-student align-middle text-primary me-1"></i> {{object.batch_time}}</p>
+                                                        </li>
+                                                        <li>
+                                                            <p class="text-muted mb-0"><i class="ph ph-graduation-cap align-middle text-primary me-1"></i> {{object.course.subjects.count}}</p>
+                                                        </li>
+                                                        <li>
+                                                            <p class="text-muted mb-0"><i class="ph ph-globe-stand align-middle text-primary me-1"></i> {{object.language}}</p>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="card-body border-top border-dashed hstack align-items-center gap-2">
+                                                    <div class="d-flex align-items-center gap-2 flex-grow-1 position-relative">
+                                                        <div class="flex-shrink-0">
+                                                            <img src="assets/images/users/avatar-2.jpg" alt="" class="avatar-xxs rounded-circle">
+                                                        </div>
+                                                        <h6 class="flex-grow-1 mb-0"><a href="pages-profile.html" class="text-reset stretched-link">Ayaan Bowen</a></h6>
+                                                    </div>
+                                                    <div class="flex-shrink-0">
+                                                        <span class="badge bg-warning-subtle text-warning"><i class="bi bi-star-fill align-baseline me-1"></i> 4.5</span>
+                                                    </div>
+                                                </div>
+                                                <div class="progress bg-primary-subtle progress-sm rounded-0" data-bs-toggle="tooltip" data-bs-title="74% Completed">
+                                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 74%" aria-valuenow="74" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div><!--end col-->
+                                        </div><!--end row-->
+                                    </div><!--end card-->
+                                </div><!--end col-->
+                                {% endfor %}
+                            </div><!--end row-->
+                        </div><!--end col-->
+                        <div class="col-xl-3 col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="text-center mb-4 pb-2">
+                                        <img src="assets/images/users/avatar-1.jpg" alt="" class="avatar-md rounded-circle d-block mx-auto">
+                                        <div class="mt-3">
+                                            <a href="pages-profile.html">
+                                                <h5>Josefa Weissna</h5>
+                                            </a>
+                                            <p class="text-muted mb-0">Student</p>
+                                        </div>
+                                    </div>
+                                    <div class="upcoming-scheduled pt-4">
+                                        <input type="text" class="form-control" data-provider="flatpickr" data-date-format="d M, Y" data-default-date="30 Oct, 2023" data-inline-date="true">
+                                    </div>
+                                </div>
+                            </div><!--end card-->
+                            <div class="mb-3">
+                                <h6 class="card-title">Courses Schedule</h6>
+                            </div>
+                            <div class="card">
+                                <div class="card-body d-flex gap-3">
+                                    <div class="flex-shrink-0">
+                                        <div class="avatar-sm border-end border-dashed">
+                                            <div class="avatar-title bg-body-secondary text-body-secondary p-2 text-center">
+                                                16 Feb
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <a href="apps-learning-overview.html" class="stretched-link">
+                                            <h6 class="fs-md">React Development</h6>
+                                        </a>
+                                        <p class="text-muted mb-0"><b>9</b> of 15 Lessons</p>
+                                    </div>
+                                    <div class="flex-shrink-0 text-muted">
+                                        08:54 AM
+                                    </div>
+                                </div>
+                            </div><!--end card-->
+                            <div class="card">
+                                <div class="card-body d-flex gap-3">
+                                    <div class="flex-shrink-0">
+                                        <div class="avatar-sm border-end border-dashed">
+                                            <div class="avatar-title bg-body-secondary text-body-secondary p-2 text-center">
+                                                28 Jan
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <a href="apps-learning-overview.html" class="stretched-link">
+                                            <h6 class="fs-md">Shopify Development</h6>
+                                        </a>
+                                        <p class="text-muted mb-0"><b>18</b> of 43 Lessons</p>
+                                    </div>
+                                    <div class="flex-shrink-0 text-muted">
+                                        10:49 PM
+                                    </div>
+                                </div>
+                            </div><!--end card-->
+                            <div class="card">
+                                <div class="card-body d-flex gap-3">
+                                    <div class="flex-shrink-0">
+                                        <div class="avatar-sm border-end border-dashed">
+                                            <div class="avatar-title bg-body-secondary text-body-secondary p-2 text-center">
+                                                19 Jan
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <a href="apps-learning-overview.html" class="stretched-link">
+                                            <h6 class="fs-md">Laravel Development</h6>
+                                        </a>
+                                        <p class="text-muted mb-0"><b>3</b> of 68 Lessons</p>
+                                    </div>
+                                    <div class="flex-shrink-0 text-muted">
+                                        03:24 PM
+                                    </div>
+                                </div>
+                            </div><!--end card-->
+                        </div><!--end col-->
+                    </div><!--end row-->
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <script>document.write(new Date().getFullYear())</script> © Steex.
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-end d-none d-sm-block">
+                                Design & Develop by Themesbrand
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end main content-->
+{% endblock %}
+
+{% block popups %}
+
+{% endblock %}
+
+{% block js %}
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'codedictiondashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'codedictiondashboard/assets/libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'codedictiondashboard/assets/js/plugins.js' %}"></script>
+    <!-- App js -->
+    <script src="{% static 'codedictiondashboard/assets/js/app.js' %}"></script>
+{% endblock %}

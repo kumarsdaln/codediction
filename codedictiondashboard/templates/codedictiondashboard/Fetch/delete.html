@@ -1,0 +1,62 @@
+<style>
+    @keyframes hide {
+        0% {
+            opacity: 1;
+            height: 100%;
+            line-height: 100%;
+            padding: 20px;
+            margin-bottom: 10px;
+        }
+        75% {
+            opacity: 0;
+            height: 100%;
+            line-height: 100%;
+            padding: 20px;
+            margin-bottom: 10px;
+        }
+        100% {
+            opacity: 0;
+            height: 0px;
+            line-height: 0px;
+            padding: 0px;
+            margin-bottom: 0px;
+        }
+    }
+    .remove-item {
+        animation-name: hide;
+        animation-duration: 2s;
+        animation-fill-mode: forwards;
+        animation-play-state: paused;
+    }
+</style>
+<script>
+    function deleteItem(actionUrl, removeItem){
+        fetch(`${actionUrl}`, {
+            method: 'GET',
+            headers:{
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(res => res.json()) // or res.json()
+        .then(res => {
+            if(res.status){
+                let element = document.getElementById(removeItem);
+                element.classList.add("remove-item");
+                element.style.animationPlayState = 'running';
+                element.addEventListener('animationend', () => {
+                    element.remove();
+                });
+            }
+        })
+    }
+    document.querySelectorAll('.delete-item').forEach(element=>{
+        element.onclick = function(){
+            let actionUrl = this.dataset.action;
+            let removeItem = this.dataset.removeitem;
+            document.getElementById('delete-record').onclick = function(){
+                document.getElementById('deleteRecord-close').click();
+                deleteItem(actionUrl, removeItem);
+            };
+        }
+    })
+</script>

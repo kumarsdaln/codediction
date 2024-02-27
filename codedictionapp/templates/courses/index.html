@@ -1,0 +1,294 @@
+{% extends 'courses/layouts/layout.html' %}
+{% load static %}
+
+{% block metatags %}
+<title>Acens - Creative Template for Agencies and Freelancers</title>
+{% endblock metatags %}
+
+{% block main %}
+    <style>
+        .{
+            max-height:409px;
+        }
+    </style>
+    <!-- Parallax Image -->
+    <section class="parallax-header valign bg-img" data-overlay-dark="6" data-background="{% static "courses/images/slider/3.jpg" %}">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 text-center mt-60">
+                    <h1><span>Your Way</span><br>To Success</h1>
+                    <p>Software Consulting and Development.</p> 
+                    <a href="https://wa.me/8218444136?text=Hello!" class="btn-1 mt-15"> Getting Started</a> 
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Services -->
+    <section class="services section-padding">
+        <div class="container">
+           <div class="row mb-30">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>What You Will Learn</h6>
+                    <h1 class="wow" data-splitting>Our Courses</h1>
+                    <div class="line-hr-section center"></div>
+                </div>
+            </div>
+            <div class="row">
+                {% for course in courses %}
+                <div class="col-lg-6 col-md-6 mb-25">
+                    <a href="{% url 'app.courses.details' course.course_category.slug course.slug %}">
+                        <div class="item">
+                            <div class="wrap">
+                                <div class="icon-1"> 
+                                    <img style="width:120px; height:120px;border: 2px solid #fff;
+                                    border-radius: 50%;" src="{{course.image.url}}">
+                                </div>
+                                <div class="con">
+                                    <h4>{{course.name}}</h4>
+                                    <p>{{course.brief}}</p>
+                                    <div class="icon-2">
+                                        <a href="{% url 'app.courses.details' course.course_category.slug course.slug %}"><span class="fa-sharp fa-light fa-arrow-right"></span></a>
+                                    </div>
+                                </div>
+                                <div class="numb">0{{forloop.counter}}</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <div class="line-vr-section"></div>
+    <!-- divider line -->
+    <!-- Events -->
+    <section class="events section-padding bg-drk">
+        <div class="container">
+            <div class="row mb-30">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>Upcoming</h6>
+                    <h1 class="wow cw" data-splitting>Our Batches</h1>
+                    <div class="line-hr-section center"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {% for batch in batches %}
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-md-3 d-flex align-items-center">
+                                <div class="date md-mb30"> <span>{{batch.start_at|date:"d"}}</span>
+                                    <div><span>{{batch.start_at|date:"M Y"}}</span><span>{{batch.batch_time}}</span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-center justify-content-start">
+                                <div class="text">
+                                    <h5>{{batch.batch_name}} - {{batch.language}}</h5>
+                                    <p>{{batch.course.name}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 position-re">
+                                <div class="img "> <img src="{{batch.image.url}}" alt=""> </div>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center justify-content-end"> <a href="{% url 'app.batches.details' batch.slug %}" class="btn-1 mr-0">Details</a> </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Promo Popup Video -->
+    <section class="video-popup section-padding bg-img bg-fixed" data-overlay-dark="6" data-background="{% static "courses/images/slider/6.jpg" %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>Free one day demo class</h6>
+                    <h1 class="wow" data-splitting>Book Demo Class</h1>
+                </div>
+                <div class="col-md-12 text-center">
+                    <a class="vid" href="https://wa.me/8218444136?text=Hello, Can I have a demo class...">
+                        <div class="vid-butn"> 
+                            <span class="icon"><i class="fa-regular fa-play"></i></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+   <!-- divider line -->
+    <div class="line-vr-section"></div>
+    {% if team %}
+    <section class="team section-padding">
+        <div class="container">
+            <div class="row mb-30">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>Creative Staff</h6>
+                    <h1 class="wow" data-splitting>Meet Team</h1>
+                    <div class="line-hr-section center"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="owl-carousel owl-theme">
+                        {% for team_member in team %}
+                        <div class="item">
+                            <div class="img"> <img src="{{team_member.photo.url}}" alt="" class="w-100"> </div>
+                            <div class="con">
+                                <h5 class="mb-0"><a href="javascript:;">{{team_member.name}}<br><span>{{team_member.designation}}</span></a></h5>
+                                <div class="arrow"> <a href="javascript:;"><i class="fa-solid fa-arrow-up"></i></a> </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <!-- Team -->
+   
+    <div class="line-vr-section"></div>
+    <!-- Works -->
+    <section class="works section-padding bg-drk">
+        <div class="container">
+            <div class="row mb-30">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>Portfolio & Project</h6>
+                    <h1 class="wow cw" data-splitting>Our Works</h1>
+                    <div class="line-hr-section center"></div>
+                </div>
+            </div>
+        </div>
+        <div class="full-width">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="owl-carousel owl-theme">
+                        {% for project in projects %}
+                        <div class="item">
+                            <div class="wrap">
+                                <div class="img"> <img src="{{project.image.url}}" class="img-fluid" alt="{{project.name}}"> </div>
+                                <div class="text">
+                                    <a href="services-single.html">
+                                        <h4>{{project.name}}</h4>
+                                        <p>{{project.work_category.name}}</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+     <!-- divider line -->
+     <div class="line-vr-section"></div>
+     
+    <!-- Testiominals -->
+    <section class="testimonials section-padding">
+        <div class="container">
+            <div class="row mb-30">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>What Client's Say?</h6>
+                    <h1 class="wow" data-splitting>Testimonials</h1>
+                    <div class="line-hr-section center"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    <div class="owl-carousel owl-theme">
+                        {% for testimonial in testimonials %}
+                        <div class="item"> <span class="quote"><i class="fa-solid fa-ditto"></i></span>
+                            <p>{{testimonial.testimonial}}</p>
+                            <div class="info">
+                                <div class="author-img "> <img src="{{testimonial.photo.url}}" alt="{{testimonial.name}}"> </div>
+                                <div class="cont">
+                                    <h6>{{testimonial.name}}</h6> <span>{{testimonial.designation}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Blog Home -->
+    <section class="blog section-padding bg-drk">
+        <div class="container">
+            <div class="row mb-30">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>News & Blog</h6>
+                    <h1 class="wow cw" data-splitting>Latest News</h1>
+                    <div class="line-hr-section center"></div>
+                </div>
+            </div>
+            {% for blog in blog_list %}
+            <div class="row">
+                <div class="{% if forloop.counter == 1 %}col-md-8 {% else %}col-md-4{% endif %}">
+                    <div class="item">
+                        <div class="img ">
+                            <a href="{% url 'app.blog.details' blog.category.slug blog.slug %}"> <img src="{{blog.image.url}}" alt=""> </a>
+                            <div class="date">
+                                <a href="{% url 'app.blog.details' blog.category.slug blog.slug %}"> <span>{{blog.uploaded_at|date:'M'}}</span> <i>{{blog.uploaded_at|date:'d'}}</i> </a>
+                            </div>
+                        </div>
+                        <div class="wrap">
+                            <div class="category">
+                                <a href="{% url 'app.blog.details' blog.category.slug blog.slug %}">{{blog.category.name}}</a><div class="divider"></div>{{blog.uploaded_at}}
+                            </div>
+                            <h4><a href="{% url 'app.blog.details' blog.category.slug blog.slug %}">{{blog.title}}</a></h4>
+                            <p>{{blog.brief}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Clients -->
+    <section class="clients section-padding">
+        <div class="container">
+            <div class="row mb-30">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>Partners & Sponsors</h6>
+                    <h1 class="wow" data-splitting>Our Clients</h1>
+                    <div class="line-hr-section center"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="owl-carousel owl-theme">
+                        {% for client in clients %}
+                        <div class="clients-logo">
+                            <a href="#0"><img src="{{client.image}}" alt="{{client.name}}"></a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Lets Talk -->
+    <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="{% static "courses/images/banner2.jpg" %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>We develop digital future</h6>
+                    <h5><span>Let's</span> Talk?</h5>
+                    <a href="tel:+918218444136" target="_blank" class="btn-1 mt-30"> <i class="fa-solid fa-phone"></i>+91-8218444136</a>
+                    <a href="https://wa.me/8218444136?text=Hello, Can I know more..." target="_blank" class="btn-5 mt-30"> <i class="fa-solid fa-paper-plane"></i> Make an enquiry</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock main %}

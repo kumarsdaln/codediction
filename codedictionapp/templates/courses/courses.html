@@ -1,0 +1,69 @@
+{% extends 'courses/layouts/layout.html' %}
+{% load static %}
+
+{% block metatags %}
+<title>About</title>
+{% endblock metatags %}
+
+{% block main %}
+    <!-- Header Banner -->
+    <section class="banner-header section-padding bg-img bg-fixed bg-img-position-top" data-overlay-dark="7" data-background="{% static "courses/images/slider/5.jpg" %}">
+        <div class="v-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center mt-60">
+                        <h1>Our Courses</h1>
+                        <ul class="breadcrumbs">
+                            <li><a href="{% url 'courses.index' %}">Home</a></li>
+                            <li>Our Courses</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Services -->
+    <section class="services section-padding">
+        <div class="container">
+            <div class="row">
+                {% for course in courses %}
+                <div class="col-lg-6 col-md-6 mb-25">
+                    <a href="{% url 'courses.courses.details' course.course_category.link_url course.link_url %}">
+                        <div class="item">
+                            <div class="wrap">
+                                <div class="icon-1"> <img style="width:120px; height:120px;border: 2px solid #fff;
+                                    border-radius: 50%;" src="{{course.image.url}}"> </div>
+                                <div class="con">
+                                    <h4>{{course.name}}</h4>
+                                    <p>{{course.brief}}</p>
+                                    <div class="icon-2">
+                                        <a href="{% url 'courses.courses.details' course.course_category.link_url course.link_url %}"><span class="fa-sharp fa-light fa-arrow-right"></span></a>
+                                    </div>
+                                </div>
+                                <div class="numb">0{{forloop.counter}}</div>
+                            </div>
+                        </div>
+                    </a>
+                </div> 
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Lets Talk -->
+    <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="{% static "courses/images/banner2.jpg" %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>We develop digital future</h6>
+                    <h5><span>Let's</span> Talk?</h5> 
+                    <a href="tel:+8001234567" class="btn-1 mt-30"> <i class="fa-solid fa-phone"></i> 800 123 4567</a> 
+                    <a href="contact.html" class="btn-5 mt-30"> <i class="fa-solid fa-paper-plane"></i> Make an enquiry</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock main %}

@@ -1,0 +1,110 @@
+<script>
+    document.querySelectorAll('.blog-cat-btn').forEach(element => {
+        element.onclick = function(){
+            document.querySelectorAll('.blog-cat-btn').forEach(allelemnt => {
+                allelemnt.classList.remove('active');
+            })
+            link = this.dataset.link;
+            category = this.dataset.category;
+            nextState = this.dataset.nextstate;
+            nextTitle = this.dataset.nexttitle;
+            nextURL = this.dataset.nexturl;
+
+
+            // This will create a new entry in the browser's history, without reloading
+            window.history.pushState(nextState, nextTitle, nextURL);
+
+            // This will replace the current entry in the browser's history, without reloading
+            window.history.replaceState(nextState, nextTitle, nextURL);
+
+            
+            this.classList.add('active');
+            console.log(link);
+            fetch(`${link}`)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                var blogContainer = document.getElementById('blog-container');
+                // Assuming 'data' is an array of objects with 'id' and 'time' properties
+                if(result.blog.length>0){
+                    blogContainer.innerHTML = '';
+                    result.blog.forEach(item => {
+                        var div = document.createElement('div');
+                        div.setAttribute('class', 'col-lg-4 col-sm-6');
+                        div.innerHTML = `
+                        <a href="{% url 'app.blog' %}${item.category.slug}/${item.slug}/" class="single-blog-box">
+                            <div class="blog-box-img">
+                                <img src="{{url}}/${item.image}" alt="img">
+                                <span class="blog-type">${item.category.name}</span>
+                            </div>
+                            <div class="blog-box-text">
+                                <h4 class="title">${item.title}</h4>
+                                <ul>
+                                    <li><span>${item.uploaded_at}</span></li>
+                                    <li><span>${item.read_time} </span></li>
+                                </ul>
+                                <div class="blog-box-action text-center">
+                                    <span class="blog-btn">Read this Blog<img src="{% static 'courtmasterapp/assets/img/arrow-r.png' %}" alt="img"></span>
+                                </div>
+                            </div>
+                        </a>
+                        `;
+                        
+                        blogContainer.appendChild(div);
+                    });
+
+                    document.getElementById('load-more').dataset.link = `${link}${result.load+1}`;
+                    document.getElementById('load-more').dataset.clink = `${link}`;
+                    if(result.total_pages == result.load+1){
+                        document.getElementById('load-more').innerHTML = 'No More Blog';
+                    } else {
+                        document.getElementById('load-more').innerHTML = 'Load More Blog';
+                    }
+                } else {
+                    blogContainer.innerHTML = '<div class="danger">No Blog</div>'
+                }
+            });
+        }
+    })
+
+    document.getElementById('load-more').onclick = function(){
+        var link = this.dataset.link;
+        fetch(`${link}`)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result);
+            var blogContainer = document.getElementById('blog-container');
+            // Assuming 'data' is an array of objects with 'id' and 'time' properties
+            if(result.blog.length>0){
+                result.blog.forEach(item => {
+                    var div = document.createElement('div');
+                    div.setAttribute('class', 'col-lg-4 col-sm-6');
+                    div.innerHTML = `
+                    <a href="{% url 'app.blog' %}${item.category.slug}/${item.slug}/" class="single-blog-box">
+                        <div class="blog-box-img">
+                            <img src="{{url}}/${item.image}" alt="img">
+                            <span class="blog-type">${item.category.name}</span>
+                        </div>
+                        <div class="blog-box-text">
+                            <h4 class="title">${item.title}</h4>
+                            <ul>
+                                <li><span>${item.uploaded_at}</span></li>
+                                <li><span>${item.read_time} </span></li>
+                            </ul>
+                            <div class="blog-box-action text-center">
+                                <span class="blog-btn">Read this Blog<img src="{% static 'courtmasterapp/assets/img/arrow-r.png' %}" alt="img"></span>
+                            </div>
+                        </div>
+                    </a>
+                    `;
+                    
+                    blogContainer.appendChild(div);
+                });
+                document.getElementById('load-more').dataset.link = `${document.getElementById('load-more').dataset.clink}${result.load+1}`;
+                if(result.total_pages == result.load+1){
+                    document.getElementById('load-more').innerHTML = 'No More Blog';
+                }
+            }
+        });
+    }
+</script>

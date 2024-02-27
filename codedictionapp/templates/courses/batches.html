@@ -1,0 +1,108 @@
+{% extends 'courses/layouts/layout.html' %}
+{% load static %}
+
+{% block metatags %}
+<title>About</title>
+{% endblock metatags %}
+
+{% block main %}
+    <!-- Header Banner -->
+    <section class="banner-header section-padding bg-img bg-fixed" data-overlay-dark="6" data-background="images/slider/8.jpg">
+        <div class="v-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center mt-60">
+                        <h1>Upcoming Events</h1>
+                        <ul class="breadcrumbs">
+                            <li><a href="#">Home</a></li>
+                            <li>Upcoming Events</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Events -->
+    <section class="events section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-md-3 d-flex align-items-center">
+                                <div class="date md-mb30"> <span>22</span>
+                                    <div><span>Nov 2025</span><span>8:00 AM - 5:00 PM</span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-center justify-content-start">
+                                <div class="text">
+                                    <h5>London Leading Design</h5>
+                                    <p>Bedford Way, London</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 position-re">
+                                <div class="img img-grayscale"> <img src="images/events/01.jpg" alt=""> </div>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center justify-content-end"> <a href="events.html" class="btn-1 mr-0">Details</a> </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-md-3 d-flex align-items-center">
+                                <div class="date md-mb30"> <span>24</span>
+                                    <div><span>Nov 2025</span><span>9:00 AM - 6:00 PM</span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-center justify-content-start">
+                                <div class="text">
+                                    <h5>Web Summit 2023</h5>
+                                    <p>Prior Velho, Lisbon</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 position-re">
+                                <div class="img img-grayscale"> <img src="images/events/02.jpg" alt=""> </div>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center justify-content-end"> <a href="events.html" class="btn-1 mr-0">Details</a> </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-md-3 d-flex align-items-center">
+                                <div class="date md-mb30"> <span>27</span>
+                                    <div><span>Nov 2025</span><span>10:00 AM - 5:00 PM</span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-center justify-content-start">
+                                <div class="text">
+                                    <h5>SXSW Conference</h5>
+                                    <p>London, UK</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 position-re">
+                                <div class="img img-grayscale"> <img src="images/events/03.jpg" alt=""> </div>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center justify-content-end"> <a href="events.html" class="btn-1 mr-0">Details</a> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Lets Talk -->
+    <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="images/banner2.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>We develop digital future</h6>
+                    <h5><span>Let's</span> Talk?</h5>
+                    <a href="tel:+8001234567" class="btn-1 mt-30"> <i class="fa-solid fa-phone"></i> 800 123 4567</a>
+                    <a href="contact.html" class="btn-5 mt-30"> <i class="fa-solid fa-paper-plane"></i> Make an enquiry</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock main %}

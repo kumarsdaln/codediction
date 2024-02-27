@@ -1,0 +1,103 @@
+{% extends 'courses/layouts/layout.html' %}
+{% load static %}
+{% load mathematical_tags %}
+{% load orm_tags %}
+
+{% block metatags %}
+{% autoescape off %}
+{{course.meta_data}}
+{% endautoescape %}
+<style>
+    .subject-curriculum{
+        color:#fff;
+    }
+</style>
+{% endblock metatags %}
+
+{% block main %}
+    <!-- Header Banner -->
+    <section class="banner-header section-padding bg-img bg-fixed" data-overlay-dark="7" data-background="{{course.image.url}}">
+        <div class="v-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mt-60">
+                        <h1>{{course.name}}</h1>
+                        <ul class="breadcrumbs">
+                            <li><a href="{% url 'app.index' %}">Home</a></li>
+                            <li><a href="{% url 'app.courses' %}">courses</a></li>
+                            <li>{{course.name}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Services Page  -->
+    <section class="section-padding services-single">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <h5>Course Description</h5>
+                    {% autoescape off %}
+                    {{course.description}}
+                    {% endautoescape %}
+                    <h5>Course Curriculum</h5>
+                    <ul class="accordion-box clearfix">
+                        {% for subject in course.subjects.all %}
+                        <li class="accordion block">
+                            <div class="acc-btn"><span class="count">{{forloop.counter}}. </span> {{subject}}</div>
+                            <div class="acc-content">
+                                <div class="content">
+                                    <ul class="disc">
+                                        {% with s_fiter_args='{"relation_with":null}' %}
+                                        {% for curriculum in subject.curriculum_set|in_filter_by:s_fiter_args %}
+                                        <li class="subject-curriculum">
+                                            {{curriculum.title}}
+                                            <ul>
+                                                {% for rel_curriculum in curriculum.curriculum_set.all %}
+                                                <li class="subject-curriculum">
+                                                    {{rel_curriculum.title}}
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                        {% endfor %}
+                                        {% endwith %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-12 sidebar-side">
+                    <aside class="sidebar blog-sidebar">
+                        <div class="sidebar-widget services">
+                            <div class="widget-inner">
+                                <h5>Choose Batch</h5>
+                                <ul>
+                                    {% for batch in course.ourbatch_set.all %}
+                                    <li><a href="{% url 'app.batches.details' batch.slug %}">{{batch.batch_name}}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Lets Talk -->
+    <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="{% static "courses/images/banner2.jpg" %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>We develop digital future</h6>
+                    <h5><span>Let's</span> Talk?</h5>
+                    <a href="tel:+918218444136" class="btn-1 mt-30"> <i class="fa-solid fa-phone"></i>+91-8218444136</a>
+                    <a href="https://wa.me/8218444136?text=Hello, Can I know more..." target="_blank" class="btn-5 mt-30"> <i class="fa-solid fa-paper-plane"></i> Make an enquiry</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock main %}
