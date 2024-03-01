@@ -14,7 +14,7 @@
                     <div class="col-md-12 text-center mt-60">
                         <h1>Our Courses</h1>
                         <ul class="breadcrumbs">
-                            <li><a href="{% url 'courses.index' %}">Home</a></li>
+                            <li><a href="{% url 'app.index' %}">Home</a></li>
                             <li>Our Courses</li>
                         </ul>
                     </div>
@@ -29,8 +29,8 @@
         <div class="container">
             <div class="row">
                 {% for course in courses %}
-                <div class="col-lg-6 col-md-6 mb-25">
-                    <a href="{% url 'courses.courses.details' course.course_category.link_url course.link_url %}">
+                <div class="col-lg-4 col-md-4 mb-25">
+                    <a href="{% url 'app.courses.details' course.course_category.slug course.slug %}">
                         <div class="item">
                             <div class="wrap">
                                 <div class="icon-1"> <img style="width:120px; height:120px;border: 2px solid #fff;
@@ -39,10 +39,10 @@
                                     <h4>{{course.name}}</h4>
                                     <p>{{course.brief}}</p>
                                     <div class="icon-2">
-                                        <a href="{% url 'courses.courses.details' course.course_category.link_url course.link_url %}"><span class="fa-sharp fa-light fa-arrow-right"></span></a>
+                                        <a href="{% url 'app.courses.details' course.course_category.slug course.slug %}"><span class="fa-sharp fa-light fa-arrow-right"></span></a>
                                     </div>
                                 </div>
-                                <div class="numb">0{{forloop.counter}}</div>
+                                <div class="numb">{{forloop.counter}}</div>
                             </div>
                         </div>
                     </a>
@@ -59,9 +59,9 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <h6 class="wow" data-splitting>We develop digital future</h6>
-                    <h5><span>Let's</span> Talk?</h5> 
-                    <a href="tel:+8001234567" class="btn-1 mt-30"> <i class="fa-solid fa-phone"></i> 800 123 4567</a> 
-                    <a href="contact.html" class="btn-5 mt-30"> <i class="fa-solid fa-paper-plane"></i> Make an enquiry</a>
+                    <h5><span>Let's</span> Talk?</h5>
+                    <a href="tel:+918218444136" target="_blank" class="btn-1 mt-30"> <i class="fa-solid fa-phone"></i>+91-8218444136</a>
+                    <a href="https://wa.me/8218444136?text=Hello, Can I know more..." target="_blank" class="btn-5 mt-30"> <i class="fa-solid fa-paper-plane"></i> Make an enquiry</a>
                 </div>
             </div>
         </div>

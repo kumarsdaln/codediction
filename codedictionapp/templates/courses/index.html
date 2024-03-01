@@ -185,9 +185,10 @@
         </div>
     </section>
     
-    {% if testimonials %}
-    <!-- divider line -->
-    <div class="line-vr-section"></div>
+    
+     <!-- divider line -->
+     <div class="line-vr-section"></div>
+     
     <!-- Testiominals -->
     <section class="testimonials section-padding">
         <div class="container">
@@ -217,9 +218,6 @@
             </div>
         </div>
     </section>
-    {% endif %}
-    
-    {% if blog_list %}
     <!-- divider line -->
     <div class="line-vr-section"></div>
     <!-- Blog Home -->
@@ -255,35 +253,31 @@
             {% endfor %}
         </div>
     </section>
-    {% endif %}
-
-    {% if clients %}
-     <!-- divider line -->
-     <div class="line-vr-section"></div>
-     <!-- Clients -->
-     <section class="clients section-padding">
-         <div class="container">
-             <div class="row mb-30">
-                 <div class="col-md-12 text-center">
-                     <h6 class="wow" data-splitting>Partners & Sponsors</h6>
-                     <h1 class="wow" data-splitting>Our Clients</h1>
-                     <div class="line-hr-section center"></div>
-                 </div>
-             </div>
-             <div class="row">
-                 <div class="col-md-12">
-                     <div class="owl-carousel owl-theme">
-                         {% for client in clients %}
-                         <div class="clients-logo">
-                             <a href="#0"><img src="{{client.image}}" alt="{{client.name}}"></a>
-                         </div>
-                         {% endfor %}
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </section>
-    {% endif %}
+    <!-- divider line -->
+    <div class="line-vr-section"></div>
+    <!-- Clients -->
+    <section class="clients section-padding">
+        <div class="container">
+            <div class="row mb-30">
+                <div class="col-md-12 text-center">
+                    <h6 class="wow" data-splitting>Partners & Sponsors</h6>
+                    <h1 class="wow" data-splitting>Our Clients</h1>
+                    <div class="line-hr-section center"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="owl-carousel owl-theme">
+                        {% for client in clients %}
+                        <div class="clients-logo">
+                            <a href="#0"><img src="{{client.image}}" alt="{{client.name}}"></a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Lets Talk -->
     <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="{% static "courses/images/banner2.jpg" %}">
         <div class="container">

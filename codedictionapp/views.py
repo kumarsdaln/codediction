@@ -9,7 +9,7 @@ from .models import *
 
 def index(request):
     subjects = Subjects.objects.all()
-    courses = Courses.objects.all()
+    courses = Courses.objects.all()[:2]
     services = Services.objects.all()
     batches = OurBatch.objects.filter(status="u")
     projects = OurWork.objects.filter()
@@ -24,11 +24,11 @@ def index(request):
         'services':services,
         'batches':batches,
         'projects':projects,
-        'blog_list':blog if blog.count() > 0 else False,
+        'blog_list':blog,
         'subjects':subjects,
         'team':team,
-        'testimonial':testimonial if testimonial.count() > 0 else False,
-        'clients':clients if clients.count() > 0 else False
+        'testimonial':testimonial,
+        'clients':clients
     })
 
 def courses(request):
