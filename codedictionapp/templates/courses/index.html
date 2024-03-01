@@ -185,7 +185,7 @@
         </div>
     </section>
     
-    {% if testimonials %}
+    {% if testimonials.count > 0 %}
     <!-- divider line -->
     <div class="line-vr-section"></div>
     <!-- Testiominals -->
@@ -219,7 +219,7 @@
     </section>
     {% endif %}
     
-    {% if blog_list %}
+    {% if blog_list.count > 0 %}
     <!-- divider line -->
     <div class="line-vr-section"></div>
     <!-- Blog Home -->
@@ -257,7 +257,7 @@
     </section>
     {% endif %}
 
-    {% if clients %}
+    {% if clients.count > 0 %}
      <!-- divider line -->
      <div class="line-vr-section"></div>
      <!-- Clients -->
