@@ -24,11 +24,11 @@ def index(request):
         'services':services,
         'batches':batches,
         'projects':projects,
-        'blog_list':blog,
+        'blog_list':blog if blog.count() > 0 else False,
         'subjects':subjects,
         'team':team,
-        'testimonial':testimonial,
-        'clients':clients
+        'testimonial':testimonial if testimonial.count() > 0 else False,
+        'clients':clients if clients.count() > 0 else False
     })
 
 def courses(request):
