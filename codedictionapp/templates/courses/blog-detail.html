@@ -5,9 +5,18 @@
 {% autoescape off %}
 {{blog.meta_data}}
 {% endautoescape %}
+<meta property="og:url" content="https://www.codediction.com{% url 'app.blog.details' blog.category.slug blog.slug %}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.codediction.com{{blog.image.url}}">
 {% endblock metatags %}
 
 {% block main %}
+    <style>
+        h3 {
+            color:#fff;
+            margin: 56px 0px 24px 0px;
+        }
+    </style>
     <!-- Header Banner -->
     <section class="banner-header section-padding bg-img bg-fixed" data-overlay-dark="7" data-background="{% static 'courses/images/blog/b1.jpg' %}">
         <div class="v-middle">

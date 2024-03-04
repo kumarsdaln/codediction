@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
     'codediction.com',
     'www.codediction.com',
     '154.41.253.197',
+    '127.0.0.1'
 ]
 
 
@@ -84,6 +85,16 @@ WSGI_APPLICATION = 'codediction.wsgi.application'
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'codediction',
+#         'USER': 'root',
+#         'PASSWORD': 'Satendra',
+#         'HOST':'localhost',
+#         'PORT':'3306',
 #     }
 # }
 DATABASES = {
