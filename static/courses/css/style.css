@@ -2042,8 +2042,9 @@ ul.disc.disc li:before {
     padding: 130px 0;
 }
 .section-padding h1 {
+    font-family: "Red Hat Display";
     font-size: 48px;
-    font-weight: 900;
+    font-weight: 700;
     margin-bottom: 15px;
     color: #fff;
 }
