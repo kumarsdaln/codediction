@@ -230,8 +230,8 @@
                     <div class="line-hr-section center"></div>
                 </div>
             </div>
-            {% for blog in blog_list %}
             <div class="row">
+            {% for blog in blog_list %}
                 <div class="{% if forloop.counter == 1 %}col-md-8 {% else %}col-md-4{% endif %}">
                     <div class="item">
                         <div class="img ">
@@ -249,8 +249,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
             {% endfor %}
+            </div>
         </div>
     </section>
     <!-- divider line -->
