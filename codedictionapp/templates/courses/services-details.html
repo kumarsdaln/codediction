@@ -2,7 +2,9 @@
 {% load static %}
 
 {% block metatags %}
-<title>About</title>
+{% autoescape off %}
+{{service.meta_data}}
+{% endautoescape %}
 {% endblock metatags %}
 
 {% block main %}
