@@ -89,10 +89,10 @@
                                     <p>{{batch.course.name}}</p>
                                 </div>
                             </div>
-                            <div class="col-md-3 position-re">
+                            {% comment %} <div class="col-md-3 position-re">
                                 <div class="img "> <img src="{{batch.image.url}}" alt=""> </div>
-                            </div>
-                            <div class="col-md-2 d-flex align-items-center justify-content-end"> <a href="{% url 'app.batches.details' batch.slug %}" class="btn-1 mr-0">Details</a> </div>
+                            </div> {% endcomment %}
+                            <div class="col-md-5 d-flex align-items-center justify-content-end"> <a href="{% url 'app.batches.details' batch.slug %}" class="btn-1 mr-0">Details</a> </div>
                         </div>
                     </div>
                     {% endfor %}
