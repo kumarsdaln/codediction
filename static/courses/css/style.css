@@ -807,7 +807,7 @@ ul.disc.disc li:before {
 .navbar .navbar-nav .nav-link {
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 400;
     color: #fff;
     margin: 1px;
     -webkit-transition: all .4s;
@@ -2114,7 +2114,7 @@ ul.disc.disc li:before {
     display:inline-block;
     margin:0;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 400;
     font-family: 'Poppins', sans-serif;
     color:#fff;
 }
@@ -3030,7 +3030,7 @@ ul.disc.disc li:before {
 .gallery-filter li {
     font-family: 'Syne', sans-serif;
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 400;
     margin-right: 15px;
     display: inline-block;
     cursor: pointer;
