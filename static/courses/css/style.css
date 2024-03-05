@@ -101,8 +101,8 @@ h6 {
 }
 /* paragraph */
 p {
-    font-family: 'Hind', sans-serif;
-    font-size: 16px;
+    font-family: "Lora";
+    font-size: 18px;
     line-height: 1.75em;
     margin: 0 0 15px;
     color: #ccc;
@@ -2056,15 +2056,16 @@ ul.disc.disc li:before {
 .section-padding h2 {
     font-size: 48px;
     line-height: 1.2em;
-    font-weight: 900;
+    font-weight: 700;
     margin-bottom: 5px;
     color: #fff;
     font-family: 'Poppins', sans-serif;
 }
 .section-padding h5 {
+    font-family: "Commissioner";
     font-size: 24px;
     line-height: 1.5em;
-    font-weight: 900;
+    font-weight: 600;
     margin-bottom: 15px;
     color: #fff;
 }
