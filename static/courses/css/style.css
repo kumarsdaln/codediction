@@ -785,7 +785,7 @@ ul.disc.disc li:before {
     padding-left: 0;
     padding-top: 0;
     padding-bottom: 0;
-    height: 100px;
+    height: auto;
     border: none;
 }
 .navbar .container {
@@ -1074,10 +1074,10 @@ ul.disc.disc li:before {
     }
     .logo-wrapper {
         float: left;
-        padding: 34.15px 15px;
+        /* padding: 34.15px 15px; */
     }
     .nav-scroll .logo-wrapper {
-        padding: 34.15px 15px;
+        /* padding: 34.15px 15px; */
         background-color: transparent;
     }
     .nav-scroll .logo-img {
