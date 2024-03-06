@@ -39,7 +39,8 @@
                                 <h4>{{service.name}}</h4>
                                 <p>{{service.brief}}</p>
                                 <div class="icon-2">
-                                    <a href="{% url 'app.services.details' service.slug %}"><span class="fa-sharp fa-light fa-arrow-right"></span></a>
+                                    <a href="Javascript:;"><span class="fa-sharp fa-light fa-arrow-right"></span></a>
+                                    {% comment %} <a href="{% url 'app.services.details' service.slug %}"><span class="fa-sharp fa-light fa-arrow-right"></span></a> {% endcomment %}
                                 </div>
                             </div>
                             <div class="numb">{% if forloop.counter < 10 %}0{% endif %}{{forloop.counter}}</div>

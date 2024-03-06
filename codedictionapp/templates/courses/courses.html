@@ -42,7 +42,7 @@
                                         <a href="{% url 'app.courses.details' course.course_category.slug course.slug %}"><span class="fa-sharp fa-light fa-arrow-right"></span></a>
                                     </div>
                                 </div>
-                                <div class="numb">{{forloop.counter}}</div>
+                                <div class="numb">{% if forloop.counter < 10 %}0{% endif %}{{forloop.counter}}</div>
                             </div>
                         </div>
                     </a>
