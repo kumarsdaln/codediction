@@ -55,7 +55,7 @@ urlpatterns = [
     
 
     
-
+    path("maintaince/", views.maintainance, name="app.maintainance"),
     path("index-2/", views.index2, name="app.index-2"),
     path("index-3/", views.index3, name="app.index-3"),
     path("about/", views.about, name="app.about"),

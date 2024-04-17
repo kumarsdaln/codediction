@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from .models import *
 
@@ -18,18 +18,19 @@ def index(request):
     team = OurTeam.objects.all()[:5]
     testimonials = Testimonial.objects.all()[:5]
     clients = OurClients.objects.all()[:5]
-    return render(request, "courses/index.html", {
-        'subjects':subjects,
-        'courses':courses,
-        'services':services,
-        'batches':batches,
-        'projects':projects,
-        'blog_list':blog,
-        'subjects':subjects,
-        'team':team,
-        'testimonials':testimonials,
-        'clients':clients
-    })
+    # return render(request, "courses/index.html", {
+    #     'subjects':subjects,
+    #     'courses':courses,
+    #     'services':services,
+    #     'batches':batches,
+    #     'projects':projects,
+    #     'blog_list':blog,
+    #     'subjects':subjects,
+    #     'team':team,
+    #     'testimonials':testimonials,
+    #     'clients':clients
+    # })
+    return redirect('app.maintainance')
 
 def courses(request):
     courses = Courses.objects.all()
@@ -204,6 +205,9 @@ def projectsDetails(request):
 
 def index2(request):
     return render(request, "courses/index-2.html")
+
+def maintainance(request):
+    return render(request, "courses/maintainance.html")
 
 def index3(request):
     return render(request, "courses/index-3.html")
