@@ -1,0 +1,88 @@
+:root {
+    --marquee-width: 80vw;
+    --marquee-height: 20vh;
+    /* --marquee-elements: 12; */ /* defined with JavaScript */
+    --marquee-elements-displayed: 5;
+    --marquee-element-width: calc(var(--marquee-width) / var(--marquee-elements-displayed));
+    --marquee-animation-duration: calc(var(--marquee-elements) * 3s);
+  }
+  
+  .marquee {
+    overflow: hidden;
+    position: relative;
+  }
+  .marquee:before, .marquee:after {
+    position: absolute;
+    top: 0;
+    width: 10rem;
+    height: 100%;
+    content: "";
+    z-index: 1;
+  }
+  .marquee:before {
+    left: 0;
+    
+  }
+  .marquee:after {
+    right: 0;
+
+  }
+  .marquee-content {
+    list-style: none;
+    height: 100%;
+    flex-wrap:nowrap !important;
+    animation: scrolling var(--marquee-animation-duration) linear infinite;
+  }
+  /* .marquee-content:hover {
+    animation-play-state: paused;
+  } */
+  @keyframes scrolling {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements))); }
+  }
+  {% comment %} .marquee-content div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* text-align: center; */
+    flex-shrink: 0;
+    width: var(--marquee-element-width);
+    max-height: 100%;
+    font-size: calc(var(--marquee-height)*3/4); /* 5rem; */
+    white-space: nowrap;
+  } {% endcomment %}
+  
+  {% comment %} .marquee-content li img {
+    width: 100%;
+    /* height: 100%; */
+    border: 2px solid #eee;
+  } {% endcomment %}
+  
+  @media (max-width: 600px) {
+    html { font-size: 12px; }
+    :root {
+      --marquee-width: 100vw;
+      --marquee-height: 16vh;
+      --marquee-elements-displayed: 3;
+    }
+    .marquee:before, .marquee:after { width: 5rem; }
+  }
+  .btn-1 .arrow{
+    visibility: none;
+    opacity: 0;
+  }
+  .btn-1:hover .arrow{
+    visibility: visible;
+    opacity: 1;
+  }
+  .btn-1:hover .arrow i{
+    animation: arrow 1s linear;
+  }
+  @keyframes arrow {
+    0% { margin-left:0px;}
+    100% { margin-left:10px; transform:rotate(90deg) }
+  }
+  .about-text-h{
+    line-height:120% !important;
+    font-size:48px !important;
+  }

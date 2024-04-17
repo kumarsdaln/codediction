@@ -3,14 +3,116 @@
 
 {% block metatags %}
 <title>Codediction | Contact</title>
+
 {% endblock metatags %}
 
 {% block main %}
+<style>
+    :root {
+        --marquee-width: 80vw;
+        --marquee-height: 20vh;
+        /* --marquee-elements: 1; */ /* defined with JavaScript */
+        --marquee-elements-displayed: 1;
+        --marquee-element-width: calc(var(--marquee-width) / var(--marquee-elements-displayed));
+        --marquee-animation-duration: calc(var(--marquee-elements) * 3s);
+      }
+      
+      .marquee {
+        overflow: hidden;
+        position: relative;
+      }
+      .marquee:before, .marquee:after {
+        position: absolute;
+        top: 0;
+        width: 10rem;
+        height: 100%;
+        content: "";
+        z-index: 1;
+      }
+      .marquee:before {
+        left: 0;
+        
+      }
+      .marquee:after {
+        right: 0;
+    
+      }
+      .marquee-content {
+        list-style: none;
+        height: 100%;
+        flex-wrap:nowrap !important;
+        animation: scrolling var(--marquee-animation-duration) linear infinite;
+      }
+      /* .marquee-content:hover {
+        animation-play-state: paused;
+      } */
+      @keyframes scrolling {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements))); }
+      }
+      
+      @media (max-width: 600px) {
+        html { font-size: 12px; }
+        :root {
+          --marquee-width: 100vw;
+          --marquee-height: 16vh;
+          --marquee-elements-displayed: 3;
+        }
+        .marquee:before, .marquee:after { width: 5rem; }
+      }
+      .btn-1 .arrow{
+        visibility: none;
+        opacity: 0;
+      }
+      .btn-1:hover .arrow{
+        visibility: visible;
+        opacity: 1;
+      }
+      .btn-1:hover .arrow i{
+        animation: arrow 1s linear;
+      }
+      @keyframes arrow {
+        0% { margin-left:0px;}
+        100% { margin-left:10px; transform:rotate(90deg) }
+      }
+      .about-text-h{
+        line-height:120% !important;
+        font-size:48px !important;
+      }
+
+      .con{
+        background: #fff;
+        text-align: center;
+        color: #000;
+        border-radius: 16px;
+        padding: 36px;
+        align-items: center;
+      }
+      .contact .con .text {
+        color: #101010 !important;
+        margin: 0px;
+    }
+    .contact .con .text a{
+        color: #101010;
+        margin: 0px;
+        
+    }
+    .contact .con .text p{
+        color: #101010;
+        margin: 0px;
+    }
+    .contact .con .icon{
+        margin-bottom:8px;
+    }
+    .contact h1{
+        line-height: 120%;
+    }
+</style>
     <!-- Header Banner -->
     <section class="banner-header section-padding bg-img bg-fixed bg-img-position-top" data-overlay-dark="5" data-background="{% static "courses/images/slider/2.jpg" %}">
         <div class="v-middle">
             <div class="container">
-                <div class="row">
+                {% comment %} <div class="row">
                     <div class="col-md-12 text-center mt-60">
                         <h1>Contact</h1>
                         <ul class="breadcrumbs">
@@ -18,172 +120,225 @@
                             <li>Contact</li>
                         </ul>
                     </div>
-                </div>
+                </div> {% endcomment %}
             </div>
         </div>
     </section>
     <!-- divider line -->
-    <div class="line-vr-section"></div>
+    <section class="lets-talk section-padding section-padding-2">
+        <div class="container container-2">
+            <div class="container-2-item dark">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="marquee">
+                            <div class="marquee-content">
+                                <h1>Your Vision Our Mission Let's Make It Happen Together</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-lg-6 col-md-12 mb-60">
+                        <div class="img">
+                            <img src="{% static "courses/images/lets-talk.png" %}">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <form style="padding:60px" method="post" action="{% url 'app.contact.sendform' %}">
+                            {% csrf_token %}
+                            <!-- Form message -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="alert alert-success contact__msg" style="display: {% if msg %}
+                                    block
+                                    {% else %}
+                                    none
+                                    {% endif %}" role="alert"> Your message was sent successfully. </div>
+                                </div>
+                            </div>
+                            <!-- Form elements -->
+                            <div class="row">
+                                <div class="col-md-12 form-group">
+                                    <input name="name" type="text" placeholder="Name *" value="{% if form.name.value %}{{form.name.value}}{% endif %}" required>
+                                    <div class="form-errors text-danger">
+                                        {% if form.name.errors %}
+                                        <ul>
+                                        {% for error in form.name.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input name="email" type="email" placeholder="Email Address *" value="{% if form.email.value %}{{form.email.value}}{% endif %}" required>
+                                    <div class="form-errors text-danger">
+                                        {% if form.email.errors %}
+                                        <ul>
+                                        {% for error in form.email.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input name="phone" type="text" placeholder="Phone *" value="{% if form.phone.value %}{{form.phone.value}}{% endif %}" required>
+                                    <div class="form-errors text-danger">
+                                        {% if form.phone.errors %}
+                                        <ul>
+                                        {% for error in form.phone.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <input name="subject" type="text" placeholder="Subject *" value="{% if form.subject.value %}{{form.subject.value}}{% endif %}" required>
+                                    <div class="form-errors text-danger">
+                                        {% if form.subject.errors %}
+                                        <ul>
+                                        {% for error in form.subject.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <textarea name="message" id="message" cols="30" rows="4" placeholder="How can we help you? Feel free to get in touch! *" required>{% if form.message.value %}{{form.message.value}}{% endif %}</textarea>
+                                    <div class="form-errors text-danger">
+                                        {% if form.message.errors %}
+                                        <ul>
+                                        {% for error in form.message.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="margin-top:36px">
+                                    <button type="submit" class="btn-1">Submit <span class="arrow"><i class="fa fa-arrow-up"></i></span></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Contact  -->
     <section class="contact section-padding">
         <div class="container">
+            <div class="row mb-60">
+                <div class="col-md-12">
+                    <h1 class="wow cw" data-splitting>Your Dream Project is away <br> from just one click</h1>
+                </div>
+            </div>
             <div class="row">
                 
-                <div class="col-lg-6 col-md-12 mb-60">
+                <div class="col-md-12 mb-60">
                     <div class="row mb-60">
-                        <div class="col-md-12">
-                            {% comment %} <h5>Central Office</h5>
-                            <p>Nulla posuere tortoran nisan sempere scelerisque etiam ornare iros metusan the ravidane sodales vesaire. Integer ac molestie nisi orci varius the natose nenatis magnis the duru parturient montes ridiculus.</p> {% endcomment %}
-                            <div class="con">
+                        <div class="col-md-4">
+                            
+                            <div class="con d-flex flex-column">
                                 <div class="icon"> <span class="fa-solid fa-phone"></span> </div>
                                 <div class="con-content">
                                     <p class="text"><a href="tel:+918218444136">+91-8218444136</a></p>
                                 </div>
                             </div>
-                            <div class="con">
+                            
+                        </div>
+                        <div class="col-md-4">
+                            <div class="con d-flex flex-column">
                                 <div class="icon"> <span class="fa-solid fa-envelope"></span> </div>
                                 <div class="con-content">
                                     <p class="text"><a href="mailto:hi@alfrik.com">hi@alfrik.com</a></p>
                                 </div>
                             </div>
-                            <div class="con">
+                           
+                        </div>
+                        <div class="col-md-4">
+                            <div class="con d-flex flex-column">
                                 <div class="icon"> <span class="fa-solid fa-location"></span> </div>
                                 <div class="con-content">
-                                    <p class="text">96, Sant Nagar, East of Kailash
-                                        <br>Delhi, India</p>
+                                    <p class="text">New Delhi, India</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h5>Opening Hours</h5>
-                            <div class="opening-hours">
-                                <ul>
-                                    <li>
-                                        <div class="tit">Monday - Friday</div>
-                                        <div class="dots"></div> <span>12:00 PM - 10:00 PM</span>
-                                    </li>
-                                    <li>
-                                        <div class="tit">Saturday</div>
-                                        <div class="dots"></div> <span>Closed</span>
-                                    </li>
-                                    <li>
-                                        <div class="tit">Sunday</div>
-                                        <div class="dots"></div> <span>Closed</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-12">
-                    <h5>Get in touch!</h5>
-                    <form method="post" action="{% url 'app.contact.sendform' %}">
-                        {% csrf_token %}
-                        <!-- Form message -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="alert alert-success contact__msg" style="display: {% if msg %}
-                                block
-                                {% else %}
-                                none
-                                {% endif %}" role="alert"> Your message was sent successfully. </div>
-                            </div>
-                        </div>
-                        <!-- Form elements -->
-                        <div class="row">
-                            <div class="col-md-12 form-group">
-                                <input name="name" type="text" placeholder="Name *" value="{% if form.name.value %}{{form.name.value}}{% endif %}" required>
-                                <div class="form-errors text-danger">
-                                    {% if form.name.errors %}
-                                    <ul>
-                                    {% for error in form.name.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                    </ul>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <input name="email" type="email" placeholder="Email Address *" value="{% if form.email.value %}{{form.email.value}}{% endif %}" required>
-                                <div class="form-errors text-danger">
-                                    {% if form.email.errors %}
-                                    <ul>
-                                    {% for error in form.email.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                    </ul>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <input name="phone" type="text" placeholder="Phone *" value="{% if form.phone.value %}{{form.phone.value}}{% endif %}" required>
-                                <div class="form-errors text-danger">
-                                    {% if form.phone.errors %}
-                                    <ul>
-                                    {% for error in form.phone.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                    </ul>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <input name="subject" type="text" placeholder="Subject *" value="{% if form.subject.value %}{{form.subject.value}}{% endif %}" required>
-                                <div class="form-errors text-danger">
-                                    {% if form.subject.errors %}
-                                    <ul>
-                                    {% for error in form.subject.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                    </ul>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <textarea name="message" id="message" cols="30" rows="4" placeholder="How can we help you? Feel free to get in touch! *" required>{% if form.message.value %}{{form.message.value}}{% endif %}</textarea>
-                                <div class="form-errors text-danger">
-                                    {% if form.message.errors %}
-                                    <ul>
-                                    {% for error in form.message.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                    </ul>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <input type="submit" value="Submit">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    {% comment %} <!-- Maps -->
-    <section id="map">
-        <div class="full-width">
-            <div class="google-map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1573147.7480448114!2d-74.84628175962355!3d41.04009641088412!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25856139b3d33%3A0xb2739f33610a08ee!2s1616%20Broadway%2C%20New%20York%2C%20NY%2010019%2C%20Amerika%20Birle%C5%9Fik%20Devletleri!5e0!3m2!1str!2str!4v1646760525018!5m2!1str!2str" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-        </div>
-    </section> {% endcomment %}
-    <!-- divider line -->
-    <div class="line-vr-section"></div>
-    <!-- Lets Talk -->
-    <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="{% static "courses/images/banner2.jpg" %}">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h6 class="wow" data-splitting>We develop digital future</h6>
-                    <h5><span>Let's</span> Talk?</h5>
-                    <a href="tel:+918218444136" class="btn-1 mt-30"> <i class="fa-solid fa-phone"></i>+91-8218444136</a>
-                    <a href="https://wa.me/8218444136?text=Hello, Can I know more..." target="_blank" class="btn-5 mt-30"> <i class="fa-solid fa-paper-plane"></i> Make an enquiry</a>
                 </div>
             </div>
         </div>
     </section>
     <!-- Footer -->
+    <script>
+        const root = document.documentElement;
+        const marqueeElementsDisplayed = getComputedStyle(root).getPropertyValue("--marquee-elements-displayed");
+        const marqueeContent = document.querySelector("div.marquee-content");
+        
+        root.style.setProperty("--marquee-elements", marqueeContent.children.length);
+        
+        for(let i=0; i<marqueeElementsDisplayed; i++) {
+          marqueeContent.appendChild(marqueeContent.children[i].cloneNode(true));
+        }
+
+
+        var TxtType = function(el, toRotate, period) {
+            this.toRotate = toRotate;
+            this.el = el;
+            this.loopNum = 0;
+            this.period = parseInt(period, 10) || 2000;
+            this.txt = '';
+            this.tick();
+            this.isDeleting = false;
+        };
+    
+        TxtType.prototype.tick = function() {
+            var i = this.loopNum % this.toRotate.length;
+            var fullTxt = this.toRotate[i];
+    
+            if (this.isDeleting) {
+            this.txt = fullTxt.substring(0, this.txt.length - 1);
+            } else {
+            this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+    
+            this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+    
+            var that = this;
+            var delta = 200 - Math.random() * 100;
+    
+            if (this.isDeleting) { delta /= 2; }
+    
+            if (!this.isDeleting && this.txt === fullTxt) {
+            delta = this.period;
+            this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+            this.isDeleting = false;
+            this.loopNum++;
+            delta = 500;
+            }
+    
+            setTimeout(function() {
+            that.tick();
+            }, delta);
+        };
+    
+        window.onload = function() {
+            var elements = document.getElementsByClassName('typewrite');
+            for (var i=0; i<elements.length; i++) {
+                var toRotate = elements[i].getAttribute('data-type');
+                var period = elements[i].getAttribute('data-period');
+                if (toRotate) {
+                  new TxtType(elements[i], JSON.parse(toRotate), period);
+                }
+            }
+            // INJECT CSS
+            
+            document.body.appendChild(css);
+        };
+    </script>
 {% endblock main %}

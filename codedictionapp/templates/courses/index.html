@@ -6,6 +6,96 @@
 <meta name="description" content="Learn with Codediction and master in - HTML, CSS, Javascript, PHP, Laravel, Python, Django, SQL, MySQL, Postgresql, Git, GitHub, CI/CD.">
 <meta property="og:title" content="Codediction">
 <meta property="og:description" content="Learn with Codediction and master in - HTML, CSS, Javascript, PHP, Laravel, Python, Django, SQL, MySQL, Postgresql, Git, GitHub, CI/CD.">
+<style>
+    :root {
+        --marquee-width: 80vw;
+        --marquee-height: 20vh;
+        /* --marquee-elements: 12; */ /* defined with JavaScript */
+        --marquee-elements-displayed: 5;
+        --marquee-element-width: calc(var(--marquee-width) / var(--marquee-elements-displayed));
+        --marquee-animation-duration: calc(var(--marquee-elements) * 3s);
+      }
+      
+      .marquee {
+        overflow: hidden;
+        position: relative;
+      }
+      .marquee:before, .marquee:after {
+        position: absolute;
+        top: 0;
+        width: 10rem;
+        height: 100%;
+        content: "";
+        z-index: 1;
+      }
+      .marquee:before {
+        left: 0;
+        
+      }
+      .marquee:after {
+        right: 0;
+    
+      }
+      .marquee-content {
+        list-style: none;
+        height: 100%;
+        flex-wrap:nowrap !important;
+        animation: scrolling var(--marquee-animation-duration) linear infinite;
+      }
+      /* .marquee-content:hover {
+        animation-play-state: paused;
+      } */
+      @keyframes scrolling {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements))); }
+      }
+      {% comment %} .marquee-content div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* text-align: center; */
+        flex-shrink: 0;
+        width: var(--marquee-element-width);
+        max-height: 100%;
+        font-size: calc(var(--marquee-height)*3/4); /* 5rem; */
+        white-space: nowrap;
+      } {% endcomment %}
+      
+      {% comment %} .marquee-content li img {
+        width: 100%;
+        /* height: 100%; */
+        border: 2px solid #eee;
+      } {% endcomment %}
+      
+      @media (max-width: 600px) {
+        html { font-size: 12px; }
+        :root {
+          --marquee-width: 100vw;
+          --marquee-height: 16vh;
+          --marquee-elements-displayed: 3;
+        }
+        .marquee:before, .marquee:after { width: 5rem; }
+      }
+      .btn-1 .arrow{
+        visibility: none;
+        opacity: 0;
+      }
+      .btn-1:hover .arrow{
+        visibility: visible;
+        opacity: 1;
+      }
+      .btn-1:hover .arrow i{
+        animation: arrow 1s linear;
+      }
+      @keyframes arrow {
+        0% { margin-left:0px;}
+        100% { margin-left:10px; transform:rotate(90deg) }
+      }
+      .about-text-h{
+        line-height:120% !important;
+        font-size:48px !important;
+      }
+</style>
 {% endblock metatags %}
 
 {% block main %}
@@ -18,18 +108,17 @@
     <section class="parallax-header valign bg-img" data-overlay-dark="6" data-background="{% static "courses/images/slider/3.jpg" %}">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-12 text-center mt-60">
-                    <h1><span>Your Way</span><br>To Success</h1>
+                <div class="col-md-12 mt-60">
+                    <h1><span class="typewrite" data-period="2000" data-type='[ "DREAM", "DESIGN", "DEVELOPMENT", "DELIVER"]'></span><br>Your Partner <br> For IT Services</h1>
                     <p>Software Consulting and Development.</p> 
-                    <a target="_blank" href="https://wa.me/8218444136?text=Hello!" class="btn-1 mt-15"> Getting Started</a> 
+                    <a target="_blank" style="margin-top:36px;" href="https://wa.me/8218444136?text=Hello!" class="btn-1 mt-15"> Getting Started <span class="arrow"><i class="fa fa-arrow-up"></i></span></a> 
                 </div>
             </div>
         </div>
     </section>
     <!-- divider line -->
-    <div class="line-vr-section"></div>
     <!-- Services -->
-    <section class="services section-padding">
+    {% comment %} <section class="services section-padding">
         <div class="container">
            <div class="row mb-30">
                 <div class="col-md-12 text-center">
@@ -63,11 +152,48 @@
                 {% endfor %}
             </div>
         </div>
+    </section> {% endcomment %}
+    <section class="services section-padding">
+        <div class="container">
+            <div class="row mb-60">
+                <div class="col-md-12 text-center">
+                    {% comment %} <h6 class="wow" data-splitting>Our Services</h6> {% endcomment %}
+                    <h1 class="wow" data-splitting>We are expertize in</h1>
+                    {% comment %} <div class="line-hr-section center"></div> {% endcomment %}
+                </div>
+            </div>
+            <div class="marquee">
+                <div class="row marquee-content">
+                    {% for service in services %}
+                    <div class="col-lg-3 col-md-4 mb-25">
+                        <div class="item">
+                            <div class="wrap">
+                                <div class="icon-1"> 
+                                    <img src="{{service.icon.url}}" style="max-width:112px;">
+                                </div>
+                                <div class="con">
+                                    <h4>
+                                        {% autoescape off %}
+                                        {{service.name}}
+                                        {%endautoescape%}
+                                    </h4>
+                                    <div class="icon-2">
+                                        <a href="Javascript:;"><span class="fa-sharp fa-light fa-arrow-right"></span></a>
+                                        {% comment %} <a href="{% url 'app.services.details' service.slug %}"><span class="fa-sharp fa-light fa-arrow-right"></span></a> {% endcomment %}
+                                    </div>
+                                </div>
+                                <div class="numb">{% if forloop.counter < 10 %}0{% endif %}{{forloop.counter}}</div>
+                            </div>
+                        </div>
+                    </div> 
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </section>
-    <div class="line-vr-section"></div>
     <!-- divider line -->
     <!-- Events -->
-    <section class="events section-padding bg-drk">
+    {% comment %} <section class="events section-padding bg-drk">
         <div class="container">
             <div class="row mb-30">
                 <div class="col-md-12 text-center">
@@ -92,9 +218,7 @@
                                     <p>{{batch.course.name}}</p>
                                 </div>
                             </div>
-                            {% comment %} <div class="col-md-3 position-re">
-                                <div class="img "> <img src="{{batch.image.url}}" alt=""> </div>
-                            </div> {% endcomment %}
+                            
                             <div class="col-md-5 d-flex align-items-center justify-content-end"> <a href="{% url 'app.batches.details' batch.slug %}" class="btn-1 mr-0">Details</a> </div>
                         </div>
                     </div>
@@ -102,35 +226,77 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> {% endcomment %}
     <!-- Promo Popup Video -->
-    <section class="video-popup section-padding bg-img bg-fixed" data-overlay-dark="6" data-background="{% static "courses/images/slider/6.jpg" %}">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h6 class="wow" data-splitting>Free one day demo class</h6>
-                    <h1 class="wow" data-splitting>Book Demo Class</h1>
-                </div>
-                <div class="col-md-12 text-center">
-                    <a class="vid" href="https://wa.me/8218444136?text=Hello, Can I have a demo class...">
-                        <div class="vid-butn"> 
-                            <span class="icon"><i class="fa-regular fa-play"></i></span>
-                        </div>
-                    </a>
+    {% comment %} <section class="video-popup section-padding section-padding-2">
+        <div class="container container-2">
+            <div class="container-2-item dark">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h6 class="wow" data-splitting>Book consulting for your project or product</h6>
+                        <h1 class="wow" data-splitting>Book Consulting</h1>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <a target="_blank" class="btn-1 mt-15" href="https://wa.me/8218444136?text=Hello, I want consultaing regarding my project...">
+                            Book Now
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </section> {% endcomment %}
    <!-- divider line -->
-    <div class="line-vr-section"></div>
+   <!-- About -->
+   <section class="about section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="dark about-text-h">Behind the screen <br> where coffee is the fuel <br> debugging is the game</h1>
+                <p>Nulla posuere tortoran nisan sempere scelerisque etiam ornare iros metusan the avidan sodales vesaire. Integer ac molestie nisi orci varius natoque senatis magnis in miss the durution parturient montes, nascetur ridiculus mus.</p>
+                <p>Phasellus et lacus suscipit congue nisl the volutpat magna done miss the rana risus miss tincidunt convallis velit orci congue tortor eu dignissim ipsum suam non odio esuntion imperdiet metus in the miss lorem ipsum amet ornare.</p>
+                <!-- list -->
+                {% comment %} <ul class="list-unstyled list mb-30">
+                    <li>
+                        <div class="list-icon"> <i class="fa-solid fa-check"></i> </div>
+                        <div class="list-text">
+                            <p>Branding Strategy</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="list-icon"> <i class="fa-solid fa-check"></i> </div>
+                        <div class="list-text">
+                            <p>Digital Experiences</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="list-icon"> <i class="fa-solid fa-check"></i> </div>
+                        <div class="list-text">
+                            <p>Social Media</p>
+                        </div>
+                    </li>
+                </ul>  {% endcomment %}
+                <a href="services.html" style="margin-top:36px;" class="btn-1"> More About US <span class="arrow"><i class="fa fa-arrow-up"></i></a>
+            </div>
+            <div class="col-md-6">
+                <div class="item">
+                    <div class="wrap">
+                        <div class="img"> <img src="{% static "courses/images/about.jpg" %}" class="img-fluid"> </div>
+                        <div class="title">
+                            <h4>Enrico Brown</h4>
+                            <h6>CEO / Founder</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
     {% if team %}
     <section class="team section-padding">
         <div class="container">
-            <div class="row mb-30">
+            <div class="row mb-60">
                 <div class="col-md-12 text-center">
-                    <h6 class="wow" data-splitting>Creative Staff</h6>
-                    <h1 class="wow" data-splitting>Meet Team</h1>
-                    <div class="line-hr-section center"></div>
+                    <h1 class="wow" data-splitting>Meat Our Avengers</h1>
                 </div>
             </div>
             <div class="row">
@@ -152,85 +318,101 @@
     </section>
     {% endif %}
     <!-- Team -->
-   
-    <div class="line-vr-section"></div>
     <!-- Works -->
     <section class="works section-padding bg-drk">
         <div class="container">
-            <div class="row mb-30">
+            <div class="row mb-60">
                 <div class="col-md-12 text-center">
-                    <h6 class="wow" data-splitting>Portfolio & Project</h6>
                     <h1 class="wow cw" data-splitting>Our Works</h1>
-                    <div class="line-hr-section center"></div>
                 </div>
             </div>
-        </div>
+        
         <div class="full-width">
             <div class="row">
-                <div class="col-md-12">
-                    <div class="owl-carousel owl-theme">
-                        {% for project in projects %}
-                        <div class="item">
-                            <div class="wrap">
-                                <div class="img"> <img src="{{project.image.url}}" class="img-fluid" alt="{{project.name}}"> </div>
-                                <div class="text">
-                                    <a href="javascript:;">
-                                        <h4>{{project.name}}</h4>
-                                        <p>{{project.work_category.name}}</p>
-                                    </a>
-                                </div>
-                            </div>
+                {% for project in projects %}
+                <div class="col-lg-4">
+                    <div class="item">
+                        <div class="wrap">
+                            <div class="img"> <img src="{{project.image.url}}" class="img-fluid" alt="{{project.name}}"> </div>
                         </div>
-                        {% endfor %}
+                        <div class="text" style="margin-top:16px">
+                            <a href="javascript:;">
+                                <h4 style="margin-bottom:4px; color:#fff;">{{project.name}}</h4>
+                                <p>{{project.work_category.name}}</p>
+                            </a>
+                        </div>
                     </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="item">
+                        <div class="wrap">
+                            <div class="img"> <img src="{{project.image.url}}" class="img-fluid" alt="{{project.name}}"> </div>
+                        </div>
+                        <div class="text" style="margin-top:16px">
+                            <a href="javascript:;">
+                                <h4 style="margin-bottom:4px; color:#fff;">{{project.name}}</h4>
+                                <p>{{project.work_category.name}}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="item">
+                        <div class="wrap">
+                            <div class="img"> <img src="{{project.image.url}}" class="img-fluid" alt="{{project.name}}"> </div>
+                        </div>
+                        <div class="text" style="margin-top:16px">
+                            <a href="javascript:;">
+                                <h4 style="margin-bottom:4px; color:#fff;">{{project.name}}</h4>
+                                <p>{{project.work_category.name}}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="col-12 text-center" style="margin-top:36px;">
+                    <a target="_blank" href="https://wa.me/8218444136?text=Hello!" class="btn-1 mt-15"> Discover More <span class="arrow"><i class="fa fa-arrow-up"></i></span></a> 
                 </div>
             </div>
         </div>
+    </div>
     </section>
-    
-    
-     <!-- divider line -->
-     <div class="line-vr-section"></div>
-     
     <!-- Testiominals -->
-    <section class="testimonials section-padding">
-        <div class="container">
-            <div class="row mb-30">
-                <div class="col-md-12 text-center">
-                    <h6 class="wow" data-splitting>What Client's Say?</h6>
-                    <h1 class="wow" data-splitting>Testimonials</h1>
-                    <div class="line-hr-section center"></div>
+    <section class="testimonials section-padding section-padding-2">
+        <div class="container container-2">
+            <div class="container-2-item">
+                <div class="row mb-60">
+                    <div class="col-md-12 text-center">
+                        <h1 class="wow" data-splitting>Testimonials</h1>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-10 offset-md-1">
-                    <div class="owl-carousel owl-theme">
-                        {% for testimonial in testimonials %}
-                        <div class="item"> <span class="quote"><i class="fa-solid fa-ditto"></i></span>
-                            <p>{{testimonial.testimonial}}</p>
-                            <div class="info">
-                                <div class="author-img "> <img src="{{testimonial.photo.url}}" alt="{{testimonial.name}}"> </div>
-                                <div class="cont">
-                                    <h6>{{testimonial.name}}</h6> <span>{{testimonial.designation}}</span>
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        <div class="owl-carousel owl-theme">
+                            {% for testimonial in testimonials %}
+                            <div class="item"> 
+                                <span class="quote"><i class="fa-solid fa-ditto"></i></span>
+                                <p style="-webkit-line-clamp: 3;display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden;">{{testimonial.testimonial}}</p>
+                                <div class="info">
+                                    <div class="author-img "> <img src="{{testimonial.photo.url}}" alt="{{testimonial.name}}"> </div>
+                                    <div class="cont">
+                                        <h6>{{testimonial.name}}</h6> <span>{{testimonial.designation}}</span>
+                                    </div>
                                 </div>
                             </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- divider line -->
-    <div class="line-vr-section"></div>
     <!-- Blog Home -->
     <section class="blog section-padding bg-drk">
         <div class="container">
-            <div class="row mb-30">
+            <div class="row mb-60">
                 <div class="col-md-12 text-center">
-                    <h6 class="wow" data-splitting>News & Blog</h6>
                     <h1 class="wow cw" data-splitting>Latest News</h1>
-                    <div class="line-hr-section center"></div>
                 </div>
             </div>
             <div class="row">
@@ -256,16 +438,12 @@
             </div>
         </div>
     </section>
-    <!-- divider line -->
-    <div class="line-vr-section"></div>
     <!-- Clients -->
     <section class="clients section-padding">
         <div class="container">
-            <div class="row mb-30">
+            <div class="row mb-60">
                 <div class="col-md-12 text-center">
-                    <h6 class="wow" data-splitting>Partners & Sponsors</h6>
-                    <h1 class="wow" data-splitting>Our Clients</h1>
-                    <div class="line-hr-section center"></div>
+                    <h1 class="wow cw" data-splitting>Our Clients</h1>
                 </div>
             </div>
             <div class="row">
@@ -282,7 +460,7 @@
         </div>
     </section>
     <!-- Lets Talk -->
-    <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="{% static "courses/images/banner2.jpg" %}">
+    {% comment %} <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="{% static "courses/images/banner2.jpg" %}">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
@@ -293,5 +471,178 @@
                 </div>
             </div>
         </div>
+    </section> {% endcomment %}
+    <!-- Testiominals -->
+    <section class="lets-talk section-padding section-padding-2">
+        <div class="container container-2">
+            <div class="container-2-item dark">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="marquee">
+                            <div class="marquee-content">
+                                <h1>Your Vision Our Mission Let's Make It Happen Together</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-lg-6 col-md-12 mb-60">
+                        <div class="img">
+                            <img src="{% static "courses/images/lets-talk.png" %}">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <form style="padding:60px" method="post" action="{% url 'app.contact.sendform' %}">
+                            {% csrf_token %}
+                            <!-- Form message -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="alert alert-success contact__msg" style="display: {% if msg %}
+                                    block
+                                    {% else %}
+                                    none
+                                    {% endif %}" role="alert"> Your message was sent successfully. </div>
+                                </div>
+                            </div>
+                            <!-- Form elements -->
+                            <div class="row">
+                                <div class="col-md-12 form-group">
+                                    <input name="name" type="text" placeholder="Name *" value="{% if form.name.value %}{{form.name.value}}{% endif %}" required>
+                                    <div class="form-errors text-danger">
+                                        {% if form.name.errors %}
+                                        <ul>
+                                        {% for error in form.name.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input name="email" type="email" placeholder="Email Address *" value="{% if form.email.value %}{{form.email.value}}{% endif %}" required>
+                                    <div class="form-errors text-danger">
+                                        {% if form.email.errors %}
+                                        <ul>
+                                        {% for error in form.email.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input name="phone" type="text" placeholder="Phone *" value="{% if form.phone.value %}{{form.phone.value}}{% endif %}" required>
+                                    <div class="form-errors text-danger">
+                                        {% if form.phone.errors %}
+                                        <ul>
+                                        {% for error in form.phone.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <input name="subject" type="text" placeholder="Subject *" value="{% if form.subject.value %}{{form.subject.value}}{% endif %}" required>
+                                    <div class="form-errors text-danger">
+                                        {% if form.subject.errors %}
+                                        <ul>
+                                        {% for error in form.subject.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <textarea name="message" id="message" cols="30" rows="4" placeholder="How can we help you? Feel free to get in touch! *" required>{% if form.message.value %}{{form.message.value}}{% endif %}</textarea>
+                                    <div class="form-errors text-danger">
+                                        {% if form.message.errors %}
+                                        <ul>
+                                        {% for error in form.message.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="margin-top:36px">
+                                    <button type="submit" class="btn-1">Submit <span class="arrow"><i class="fa fa-arrow-up"></i></span></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
+    
+    <script>
+        const root = document.documentElement;
+        const marqueeElementsDisplayed = getComputedStyle(root).getPropertyValue("--marquee-elements-displayed");
+        const marqueeContent = document.querySelector("div.marquee-content");
+        
+        root.style.setProperty("--marquee-elements", marqueeContent.children.length);
+        
+        for(let i=0; i<marqueeElementsDisplayed; i++) {
+          marqueeContent.appendChild(marqueeContent.children[i].cloneNode(true));
+        }
+
+
+        var TxtType = function(el, toRotate, period) {
+            this.toRotate = toRotate;
+            this.el = el;
+            this.loopNum = 0;
+            this.period = parseInt(period, 10) || 2000;
+            this.txt = '';
+            this.tick();
+            this.isDeleting = false;
+        };
+    
+        TxtType.prototype.tick = function() {
+            var i = this.loopNum % this.toRotate.length;
+            var fullTxt = this.toRotate[i];
+    
+            if (this.isDeleting) {
+            this.txt = fullTxt.substring(0, this.txt.length - 1);
+            } else {
+            this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+    
+            this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+    
+            var that = this;
+            var delta = 200 - Math.random() * 100;
+    
+            if (this.isDeleting) { delta /= 2; }
+    
+            if (!this.isDeleting && this.txt === fullTxt) {
+            delta = this.period;
+            this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+            this.isDeleting = false;
+            this.loopNum++;
+            delta = 500;
+            }
+    
+            setTimeout(function() {
+            that.tick();
+            }, delta);
+        };
+    
+        window.onload = function() {
+            var elements = document.getElementsByClassName('typewrite');
+            for (var i=0; i<elements.length; i++) {
+                var toRotate = elements[i].getAttribute('data-type');
+                var period = elements[i].getAttribute('data-period');
+                if (toRotate) {
+                  new TxtType(elements[i], JSON.parse(toRotate), period);
+                }
+            }
+            // INJECT CSS
+            
+            document.body.appendChild(css);
+        };
+    </script>
 {% endblock main %}

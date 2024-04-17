@@ -24,13 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5g-27ma^&lmzoi20)fj-%gtzd2$=*9^o$t9_nlu1t146o+o&1b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'codediction.com',
     'www.codediction.com',
     '154.41.253.197',
-    '127.0.0.1'
+    '127.0.0.1',
+    '192.168.225.179'
 ]
 
 
@@ -101,8 +102,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'codediction',
-        'USER': 'codediction',
-        'PASSWORD': 'DvcQeEH5PhujesKnRmn3',
+        'USER': 'root',
+        'PASSWORD': 'Satendra',
+        # 'USER': 'codediction',
+        # 'PASSWORD': 'DvcQeEH5PhujesKnRmn3',
         'HOST':'localhost',
         'PORT':'3306',
     }

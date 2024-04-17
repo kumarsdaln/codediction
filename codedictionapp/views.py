@@ -16,7 +16,7 @@ def index(request):
     blog = Blog.objects.order_by('-id')[:5]
     subjects = Subjects.objects.all()[:8]
     team = OurTeam.objects.all()[:5]
-    testimonial = Testimonial.objects.all()[:5]
+    testimonials = Testimonial.objects.all()[:5]
     clients = OurClients.objects.all()[:5]
     return render(request, "courses/index.html", {
         'subjects':subjects,
@@ -27,7 +27,7 @@ def index(request):
         'blog_list':blog,
         'subjects':subjects,
         'team':team,
-        'testimonial':testimonial,
+        'testimonials':testimonials,
         'clients':clients
     })
 
