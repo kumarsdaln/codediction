@@ -2059,6 +2059,14 @@ ul.disc.disc li:before {
 .section-padding-2 .container-2-item.dark{
     background: #1c1c1c;
 }
+footer .container-2-item{
+    padding: 60px 60px 24px 60px;
+    border-radius: 36px;
+    background: #f7f7f7;
+}
+footer .container-2-item.dark{
+    background: #1c1c1c;
+}
 .section-padding h1 {
     font-family: "Outfit";
     font-size: 64px;
@@ -2171,6 +2179,7 @@ ul.disc.disc li:before {
 /* ======= About style ======= */
 .about {
   position: relative;
+  background: #fff;
 }
 .about .item {
     position: relative;
@@ -4385,7 +4394,7 @@ ul.disc.disc li:before {
 /* ======= Footer style ======= */
 .footer {
     position: relative;
-    background-color: #1b1b1b;
+    background-color: #fff;
 }
 /* top */
 .footer .top {
@@ -4393,7 +4402,7 @@ ul.disc.disc li:before {
     display: block;
     padding: 120px 0 60px 0;
     z-index: 1;
-    background-color: #101010;
+    background-color: #fff;
 }
 .footer .top img {
     width: 242px;
@@ -4413,12 +4422,18 @@ ul.disc.disc li:before {
     color: #28D366;
 }
 .footer .top h5 {
-    font-size: 24px;
+    font-family: "outfit";
+    font-size: 18px;
+    font-weight: 600;
     color: #fff;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
 }
 .footer .top p {
-    color: #ccc;
+    color: rgb(255 255 255 / 86%);
+    font-family: "Outfit";
+    font-size: 14px;
+    font-weight: 400;
+
 }
 .footer .top .social {
     display: -webkit-box;
@@ -4434,14 +4449,13 @@ ul.disc.disc li:before {
     line-height: 50px;
     text-align: center;
     font-size: 18px;
-    border: 2px solid #28D366;
+    background: rgb(255 255 255 / 8%);
     color: #fff;
     border-radius: 0;
     margin-right: 5px;
     -webkit-transition: all .4s;
     -o-transition: all .4s;
     transition: all .4s;
-    background: transparent;
     border-radius: 100%;
     overflow: hidden;
     transition: background-color 300ms ease, transform 300ms ease, color 300ms ease;
@@ -4467,14 +4481,30 @@ ul.disc.disc li:before {
     transition: all 500ms ease;
     font-family: 'Poppins', sans-serif;
 }
+.footer .top .phone, .footer .top .address, .footer .top .mail {
+    color: rgb(255 255 255 / 86%);
+    font-size: 16px;
+    font-family: "Outfit";
+    font-weight: 400;
+    margin-bottom: 8px;
+}
+.footer .top .phone i, .footer .top .address i, .footer .top .mail i{
+    width: 36px;
+    height: 36px;
+    background: rgb(255 255 255 / 8%);
+    border-radius: 50%;
+    text-align: center;
+    padding: 10px;
+    margin-right: 8px;
+}
 .footer .top .phone a {
-    color: #28D366;
+    color: rgb(255 255 255 / 86%);
 }
 .footer .top .phone a:hover
 .footer .top .phone:hover {
     color: #28D366;
 }
-.footer .top .mail {
+/* .footer .top .mail {
     font-size: 16px;
     line-height: 3em;
     color: #fff;
@@ -4483,14 +4513,11 @@ ul.disc.disc li:before {
     -webkit-transition: all 500ms ease;
     transition: all 500ms ease;
 }
-.footer .top .mail a {
-    color: #fff;
-}
 .footer .top .mail a:hover
 .footer .top .mail:hover {
     color: #fff;
-}
-.footer .top .mail:before {
+} */
+/* .footer .top .mail:before {
     position: absolute;
     bottom: 9px;
     left: 0;
@@ -4503,7 +4530,7 @@ ul.disc.disc li:before {
 }
 .footer .top .mail:hover:before {
     background-color: #28D366;
-}
+} */
 /* bottom */
 .footer .bottom {
     position: relative;
@@ -4557,19 +4584,19 @@ ul.disc.disc li:before {
   margin-top: 5px;
 }
 .footer .list li a {
+    font-family: "Outfit";
     position: relative;
     display: block;
     font-size: 16px;
     color: #ccc;
     -webkit-transition: all 500ms ease;
     transition: all 500ms ease;
-    padding-left: 15px;
 }
 .footer .list li a:hover {
   padding-left: 15px;
   color: #28D366;
 }
-.footer .list li a:before {
+/* .footer .list li a:before {
   position: absolute;
   top: 45%;
   left: 0;
@@ -4583,7 +4610,7 @@ transform: translateY(-50%);
   border-radius: 50%;
   -webkit-transition: all 500ms ease;
   transition: all 500ms ease;
-}
+} */
 .footer .list li a:hover:before {
   opacity: 1;
 }

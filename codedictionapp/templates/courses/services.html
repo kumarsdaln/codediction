@@ -6,24 +6,27 @@
 {% endblock metatags %}
 
 {% block main %}
+<style>
+    .services-hero-section img{
+        width: 100%;
+    }
+</style>
     <!-- Header Banner -->
-    <section class="banner-header section-padding bg-img bg-fixed bg-img-position-top" data-overlay-dark="7" data-background="{% static "courses/images/slider/5.jpg" %}">
+    <section class="banner-header section-padding bg-img bg-fixed bg-img-position-top services-hero-section">
         <div class="v-middle">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12 text-center mt-60">
-                        <h1>Our Services</h1>
-                        <ul class="breadcrumbs">
-                            <li><a href="{% url 'app.index' %}">Home</a></li>
-                            <li>Our Services</li>
-                        </ul>
+                    <div class="col-md-7">
+                        <h1>Welcome to our awesome digital playground!</h1>
+                        <p>Hey there, CODEDICTION! Welcome to the ultimate hub of digital delights where we turn your wildest tech dreams into reality! Whether you’re dreaming of a sleek website, a snazzy app, or an online empire that’ll make Jeff Bezos jealous, you’re in the right place.</p>
+                    </div>
+                    <div class="col-md-5">
+                        <img src="{% static "courses/images/services-hero.png" %}">
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- divider line -->
-    <div class="line-vr-section"></div>
     <!-- Services -->
     <section class="services section-padding">
         <div class="container">
@@ -36,7 +39,11 @@
                                 <img src="{{service.icon.url}}" style="max-width:112px;">
                             </div>
                             <div class="con">
-                                <h4>{{service.name}}</h4>
+                                <h4>
+                                    {% autoescape off %}
+                                    {{service.name}}
+                                    {% endautoescape %}
+                                </h4>
                                 <p>{{service.brief}}</p>
                                 <div class="icon-2">
                                     <a href="Javascript:;"><span class="fa-sharp fa-light fa-arrow-right"></span></a>

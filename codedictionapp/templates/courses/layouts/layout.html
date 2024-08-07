@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&amp;family=Hind&amp;family=Poppins:wght@400;500;600;700;800;900&amp;display=swap">
     <link rel="stylesheet" href="{% static 'courses/css/plugins.css' %}" />
     <link rel="stylesheet" href="{% static 'courses/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'courses/css/add-on.css' %}">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2V0KRCP6M"></script>
@@ -75,12 +76,13 @@
     <footer class="footer">
         <!-- top -->
         <div class="top">
-            <div class="container">
+            <div class="container container-2">
+            <div class="container-2-item dark">
                 <div class="row">
                     <div class="col-md-3 mb-45">
                         <img src="{% static 'courses/images/logo-light.png' %}" alt="codediction">
                         
-                        <p>Learn with Codediction and master in web technologies - HTML, CSS, Javascript, PHP, Laravel, Python, Django and MySQL etc.</p>
+                        <p>An Experience Design Agency focusing on building functional, simple, human-centered digital products for future.</p>
                         <div class="social"> <a href="https://www.instagram.com/kumar_aln/"><i class="fa-brands fa-instagram"></i></a> <a href="https://wa.me/8218444136?text=Hello"><i class="fa-brands fa-whatsapp"></i></a> <a href="https://www.linkedin.com/in/kumaraln/"><i class="fa-brands fa-linkedin"></i></a> </div>
                     </div>
                     <div class="col-md-3 mb-45">
@@ -95,49 +97,28 @@
                         </ul>
                     </div>
                     <div class="col-md-3 mb-45">
-                        <h5>Contact Info</h5>
-                        <p>96, Sant Nagar, East of Kailash
-                            <br>Delhi, India
-                        </p>
-                        <div class="phone"><a href="tel:+918218444136">+91-8218444136</a></div>
-                        <div class="mail"><a href="mailto:hi@alfrik.com">hi@alfrik.com</a></div>
+                        <h5>Services</h5>
+                        <ul class="list list-unstyled">
+                            <li><a href="javascript:;">UI/UX Design</a></li>
+                            <li><a href="javascript:;">Mobile App Development</a></li>
+                            <li><a href="javascript:;">Web App Development</a></li>
+                        </ul>
                     </div>
                     <div class="col-md-3 mb-45">
-                        <h5>Subscribe</h5>
-                        <p>Subscribe to our newsletter. Stay informed about technology news and events with our newsletter.</p>
-                        <div class="subscribe">
-                            <form id="newsletter-form">
-                                {% csrf_token %}
-                                <input type="email" id="email_newsletter" name="newsletter" placeholder="Your email" required>
-                                <button id="send_newsletter" type="button"><i class="fa-solid fa-paper-plane"></i></button>
-                            </form>
-                            <div class="form-errors text-danger" id="newsletter_error" style="display:none">
-                               Please Enter Valid Email
-                            </div>
-                        </div>
+                        <h5>Contact Info</h5>
+                        <div class="address"><i class="fa-solid fa-location-dot"></i> New Delhi, India</div>
+                        <div class="phone"><i class="fa-solid fa-phone"></i> <a href="tel:+918218444136">+91-8218444136</a></div>
+                        <div class="mail"><i class="fa-solid fa-envelope"></i> <a href="mailto:hi@alfrik.com">business@codediction.com</a></div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- bottom -->
-        <div class="bottom">
-            <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="horizontal-link">
-                            <ul class="rest">
-                                {% comment %} <li class="mr-30"> <a href="pg-mission.html">Privacy policy</a> </li>
-                                <li class="mr-30"> <a href="pg-mission.html">Legal notice</a> </li>
-                                <li> <a href="pg-mission.html">Terms of service</a> </li> {% endcomment %}
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="copyrights full-width d-flex justify-content-end">
+                        <div class="copyrights">
                             <p>© 2024 All Rights Reserved, by <span class="underline"><a href="https://alfrik.com" target="_blank">Alfrik</a></span></p>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </footer>

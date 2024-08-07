@@ -6,176 +6,197 @@
 {% endblock metatags %}
 
 {% block main %}
-    <!-- Header Banner -->
-    <section class="banner-header section-padding bg-img bg-fixed bg-img-position-top" data-overlay-dark="7" data-background="{% static "courses/images/slider/5.jpg" %}">
-        <div class="v-middle">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 text-center mt-60">
-                        <h1>About Us</h1>
-                        <ul class="breadcrumbs">
-                            <li><a href="#">Home</a></li>
-                            <li>About Us</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- divider line -->
-    <div class="line-vr-section"></div>
     <!-- About -->
-    <section class="about section-padding">
+    <section class="about section-padding bg-dark-1c">
         <div class="container">
             <div class="row">
-                <div class="col-md-7">
-                    <h6>Creative Agency</h6>
-                    <h1>Who We Are?</h1>
-                    <p>Nulla posuere tortoran nisan sempere scelerisque etiam ornare iros metusan the avidan sodales vesaire. Integer ac molestie nisi orci varius natoque senatis magnis in miss the durution parturient montes, nascetur ridiculus mus.</p>
-                    <p>Phasellus et lacus suscipit congue nisl the volutpat magna done miss the rana risus miss tincidunt convallis velit orci congue tortor eu dignissim ipsum suam non odio esuntion imperdiet metus in the miss lorem ipsum amet ornare.</p>
-                    <!-- list -->
-                    <ul class="list-unstyled list mb-30">
-                        <li>
-                            <div class="list-icon"> <i class="fa-solid fa-check"></i> </div>
-                            <div class="list-text">
-                                <p>Branding Strategy</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="list-icon"> <i class="fa-solid fa-check"></i> </div>
-                            <div class="list-text">
-                                <p>Digital Experiences</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="list-icon"> <i class="fa-solid fa-check"></i> </div>
-                            <div class="list-text">
-                                <p>Social Media</p>
-                            </div>
-                        </li>
-                    </ul> <a href="services.html" class="btn-1 mt-15"> Our Services</a>
-                </div>
-                <div class="col-md-5">
-                    <div class="item">
-                        <div class="wrap">
-                            <div class="img"> <img src="{% static "courses/images/about.jpg" %}" class="img-fluid"> </div>
-                            <div class="title">
-                                <h4>Enrico Brown</h4>
-                                <h6>CEO / Founder</h6>
-                            </div>
-                        </div>
+                <h1>Formulating Designs <br> Forging Progress...</h1>
+                <div class="col-md-6">
+                    <div class="full-div">
+                        <div class="img"><img src="{% static "courses/images/about.jpg" %}" class="img-fluid"> </div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <h2>Get to Know Us Better</h2>
+                    <p>Welcome to [Company Name], your trusted partner in IT solutions and services. At [Company Name], we pride ourselves on delivering cutting-edge technology solutions tailored to meet the unique needs of our clients. With a team of experienced professionals and a commitment to excellence, we offer a comprehensive range of IT services designed to drive innovation, enhance productivity, and streamline operations for businesses of all sizes.</p>
+                </div>
+                <div class="col-md-6 margin-top-30">
+                    <p>From cloud computing and cybersecurity to software development and IT consulting, we leverage the latest tools and techniques to empower our clients to thrive in today's digital landscape. Our dedication to customer satisfaction is evident in every project we undertake, as we strive to exceed expectations and deliver measurable results.</p>
+                </div>
+                
             </div>
         </div>
     </section>
-    <!-- About Box -->
-    <section class="about section-padding">
+    
+    <section class="work-process section-padding bg-light">
         <div class="container">
-            <div class="row mb-60">
-                <div class="col-md-8">
-                    <div class="item">
-                        <div class="wrap">
-                            <div class="img"> <img src="{% static "courses/images/slider/6.jpg" %}" class="img-fluid"> </div>
-                            <div class="title">
-                                <h4>Acens.</h4>
-                                <h6>Digital Agency Studio, New York / USA</h6>
-                            </div>
-                        </div>
+            <div class="row mb-30">
+                <div class="col-md-6">
+                    <h1 class="wow text-dark" data-splitting>Our Standard WORK Process</h1>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end">
+                    <p style="max-width:481px">"Our Standard Design Thinking Process" guides our IT innovation. It involves understanding user needs, defining problems, ideating solutions, prototyping, and iterative testing. This approach ensures user-friendly and effective solutions.</p>
+                </div>
+            </div>
+            <div class="row mb-30">
+                <div class="col-md-6">
+                    <div class="count">
+                        01
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="item">
-                        <div class="wrap">
-                            <div class="img"> <img src="{% static "courses/images/office.jpg" %}" class="img-fluid"> </div>
-                            <div class="title">
-                                <h4>Office</h4>
-                                <h6>Toronto / Canada</h6>
-                            </div>
+                <div class="col-md-6">
+                    <div class="work-process-right-item" style="background:rgb(229 197 134 / 40%);">
+                        <div class="icon">
+                            <img src="{% static 'courses/images/work-process.png' %}" alt="">
                         </div>
+                        <h6>Empathize</h6>
+                        <p>Understand users' needs and motivations.</p>
+                        <p>Explore users' emotions and experiences.</p>
+                        <p>Conduct thorough user research, including interviews and observations.</p>
+                        <p>Step into users' shoes to see the world from their perspective.</p>
                     </div>
                 </div>
             </div>
-            <!-- About Box -->
-            <div class="about-box">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="item">
-                            <div class="wrap">
-                                <div class="con">
-                                    <h4>Who we are</h4>
-                                    <p>Lorem posuere tortoran in the nisan semere sceriun miss etiam ornare iros metusan the ravidane the sodan vesaire lacus.</p>
-                                    <div class="icon-2"> <a href="#"><span class="fa-sharp fa-light fa-arrow-right"></span></a> </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="row mb-30">
+                <div class="col-md-6">
+                    <div class="count">
+                        02
                     </div>
-                    <div class="col-md-4">
-                        <div class="item">
-                            <div class="wrap">
-                                <div class="con">
-                                    <h4>Our philosophy</h4>
-                                    <p>Lorem posuere tortoran in the nisan semere sceriun miss etiam ornare iros metusan the ravidane the sodan vesaire lacus.</p>
-                                    <div class="icon-2"> <a href="#"><span class="fa-sharp fa-light fa-arrow-right"></span></a> </div>
-                                </div>
-                            </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="work-process-right-item" style="background:rgb(229 151 129 / 40%);">
+                        <div class="icon">
+                            <img src="{% static 'courses/images/work-process.png' %}" alt="">
                         </div>
+                        <h6>Empathize</h6>
+                        <p>Understand users' needs and motivations.</p>
+                        <p>Explore users' emotions and experiences.</p>
+                        <p>Conduct thorough user research, including interviews and observations.</p>
+                        <p>Step into users' shoes to see the world from their perspective.</p>
                     </div>
-                    <div class="col-md-4">
-                        <div class="item">
-                            <div class="wrap">
-                                <div class="con">
-                                    <h4>How we work</h4>
-                                    <p>Lorem posuere tortoran in the nisan semere sceriun miss etiam ornare iros metusan the ravidane the sodan vesaire lacus.</p>
-                                    <div class="icon-2"> <a href="#"><span class="fa-sharp fa-light fa-arrow-right"></span></a> </div>
-                                </div>
-                            </div>
+                </div>
+            </div>
+            <div class="row mb-30">
+                <div class="col-md-6">
+                    <div class="count">
+                        03
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="work-process-right-item" style="background:rgb(164 229 134 / 40%);">
+                        <div class="icon">
+                            <img src="{% static 'courses/images/work-process.png' %}" alt="">
                         </div>
+                        <h6>Empathize</h6>
+                        <p>Understand users' needs and motivations.</p>
+                        <p>Explore users' emotions and experiences.</p>
+                        <p>Conduct thorough user research, including interviews and observations.</p>
+                        <p>Step into users' shoes to see the world from their perspective.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-30">
+                <div class="col-md-6">
+                    <div class="count">
+                        04
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="work-process-right-item" style="background:rgb(199 134 229 / 40%);">
+                        <div class="icon">
+                            <img src="{% static 'courses/images/work-process.png' %}" alt="">
+                        </div>
+                        <h6>Empathize</h6>
+                        <p>Understand users' needs and motivations.</p>
+                        <p>Explore users' emotions and experiences.</p>
+                        <p>Conduct thorough user research, including interviews and observations.</p>
+                        <p>Step into users' shoes to see the world from their perspective.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-30">
+                <div class="col-md-6 d-flex flex-column justify-content-center">
+                    <div class="count">
+                        05
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="work-process-right-item" style="background:rgb(134 143 229 / 40%);">
+                        <div class="icon">
+                            <img src="{% static 'courses/images/work-process.png' %}" alt="">
+                        </div>
+                        <h6>Empathize</h6>
+                        <p>Understand users' needs and motivations.</p>
+                        <p>Explore users' emotions and experiences.</p>
+                        <p>Conduct thorough user research, including interviews and observations.</p>
+                        <p>Step into users' shoes to see the world from their perspective.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- Team -->
-    <section class="team section-padding">
+    <section class="team section-padding about-team bg-dark">
         <div class="container">
             <div class="row mb-30">
-                <div class="col-md-12 text-center">
-                    <h6 class="wow" data-splitting>Creative Staff</h6>
-                    <h1 class="wow" data-splitting>Meet Team</h1>
-                    <div class="line-hr-section center"></div>
+                <div class="col-md-12">
+                    <h1 class="wow text-white" data-splitting>MEAT OUR AVENGERS</h1>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <div class="owl-carousel owl-theme">
-                        {% for team_member in team %}
-                        <div class="item">
-                            <div class="img"> <img src="{{team_member.photo.url}}" alt="" class="w-100"> </div>
-                            <div class="con">
-                                <h5 class="mb-0"><a href="javascript:;">{{team_member.name}}<br><span>{{team_member.designation}}</span></a></h5>
-                                <div class="arrow"> <a href="javascript:;"><i class="fa-solid fa-arrow-up"></i></a> </div>
-                            </div>
+                {% for team_member in team %}
+                <div class="col-lg-3 col-md-4">
+                    <div class="item">
+                        <div class="img"> <img src="{{team_member.photo.url}}" alt="" class="w-100"> </div>
+                        <div class="con">
+                            <h5 class="mb-0"><a href="javascript:;">{{team_member.name}}<br><span>{{team_member.designation}}</span></a></h5>
+                            <div class="arrow"> <a href="javascript:;"><i class="fa-solid fa-arrow-up"></i></a> </div>
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </section>
-    <!-- divider line -->
-    <div class="line-vr-section"></div>
-
-    <!-- Lets Talk -->
-    <section class="lets-talk background bg-img bg-fixed section-padding" data-overlay-dark="7" data-background="{% static "courses/images/banner2.jpg" %}">
+    <section class="what-sets-us section-padding bg-light">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h6 class="wow" data-splitting>We develop digital future</h6>
-                    <h5><span>Let's</span> Talk?</h5>
-                    <a href="tel:+918218444136" class="btn-1 mt-30"> <i class="fa-solid fa-phone"></i>+91-8218444136</a>
-                    <a href="https://wa.me/8218444136?text=Hello, Can I know more..." target="_blank" class="btn-5 mt-30"> <i class="fa-solid fa-paper-plane"></i> Make an enquiry</a>
+            <div class="row mb-30">
+                <h1 class="wow text-dark" data-splitting>What Sets Us <br>
+                    Apart from Others</h1>
+            </div>
+            <div class="row mb-30">
+                <div class="col-md-4 padding-0">
+                    <div class="what-sets-us-item border-top">
+                        <h6>Empathize</h6>
+                        <p>Our skilled designers bring diverse expertise, ensuring a holistic approach to every project for superior results.</p>
+                    </div>
                 </div>
+                <div class="col-md-4 padding-0">
+                    <div class="what-sets-us-item border-left border-right border-bottom">
+                        <h6>Empathize</h6>
+                        <p>Our skilled designers bring diverse expertise, ensuring a holistic approach to every project for superior results.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 padding-0 ">
+                    <div class="what-sets-us-item border-top">
+                        <h6>Empathize</h6>
+                        <p>Our skilled designers bring diverse expertise, ensuring a holistic approach to every project for superior results.</p>
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-30">
+                <div class="col-md-4 padding-0 ">
+                    <div class="what-sets-us-item border-bottom border-right padding-top-40">
+                        <h6>Empathize</h6>
+                        <p>Our skilled designers bring diverse expertise, ensuring a holistic approach to every project for superior results.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 padding-0">
+                    <div class="what-sets-us-item border-bottom padding-top-40">
+                        <h6>Empathize</h6>
+                        <p>Our skilled designers bring diverse expertise, ensuring a holistic approach to every project for superior results.</p>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     </section>

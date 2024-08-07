@@ -18,19 +18,19 @@ def index(request):
     team = OurTeam.objects.all()[:5]
     testimonials = Testimonial.objects.all()[:5]
     clients = OurClients.objects.all()[:5]
-    # return render(request, "courses/index.html", {
-    #     'subjects':subjects,
-    #     'courses':courses,
-    #     'services':services,
-    #     'batches':batches,
-    #     'projects':projects,
-    #     'blog_list':blog,
-    #     'subjects':subjects,
-    #     'team':team,
-    #     'testimonials':testimonials,
-    #     'clients':clients
-    # })
-    return redirect('app.maintainance')
+    return render(request, "courses/index.html", {
+        'subjects':subjects,
+        'courses':courses,
+        'services':services,
+        'batches':batches,
+        'projects':projects,
+        'blog_list':blog,
+        'subjects':subjects,
+        'team':team,
+        'testimonials':testimonials,
+        'clients':clients
+    })
+    # return redirect('app.maintainance')
 
 def courses(request):
     courses = Courses.objects.all()
