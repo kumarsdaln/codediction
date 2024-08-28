@@ -83,11 +83,11 @@
                         </div><!--end col-->
                         <div class="col-xl-4 col-lg-5">
                             <div class="accordion accordion-border-box" id="accordionlefticon">
-                                {% for subject in courses.subjects.all %}
+                                {% for subject in course_subjects %}
                                 <div class="accordion-item {% if forloop.counter > 1 %}mt-2{% endif %}">
                                     <h2 class="accordion-header" id="accordionlefticonExample{{curriculum.id}}">
-                                        <a class="accordion-button collapsed" href="{% url 'app.dashboard.courses.subjects.curriculum' subject.slug %}">
-                                            {{subject.name}} <small class="ms-1 align-baseline"></small>
+                                        <a class="accordion-button collapsed" href="{% url 'app.dashboard.courses.subjects.curriculum' subject.subject.slug %}">
+                                            {{subject.subject.name}} <small class="ms-1 align-baseline"></small>
                                         </a>
                                     </h2>
                                 </div>

@@ -60,3 +60,32 @@ class OurStudentsForm(forms.ModelForm):
         model = OurStudents
         fields = ['name','designation','photo','slug','batch']   
                 
+class CourseSubjectOrderForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        course = kwargs.pop('course', None)
+        super().__init__(*args, **kwargs)
+        
+        if course:
+            course_subjects = CourseSubject.objects.filter(course=course).order_by('order')
+            existing_subject_ids = set()
+
+            # Add existing course subjects to the form
+            for cs_index, cs in enumerate(course_subjects, start=1):
+                self.fields[f'order_{cs.id}'] = forms.IntegerField(
+                    initial=cs.order,
+                    label=f'{cs.subject.name}',
+                    widget=forms.HiddenInput
+                )
+                existing_subject_ids.add(cs.subject.id)
+
+            # Add new subjects not yet associated with the course
+            all_subjects = course.subjects.all()  # Assuming 'subjects' is a related field in Course model
+            new_subject_index = len(course_subjects) + 1  # Start new subjects after existing ones
+
+            for subject_index, subject in enumerate(all_subjects, start=new_subject_index):
+                if subject.id not in existing_subject_ids:
+                    self.fields[f'order_new_{subject.id}'] = forms.IntegerField(
+                        label=f'{subject.name}',
+                        initial=subject_index,  # Set initial order based on index
+                        widget=forms.HiddenInput
+                    )

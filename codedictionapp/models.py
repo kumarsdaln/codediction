@@ -33,17 +33,6 @@ class Subjects(models.Model):
     subject_type = models.ForeignKey(SubjectType, on_delete=models.CASCADE)
     relation_with = models.ManyToManyField('self', null=True, blank=True)
     meta_data = models.TextField(null=True)
-    position = models.PositiveIntegerField(default=1)
-    def save(self, *args, **kwargs):
-        # Check if position is not set
-        if not self.position:
-            # Get the maximum position from existing instances
-            max_position = Subjects.objects.aggregate(models.Max('id'))['id__max'] or 0
-            # Increment the position for the current instance
-            self.position = max_position + 1
-        super().save(*args, **kwargs)
-    class Meta:
-        ordering = ['position']
     def __str__(self):
         return f"{self.name}"
     
@@ -64,6 +53,19 @@ class Courses(models.Model):
     meta_data = models.TextField(null=True)
     def __str__(self):
         return f"{self.name}"
+
+class CourseSubject(models.Model):
+    course = models.ForeignKey(Courses, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subjects, on_delete=models.CASCADE)
+    order = models.PositiveIntegerField()
+
+    class Meta:
+        unique_together = ['course', 'subject']
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.course.name} - {self.subject.name} ({self.order})"
+
 
 #Batches
 class OurBatch(models.Model):

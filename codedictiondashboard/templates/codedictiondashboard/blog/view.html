@@ -87,7 +87,7 @@
                                                 <a href="{% url 'app.dashboard.blog.edit' blog.id %}" class="btn bg-white">
                                                     <i class="bi bi-pencil-square me-1 align-baseline"></i> Edit
                                                 </a>
-                                                <div class="dropdown">
+                                                {% comment %} <div class="dropdown">
                                                     <button class="btn bg-white btn-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="bi bi-share"></i>
                                                     </button>
@@ -96,13 +96,13 @@
                                                         <li><a class="dropdown-item" href="#!"><i class="bi bi-instagram me-1 align-baseline"></i> Instagram</a></li>
                                                         <li><a class="dropdown-item" href="#!"><i class="bi bi-whatsapp me-1 align-baseline"></i> Whatsapp</a></li>
                                                     </ul>
-                                                </div>
+                                                </div> {% endcomment %}
                                             </div>
                                         </div>
-                                        <button type="button" class="btn btn-subtle-warning custom-toggle btn-icon btn-sm active float-end" data-bs-toggle="button" aria-pressed="true">
+                                        {% comment %} <button type="button" class="btn btn-subtle-warning custom-toggle btn-icon btn-sm active float-end" data-bs-toggle="button" aria-pressed="true">
                                             <span class="icon-on"><i class="bi bi-star"></i></span>
                                             <span class="icon-off"><i class="bi bi-star-fill"></i></span>
-                                        </button>
+                                        </button> {% endcomment %}
                                         <h4>{{blog.title}}</h4>
                                         <ul class="list-unstyled hstack gap-2 flex-wrap mb-0">
                                             <li><a href="#!" class="text-reset"><i class="bi bi-calendar align-baseline me-1"></i> {{blog.uploaded_at}}</a></li>

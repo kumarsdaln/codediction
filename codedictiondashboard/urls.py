@@ -55,6 +55,7 @@ urlpatterns = [
             path('details/<slug:slug>/', CoursesDetailViews.as_view(), name='app.dashboard.courses.view'),
             path('details/<slug:slug>/curriculum/', CoursesCurriculumViews.as_view(), name='app.dashboard.courses.curriculum'),
             path('delete/<int:course_id>/', DeleteCoursesViews.as_view(), name='app.dashboard.courses.delete'),
+            path('<int:course_id>/subject-order/', UpdateCourseSubjectsOrder.as_view(), name='app.dashboard.courses.subjects.order'),
             path('subjects/', include(
                 [
                     path('', SubjectsViews.as_view(), name='app.dashboard.courses.subjects'),

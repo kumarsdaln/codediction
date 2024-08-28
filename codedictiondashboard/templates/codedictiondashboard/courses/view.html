@@ -62,8 +62,8 @@
                     </div>
                     <!-- end page title -->
 
-                    <div class="row">
-                        <div class="col-xl-9 col-lg-8">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-9">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="position-relative  mb-4">
@@ -74,7 +74,7 @@
                                             <a href="{% url 'app.dashboard.courses.edit' courses.id %}" class="btn bg-white">
                                                 <i class="bi bi-pencil-square me-1 align-baseline"></i> Edit Course
                                             </a>
-                                            <div class="dropdown">
+                                            {% comment %} <div class="dropdown">
                                                 <button class="btn bg-white btn-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="bi bi-share"></i>
                                                 </button>
@@ -83,15 +83,15 @@
                                                     <li><a class="dropdown-item" href="#!"><i class="bi bi-instagram me-1 align-baseline"></i> Instagram</a></li>
                                                     <li><a class="dropdown-item" href="#!"><i class="bi bi-whatsapp me-1 align-baseline"></i> Whatsapp</a></li>
                                                 </ul>
-                                            </div>
+                                            </div> {% endcomment %}
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-subtle-warning custom-toggle btn-icon btn-sm active float-end" data-bs-toggle="button" aria-pressed="true">
+                                    {% comment %} <button type="button" class="btn btn-subtle-warning custom-toggle btn-icon btn-sm active float-end" data-bs-toggle="button" aria-pressed="true">
                                         <span class="icon-on"><i class="bi bi-star"></i></span>
                                         <span class="icon-off"><i class="bi bi-star-fill"></i></span>
-                                    </button>
+                                    </button> {% endcomment %}
                                     <h4>{{courses.name}}</h4>
-                                    <ul class="list-unstyled hstack gap-2 flex-wrap mb-0">
+                                    {% comment %} <ul class="list-unstyled hstack gap-2 flex-wrap mb-0">
                                         <li><a href="#!" class="text-reset"><i class="bi bi-box-seam align-baseline me-1"></i> {{courses.course_category.name}}</a></li>
                                         <li class="text-warning">
                                             <i class="bi bi-star-fill align-baseline"></i>
@@ -104,7 +104,7 @@
                                         <li>
                                             <span class="badge bg-success-subtle text-success">Beginner</span>
                                         </li>
-                                    </ul>
+                                    </ul> {% endcomment %}
                                 </div>
                                 <div class="card-body">
                                     <ul class="nav nav-tabs-custom rounded card-header-tabs border-bottom-0 mx-0" role="tablist">
@@ -156,17 +156,17 @@
                                                                 {% for curriculum in subject.curriculum_set.all|in_filter_by:s_fiter_args %}
                                                                 <li class="list-group-item">
                                                                     <div class="d-flex align-items-center">
-                                                                        <div class="flex-shrink-0 avatar-xs">
+                                                                        {% comment %} <div class="flex-shrink-0 avatar-xs">
                                                                             <div class="avatar-title rounded bg-danger-subtle text-danger">
                                                                                 <i class="bi bi-play"></i>
                                                                             </div>
-                                                                        </div>
+                                                                        </div> {% endcomment %}
                                                                         <div class="flex-grow-1 ms-2">
                                                                             <a href="#!" class="stretched-link text-reset">{{curriculum.title}}</a>
                                                                         </div>
-                                                                        <div class="flex-shrink-0">
+                                                                        {% comment %} <div class="flex-shrink-0">
                                                                             03:20 min
-                                                                        </div>
+                                                                        </div> {% endcomment %}
                                                                     </div>
                                                                 </li>
                                                                 {% endfor %}
@@ -453,7 +453,7 @@
                                 </div>
                             </div>
                         </div><!--end col-->
-                        <div class="col-xl-3 col-lg-4">
+                        {% comment %} <div class="col-xl-3 col-lg-4">
                             <div class="card overflow-hidden ribbon-box">
                                 <span class="ribbon ribbon-danger rounded-end">Off 20%</span>
                                 <div class="card-body bg-info-subtle text-center learning-widgets d-flex align-items-center justify-content-center">
@@ -555,7 +555,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!--end col-->
+                        </div><!--end col--> {% endcomment %}
                     </div><!--end row-->
 
                 </div>
