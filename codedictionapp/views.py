@@ -18,7 +18,7 @@ def index(request):
     team = OurTeam.objects.all()[:5]
     testimonials = Testimonial.objects.all()[:5]
     clients = OurClients.objects.all()[:5]
-    return render(request, "courses/index.html", {
+    return render(request, "codedictionapp/index.html", {
         'subjects':subjects,
         'courses':courses,
         'services':services,
@@ -37,26 +37,26 @@ def courses(request):
     courses_categories = CourseCategories.objects.all()
     subjects = Subjects.objects.all()
     if courses!=None:
-        return render(request, "courses/courses.html", {
+        return render(request, "codedictionapp/courses.html", {
             'courses':courses,
             'courses_categories':courses_categories,
             'subjects':subjects
         })
     else:
-         return render(request, "courses/404.html")
+         return render(request, "codedictionapp/404.html")
     
 def coursesByCategroy(request, category_link):
     courses = CourseCategories.objects.get(link_url=category_link).courses_set.all()
     courses_categories = CourseCategories.objects.all()
     subjects = Subjects.objects.all()
     if courses!=None:
-        return render(request, "courses/courses.html", {
+        return render(request, "codedictionapp/courses.html", {
             'courses':courses,
             'courses_categories':courses_categories,
             'subjects':subjects
         })
     else:
-         return render(request, "courses/404.html")
+         return render(request, "codedictionapp/404.html")
 
 def courseDetails(request, category_slug, course_slug):
     courses = Courses.objects.all()
@@ -68,7 +68,7 @@ def courseDetails(request, category_slug, course_slug):
         for subject in course.subjects.all():
             course_time = course_time + subject.time_period
             course_price = course_price + subject.price
-        return render(request, "courses/course-detail.html", {
+        return render(request, "codedictionapp/course-detail.html", {
             'course':course,
             'course_time':course_time,
             'course_price':course_price,
@@ -76,36 +76,36 @@ def courseDetails(request, category_slug, course_slug):
             'courses':courses
         })
     else:
-        return render(request, "courses/404.html")
+        return render(request, "codedictionapp/404.html")
     
 def batchDetails(request, batch_slug):
     batch = OurBatch.objects.get(slug=batch_slug)
     if batch != None:
-        return render(request, "courses/batch-details.html", {
+        return render(request, "codedictionapp/batch-details.html", {
             'batch':batch,
         })
     else:
-        return render(request, "courses/404.html")
+        return render(request, "codedictionapp/404.html")
     
 
         
 def consultation(request):
-    return render(request, "courses/consultation.html")   
+    return render(request, "codedictionapp/consultation.html")   
 
 def webinars(request):
-    return render(request, "courses/webinars.html")   
+    return render(request, "codedictionapp/webinars.html")   
 
 def question(request):
     questions = Question.objects.all()
     courses = Courses.objects.all()[:4]
-    return render(request, "courses/question.html", {
+    return render(request, "codedictionapp/question.html", {
         'questions':questions,
         'courses':courses
     })
 
 def answer(request, question_link):
     question = Question.objects.get(link_url=question_link)
-    return render(request, "courses/answer.html", {
+    return render(request, "codedictionapp/answer.html", {
         'question':question
     })
 
@@ -115,14 +115,14 @@ def subjectDetails(request, link_url):
         curriculum_list = subjects.curriculum_set.select_related('relation_with').filter(relation_with=None)
         all_subjects = Subjects.objects.all()
    
-        return render(request, "courses/subject-detail.html", {
+        return render(request, "codedictionapp/subject-detail.html", {
             'subjects': subjects,
             'curriculum_list': curriculum_list,
             'all_subjects':all_subjects
         })
         
     except Subjects.DoesNotExist:
-        return render(request, "courses/404.html")
+        return render(request, "codedictionapp/404.html")
 
 
 def fetch_all_blogs(request):
@@ -142,7 +142,7 @@ def fetch_all_blogs(request):
         blogs = []
         page_obj = []
 
-    return render(request, "courses/blog.html", {"blogs": blogs, "page_obj": page_obj, "blog_categories":blog_categories})
+    return render(request, "codedictionapp/blog.html", {"blogs": blogs, "page_obj": page_obj, "blog_categories":blog_categories})
 
 
 def blog(request):
@@ -152,7 +152,7 @@ def blogByCategory(request, category_slug):
     try:
         blog_category = get_object_or_404(BlogCategory, slug=category_slug)
     except Exception as e:
-        return render(request, "courses/404.html")
+        return render(request, "codedictionapp/404.html")
 
     blogs = BlogCategory.objects.get(slug=category_slug).blog_set.all()
     limit = 10
@@ -165,13 +165,13 @@ def blogByCategory(request, category_slug):
     else:
         page_obj = []    
 
-    return render(request, "courses/blog.html", {"blogs": blogs, "page_obj": page_obj, "blog_categories":blog_categories})
+    return render(request, "codedictionapp/blog.html", {"blogs": blogs, "page_obj": page_obj, "blog_categories":blog_categories})
 
 def blogDetails(request, category_slug, blog_slug):
     try:
         blog = get_object_or_404(Blog, slug=blog_slug)
     except Blog.DoesNotExist:
-        return render(request, "courses/blog-not-found.html")
+        return render(request, "codedictionapp/blog-not-found.html")
 
     category = blog.category
     related_blogs = Blog.objects.filter(
@@ -192,7 +192,7 @@ def blogDetails(request, category_slug, blog_slug):
         'blog_categories':blog_categories
     }
 
-    return render(request, "courses/blog-detail.html", context)
+    return render(request, "codedictionapp/blog-detail.html", context)
 
 def projects(request):
     pass
@@ -204,17 +204,17 @@ def projectsDetails(request):
     pass
 
 def index2(request):
-    return render(request, "courses/index-2.html")
+    return render(request, "codedictionapp/index-2.html")
 
 def maintainance(request):
-    return render(request, "courses/maintainance.html")
+    return render(request, "codedictionapp/maintainance.html")
 
 def index3(request):
-    return render(request, "courses/index-3.html")
+    return render(request, "codedictionapp/index-3.html")
 
 def about(request):
     team = OurTeam.objects.all()
-    return render(request, "courses/about.html",
+    return render(request, "codedictionapp/about.html",
                   {
                       'team':team
                   })
@@ -225,38 +225,38 @@ def contact(request):
         msg = "Thanks for contact us we'll back to you soon..."
     else:
         msg = False    
-    return render(request, "courses/contact.html", {
+    return render(request, "codedictionapp/contact.html", {
         'msg':msg
     })
 
 def services(request):
     services = Services.objects.all()
-    return render(request, "courses/services.html", {
+    return render(request, "codedictionapp/services.html", {
         'services':services
     })
 
 def serviceDetails(request, service_slug):
     service = Services.objects.get(slug=service_slug)
     services = Services.objects.all()
-    return render(request, "courses/services-details.html", {
+    return render(request, "codedictionapp/services-details.html", {
         'service':service,
         'services':services
     })
 
 def portfolio(request):
-    return render(request, "courses/portfolio.html")
+    return render(request, "codedictionapp/portfolio.html")
 
 def portfolioDetails(request):
-    return render(request, "courses/portfolio-detail.html")
+    return render(request, "codedictionapp/portfolio-detail.html")
 
 def mentors(request):
-    return render(request, "courses/mentors.html")
+    return render(request, "codedictionapp/mentors.html")
 
 def mentorDetails(request):
-    return render(request, "courses/mentor-detail.html")
+    return render(request, "codedictionapp/mentor-detail.html")
 
 def price(request):
-    return render(request, "courses/price.html")
+    return render(request, "codedictionapp/price.html")
 
 def faq(request):
-    return render(request, "courses/faq.html")
+    return render(request, "codedictionapp/faq.html")

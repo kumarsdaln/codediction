@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.contrib.admin.views.decorators import staff_member_required
 from django.views import View
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -14,7 +15,7 @@ from codedictiondashboard.CustomLoginRequiredMixin import CustomLoginRequiredMix
 from codedictionapp.models import Services
 from codedictiondashboard.forms import ServiceForm
 
-
+@method_decorator(staff_member_required, name='dispatch')
 class ServicesViews(CustomLoginRequiredMixin,ListView):
     model = Services
     template_name = 'codedictiondashboard/services/index.html'
@@ -22,7 +23,7 @@ class ServicesViews(CustomLoginRequiredMixin,ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-    
+@method_decorator(staff_member_required, name='dispatch')    
 class ServicesDetailViews(CustomLoginRequiredMixin,DetailView):
     model = Services
     template_name = 'codedictiondashboard/services/detail.html'
@@ -30,7 +31,7 @@ class ServicesDetailViews(CustomLoginRequiredMixin,DetailView):
         context = super().get_context_data(**kwargs)
         return context    
     
-@method_decorator(csrf_exempt, name="dispatch") 
+@method_decorator([csrf_exempt, staff_member_required], name='dispatch') 
 class AddServicesViews(CustomLoginRequiredMixin,View):
 
     def get(self, request):
@@ -46,7 +47,7 @@ class AddServicesViews(CustomLoginRequiredMixin,View):
             form = ServiceForm()
             return redirect(request.META.get('HTTP_REFERER'), {'form':form})  
     
-@method_decorator(csrf_exempt, name="dispatch") 
+@method_decorator([csrf_exempt, staff_member_required], name='dispatch') 
 class EditServicesViews(CustomLoginRequiredMixin,View):
 
     def get(self, request, service_id):
@@ -73,7 +74,8 @@ class EditServicesViews(CustomLoginRequiredMixin,View):
             'form':form,
             'service':service
             })
-    
+
+@method_decorator(staff_member_required, name='dispatch')    
 class DeleteServicesViews(CustomLoginRequiredMixin,View):
     def get(self, request, service_id):
         service = get_object_or_404(Services, pk=service_id)
@@ -82,7 +84,8 @@ class DeleteServicesViews(CustomLoginRequiredMixin,View):
             'status':True
         }
         return JsonResponse(result, safe=False)
-    
+
+@method_decorator(staff_member_required, name='dispatch')    
 class StatusServicesViews(CustomLoginRequiredMixin,View):
     def get(self, request, service_id):
         service = get_object_or_404(Services, pk=service_id)

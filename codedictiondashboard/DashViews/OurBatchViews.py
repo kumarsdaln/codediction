@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.contrib.admin.views.decorators import staff_member_required
 from django.views import View
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -15,6 +16,7 @@ from codedictiondashboard.CustomLoginRequiredMixin import CustomLoginRequiredMix
 from codedictionapp.models import Courses, OurBatch
 from codedictiondashboard.forms import OurBatchForm
 
+@method_decorator(staff_member_required, name='dispatch')
 class OurBatchViews(CustomLoginRequiredMixin,ListView):
     model = OurBatch
     template_name = 'codedictiondashboard/courses/batches/index.html'
@@ -23,6 +25,8 @@ class OurBatchViews(CustomLoginRequiredMixin,ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+    
+@method_decorator(staff_member_required, name='dispatch')    
 class OurBatchDetailViews(CustomLoginRequiredMixin,DetailView):
     model = OurBatch
     template_name = 'codedictiondashboard/courses/batches/view.html'
@@ -30,7 +34,7 @@ class OurBatchDetailViews(CustomLoginRequiredMixin,DetailView):
         context = super().get_context_data(**kwargs)
         return context     
         
-@method_decorator(csrf_exempt, name="dispatch") 
+@method_decorator([csrf_exempt, staff_member_required], name='dispatch') 
 class AddOurBatchViews(CustomLoginRequiredMixin,View):
 
     def get(self, request):
@@ -52,7 +56,7 @@ class AddOurBatchViews(CustomLoginRequiredMixin,View):
                 'courses':courses
             })  
     
-@method_decorator(csrf_exempt, name="dispatch") 
+@method_decorator([csrf_exempt, staff_member_required], name='dispatch') 
 class EditOurBatchViews(CustomLoginRequiredMixin,View):  
     def get(self, request, batch_id):
         ourbatch= get_object_or_404(OurBatch, pk=batch_id)
@@ -78,7 +82,8 @@ class EditOurBatchViews(CustomLoginRequiredMixin,View):
                 'courses':courses,
                 'ourbatch':ourbatch
             })    
-    
+
+@method_decorator(staff_member_required, name='dispatch')    
 class DeleteOurBatchViews(CustomLoginRequiredMixin,View):
     def get(self, request, batch_id):
         ourbatch = get_object_or_404(OurBatch, pk=batch_id)

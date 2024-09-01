@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.contrib.admin.views.decorators import staff_member_required
 from django.views import View
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -15,6 +16,7 @@ from codedictiondashboard.CustomLoginRequiredMixin import CustomLoginRequiredMix
 from codedictionapp.models import BlogCategory
 from codedictiondashboard.forms import BlogCategoryForm
 
+@method_decorator(staff_member_required, name='dispatch')
 class BlogCategoryViews(CustomLoginRequiredMixin,ListView):
     model = BlogCategory
     template_name = 'codedictiondashboard/blog/category/index.html'
@@ -24,7 +26,7 @@ class BlogCategoryViews(CustomLoginRequiredMixin,ListView):
         context = super().get_context_data(**kwargs)
         return context
     
-@method_decorator(csrf_exempt, name="dispatch") 
+@method_decorator([csrf_exempt, staff_member_required], name="dispatch") 
 class AddBlogCategoryViews(CustomLoginRequiredMixin,View):   
     
     @method_decorator(csrf_protect)
@@ -32,13 +34,13 @@ class AddBlogCategoryViews(CustomLoginRequiredMixin,View):
         form = BlogCategoryForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('app.dashboard.blog.category')
+            return redirect(request.META.get('HTTP_REFERER', '/'))
         else:
-            return render(request, 'app.dashboard.blog.category', {
+            return render(request, 'codedictiondashboard/blog/category/index.html', {
                 'form':form
             })  
     
-@method_decorator(csrf_exempt, name="dispatch") 
+@method_decorator([csrf_exempt, staff_member_required], name="dispatch") 
 class EditBlogCategoryViews(CustomLoginRequiredMixin,View):  
     
     @method_decorator(csrf_protect)
@@ -48,8 +50,9 @@ class EditBlogCategoryViews(CustomLoginRequiredMixin,View):
         category.slug=request.POST.get('slug')
         category.meta_tags=request.POST.get('meta_tags')
         category.save()
-        return redirect('app.dashboard.blog.category')    
-    
+        return redirect('app.dashboard.blog.category') 
+       
+@method_decorator(staff_member_required, name='dispatch')
 class DeleteBlogCategoryViews(CustomLoginRequiredMixin,View):
     def get(self, request, category_id):
         category = get_object_or_404(BlogCategory, pk=category_id)

@@ -1,0 +1,677 @@
+
+{% extends 'codedictionapp/layouts/layout.html' %}
+{% load static %}
+    {% block metatags %}
+    <title>IKO - ICO & Crypto Landing Page Template</title>
+    <meta name="description" content="IKO - ICO & Crypto Landing Page Template">
+    {% endblock metatags %}
+
+    {% block styles %}
+    <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/magnific-popup.min.css' %}">
+    <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/default.css' %}">
+    <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/responsive.css' %}">
+    {% endblock styles %}
+
+    {% block content %}
+        <!--==============================
+    Hero Area
+    ==============================-->
+    <div class="hero-wrapper hero-2">
+        <div class="hero-bg-gradient1"></div>
+        <div class="hero-bg-gradient2"></div>
+        <div class="hero-gradient-ball alltuchtopdown"></div>
+        <div class="ripple-shape">
+            <span class="ripple-1"></span>
+            <span class="ripple-2"></span>
+            <span class="ripple-3"></span>
+            <span class="ripple-4"></span>
+            <span class="ripple-5"></span>
+        </div>
+        <div class="container">
+            <div class="hero-style2">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h6 class="hero-subtitle">GET IT SOLUTION WITH</h6>
+                        <h1 class="hero-title">Codediction</h1>
+                        <div class="btn-wrap">
+                            <h3 class="hero-title2">Technology for business</h3>
+                            <div class="hero-content">
+                                <p class="hero-text">We’ve worked with over 400 companies to build blockchain solutions for their business, and we are still growing.</p>
+                                <a href="contact.html" class="btn btn3" >
+                                    Get Started Today
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--======== / Hero Section ========-->
+ <!--==============================
+    Feature Area 02
+    ==============================-->
+    <div class="feature-area-2 pb-140 position-relative overflow-hidden" style="background-image: url({% static 'codedictionapp/assets/img/update/bg/feature-area-bg.png' %}); background-size: cover; background-position: center;" id="blockchain">
+        <div class="feature-area-shape">
+            <img class="feature-shape2-1 alltuchtopdown" src="{% static 'codedictionapp/assets/img/update/feature/feature-shape-2-1.png' %}" alt="img">
+            <img class="feature-shape2-2 alltuchtopdown" src="{% static 'codedictionapp/assets/img/update/feature/feature-shape-2-2.png' %}" alt="img">
+            <img class="feature-shape2-3 leftToRight" src="{% static 'codedictionapp/assets/img/update/feature/feature-shape-2-3.png' %}" alt="img">
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-5 col-lg-8">
+                    <div class="section-title text-center mb-50">
+                        <span class="sub-title">ABOUT BLOCKCHAIN</span>
+                        <h2 class="title style2">Services We Provide</h2>
+                        <p class="sec-text">We’ve worked with over 400 companies to build blockchain solutions for their business, and we are still growing.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-grid-wrap">
+                {% for service in services %}
+                    {% if forloop.counter0|divisibleby:3 %}
+                    </div>
+                    <div class="feature-grid-wrap">
+                    {% endif %}
+
+                    <div class="feature-card-grid">
+                        <div class="feature-card-details">
+                            <h3 class="feature-card-title">
+                                {% autoescape off %}
+                                {{service.name}}
+                                {%endautoescape%}
+                            </h3>
+                            <p class="feature-card-text">
+                                {% autoescape off %}
+                                {{service.brief}}
+                                {%endautoescape%}
+                            </p>
+                        </div>
+                        <div class="feature-card-img">
+                            <img class="alltuchtopdown" src="{{service.icon.url}}" alt="img">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% comment %} <div class="feature-grid-wrap">
+                
+                <div class="feature-card-grid">
+                    <div class="feature-card-details">
+                        <h3 class="feature-card-title">Flexibility</h3>
+                        <p class="feature-card-text">We’ve worked with over 400 companies to build blockchain solutions for their business.</p>
+                        <div class="checklist">
+                            <ul>
+                                <li><i class="fas fa-circle"></i> Blockchain solutions for their business.</li>
+                                <li><i class="fas fa-circle"></i> Blockchain solutions for their business.</li>
+                                <li><i class="fas fa-circle"></i> Blockchain solutions for their business.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="feature-card-img">
+                        <img class="alltuchtopdown" src="{% static 'codedictionapp/assets/img/update/feature/feature-card-thumb-1.png' %}" alt="img">
+                    </div>
+                </div>
+                <div class="feature-card-grid">
+                    <div class="feature-card-details">
+                        <h3 class="feature-card-title">Transference</h3>
+                        <p class="feature-card-text">We’ve worked with over 400 companies to build blockchain solutions for their business.</p>
+                        <p class="feature-card-text">We’ve worked with over 400 companies to build</p>
+                    </div>
+                    <div class="feature-card-img">
+                        <img src="{% static 'codedictionapp/assets/img/update/feature/feature-card-thumb-2.png' %}" alt="img">
+                    </div>
+                </div>
+                <div class="feature-card-grid">
+                    <div class="feature-card-details">
+                        <h3 class="feature-card-title">Secure & Safe</h3>
+                        <p class="feature-card-text">We’ve worked with over 400 companies to build blockchain solutions for their business.</p>
+                        <p class="feature-card-text">We’ve worked with over 400 companies to build</p>
+                    </div>
+                    <div class="feature-card-img">
+                        <img src="{% static 'codedictionapp/assets/img/update/feature/feature-card-thumb-3.png' %}" alt="img">
+                    </div>
+                </div>
+            </div> {% endcomment %}
+        </div>
+    </div>
+    <!--==============================
+        RoadMap Area 2
+    ==============================-->
+    <div class="pt-130 pb-140 overflow-hidden position-relative z-index-common" id="roadMap">
+        <div class="bg-gradient-2">
+            <img src="{% static 'codedictionapp/assets/img/update/bg/bg-gradient1-1.jpg' %}" alt="img">
+        </div>
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-6 col-sm-8">
+                    <div class="section-title mb-50">
+                        <h2 class="title style2">Technologies We Work On</h2>
+                    </div>
+                </div>
+                <div class="col-sm-auto">
+                    <div class="icon-box">
+                        <button class="slider-arrow prev-btn default"><i class="fas fa-arrow-left"></i></button>
+                        <button class="slider-arrow next-btn default"><i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid p-0">
+            <div class="slider-area position-relative">
+                <div class="row roadMap-active2 roadmap-slider1">
+                    {% for subject in subjects %}
+                    <div class="col-lg-4">
+                        <div class="roadmap-item">
+                            <span class="roadmap-title">{{subject.subject_type.name}}</span>
+                            <div class="roadmap-content">
+                                <h4 class="title"><span class="dot"><img src="{{subject.icon.url}}"></span>{{subject.name}}</h4>
+                                <p>SubQuery Builders/Grants Program SQT Network contract internal MVP Coordinator and client SDK implementations</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+     <!--==============================
+    Intro Area
+    ==============================-->
+    <div class="pt-130 overflow-hidden">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="section-title mb-45">
+                        <h2 class="title style2">Introducing Iko Crypto</h2>
+                        <p class="sec-text">True wealth in the world of virtual currencies</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <div class="col-xl-4">
+                    <div class="intro-wrap mt-xl-4">
+                        <h6 class="intro-wrap-title">Who We Are</h6>
+                        <p class="intro-wrap-text">Iko is a 100% pre-scratched cryotome
+                            There are 1 Million Minutes, and 60% of them can be yours (60% - ICO)
+                            Utility & security token
+                            (applies to all transactions and gives a monthly dividend)</p>
+                    </div>
+                    <div class="intro-wrap">
+                        <h6 class="intro-wrap-title">Wealth?</h6>
+                        <p class="intro-wrap-text">Users with Iko have lower system fees
+                            Price growth is gathered by demand for Unifox technologies. You own a stake in an international corporation. You are part of the community</p>
+                    </div>
+                    <div class="intro-wrap">
+                        <h6 class="intro-wrap-title">True Riches?</h6>
+                        <p class="intro-wrap-text">The underlying growth attracts investors
+                            The whole community is interested in growing the Iko prize. The company is planning to continue to expand the project, and it will cost the top up</p>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="intro-thumb1 alltuchtopdown">
+                        <img src="{% static 'codedictionapp/assets/img/update/normal/intro_1-1.png' %}" alt="img">
+                    </div>
+                    <div class="intro-wrap mt-50">
+                        <h6 class="intro-wrap-title">Our Mission & Vission</h6>
+                        <p class="intro-wrap-text">Iko is a 100% pre-scratched cryptome
+                            There are 1 Million Minutes, and 60% of them can be yours (60% - ICO)
+                            Utility & security token
+                            (applies to all transactions and gives a monthly dividend)</p>
+                        <p class="intro-wrap-text mt-40">Iko is a 100% pre-scratched cryptome
+                            There are 1 Million Minutes, and 60% of them can be yours (60% - ICO)
+                            Utility & security token
+                            (applies to all transactions and gives a monthly dividend)</p>
+                        <p class="intro-wrap-text mt-40">Iko is a 100% pre-scratched cryptome
+                            There are 1 Million Minutes, and 60% of them can be yours (60% - ICO)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--==============================
+    Brand Area 3
+    ==============================-->
+    <div class="brand-area3">
+        <div class="container">
+            <div class="row g-0">
+                <div class="col-lg-12">
+                    <div class="brand-title2 text-center">
+                        <h6 class="title">Backed by leading Blockchain investors and founders</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="brand-item-wrap3">
+                <div class="row g-0 brand-active2">
+                    <div class="col-12">
+                        <div class="brand-item">
+                            <img src="{% static 'codedictionapp/assets/img/update/client/client-2-1.svg' %}" alt="img">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="brand-item">
+                            <img src="{% static 'codedictionapp/assets/img/update/client/client-2-2.svg' %}" alt="img">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="brand-item">
+                            <img src="{% static 'codedictionapp/assets/img/update/client/client-2-3.svg' %}" alt="img">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="brand-item">
+                            <img src="{% static 'codedictionapp/assets/img/update/client/client-2-4.svg' %}" alt="img">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="brand-item">
+                            <img src="{% static 'codedictionapp/assets/img/update/client/client-2-5.svg' %}" alt="img">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="brand-item">
+                            <img src="{% static 'codedictionapp/assets/img/update/client/client-2-1.svg' %}" alt="img">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="brand-item">
+                            <img src="{% static 'codedictionapp/assets/img/update/client/client-2-2.svg' %}" alt="img">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="brand-item">
+                            <img src="{% static 'codedictionapp/assets/img/update/client/client-2-3.svg' %}" alt="img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <!--==============================
+    Feature Area 03
+    ==============================-->
+    <div class="pt-140 pb-140 overflow-hidden position-relative z-index-common" id="feature">
+        <div class="bg-gradient-5"></div>
+        <div class="feature-shape-3-1 alltuchtopdown"></div>
+        <div class="feature-shape-3-2 alltuchtopdown"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 text-center">
+                    <div class="feature-thumb-wrap">
+                        <img class="feature-thumb-3-1 alltuchtopdown" src="{% static 'codedictionapp/assets/img/update/normal/intro_1-1.png' %}" alt="img">
+                        <img class="feature-thumb-3-2" src="{% static 'codedictionapp/assets/img/update/feature/feature-thumb-3-1.png' %}" alt="img">
+                        <div class="feature-thumb-circle spin"></div>
+                    </div>
+                </div>
+                <div class="col-xl-5">
+                    <div class="section-title mb-75">
+                        <span class="sub-title text-white">FEATURES</span>
+                        <h2 class="title style2">Blockchain spreads trust everywhere</h2>
+                        <p class="mt-25">Our team has created blockchain solutions for over 400 companies, and we are still growing. From less paperwork and fewer disputes, to happier customers and entirely new business methods, <a class="text-decoration-underline text-white" href="#">a shared record of truth is invaluable.</a>
+                        </p>
+                    </div>
+                    <div class="counter-grid-wrap">
+                        <div class="counter-wrap">
+                            <div class="counter-card">
+                                <h3 class="counter-card_number">
+                                    63M
+                                </h3>
+                                <p class="counter-card_text">Blockchain users</p>
+                            </div>
+                        </div>
+                        <div class="counter-wrap">
+                            <div class="counter-card">
+                                <h3 class="counter-card_number">
+                                    24%
+                                </h3>
+                                <p class="counter-card_text">Companies use blockchain</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--==============================
+    Feature Area 04
+    ==============================-->
+    <div class="pt-140 pb-140 overflow-hidden position-relative z-index-common">
+        <div class="feature-shape-4-1  spin"></div>
+        <div class="feature-shape-4-2 alltuchtopdown"></div>
+        <div class="feature-shape-4-3 alltuchtopdown"></div>
+        <div class="feature-shape-4-4"></div>
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-xl-5">
+                    <div class="section-title mb-50">
+                        <span class="sub-title">POSSIBILITIES</span>
+                        <h2 class="title style2">What does it mean for your business?</h2>
+                        <p class="mt-25">We’ve worked with over 400 companies to build blockchain solutions for their business, and we are still growing.</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <ul class="feature-category-list mb-xl-0 mb-60">
+                        <li>
+                            <a href="blog-details.html">Smart contracts</a>
+                        </li>
+                        <li>
+                            <a href="blog-details.html">Paying employees</a>
+                        </li>
+                        <li>
+                            <a href="blog-details.html">Cloud storage</a>
+                        </li>
+                        <li>
+                            <a href="blog-details.html">Electronic voting</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="feature-wrap-4">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="feature-wrap4-thumb text-center alltuchtopdown">
+                            <img src="{% static 'codedictionapp/assets/img/update/normal/why_1-1.png' %}" alt="img">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="section-title mb-0">
+                            <span class="sub-title text-title">FEATURES</span>
+                            <h2 class="title style2 text-title">What does it mean for your business?</h2>
+                            <p class="text-title mt-20 mb-55">Our team has created blockchain solutions for over 400 companies, and we are still growing. From less paperwork and fewer disputes, to happier customers and entirely new business methods, <a class="text-title text-decoration-underline" href="#">a shared record of truth is invaluable.</a></p>
+                            <a href="contact.html" class="btn btn btn3">
+                                Get started
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--==============================
+        Testimonia Area
+    ==============================-->
+    <div class="pb-140 overflow-hidden">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="section-title text-center mb-50">
+                        <span class="sub-title">TESTIMONIAL</span>
+                        <h2 class="title style2">Over 400 companies have already tried blockchain</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-wrap-3">
+                <div class="testimonial-wrap-circle1 alltuchtopdown"></div>
+                <div class="testimonial-wrap-circle2 leftToRight"></div>
+                <div class="testimonial-wrap-circle3 leftToRight"></div>
+                <div class="testimonial-wrap-bg alltuchtopdown">
+                    <img src="{% static 'codedictionapp/assets/img/update/bg/testimonial-4-bg.png' %}" alt="img">
+                </div>
+                <div class="slider-area testimonial-slider-wrap">
+                    <div class="row testimonial-slider1">
+                        <div class="col-lg-6 slider-item">
+                            <div class="testi-box ">
+                                <div class="testi-box-profile">
+                                    <div class="testi-box-profile-thumb">
+                                        <img src="{% static 'codedictionapp/assets/img/update/testimonial/testi_thumb1_1.png' %}" alt="img">
+                                    </div>
+                                    <div class="testi-box-profile-details">
+                                        <h4 class="testi-box_name">Romero Eli</h4>
+                                        <span class="testi-box_desig">Developer</span>
+                                    </div>
+                                    <div class="testi-box-profile-ratting">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <p class="testi-box_text">I've tested numerous technologies, but this one is leaps and bounds ahead of the competition. It's phenomenal.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 slider-item">
+                            <div class="testi-box ">
+                                <div class="testi-box-profile">
+                                    <div class="testi-box-profile-thumb">
+                                        <img src="{% static 'codedictionapp/assets/img/update/testimonial/testi_thumb1_2.png' %}" alt="img">
+                                    </div>
+                                    <div class="testi-box-profile-details">
+                                        <h4 class="testi-box_name">Gomez Goles</h4>
+                                        <span class="testi-box_desig">Product Designers</span>
+                                    </div>
+                                    <div class="testi-box-profile-ratting">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <p class="testi-box_text">I can't express how impressed I am with this technology. It outshines anything I've ever used before & up to the mark.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 slider-item">
+                            <div class="testi-box ">
+                                <div class="testi-box-profile">
+                                    <div class="testi-box-profile-thumb">
+                                        <img src="{% static 'codedictionapp/assets/img/update/testimonial/testi_thumb1_1.png' %}" alt="img">
+                                    </div>
+                                    <div class="testi-box-profile-details">
+                                        <h4 class="testi-box_name">Romero Eli</h4>
+                                        <span class="testi-box_desig">Developer</span>
+                                    </div>
+                                    <div class="testi-box-profile-ratting">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <p class="testi-box_text">I've tested numerous technologies, but this one is leaps and bounds ahead of the competition. It's phenomenal.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 slider-item">
+                            <div class="testi-box ">
+                                <div class="testi-box-profile">
+                                    <div class="testi-box-profile-thumb">
+                                        <img src="{% static 'codedictionapp/assets/img/update/testimonial/testi_thumb1_2.png' %}" alt="img">
+                                    </div>
+                                    <div class="testi-box-profile-details">
+                                        <h4 class="testi-box_name">Gomez Goles</h4>
+                                        <span class="testi-box_desig">Product Designers</span>
+                                    </div>
+                                    <div class="testi-box-profile-ratting">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <p class="testi-box_text">I can't express how impressed I am with this technology. It outshines anything I've ever used before & up to the mark.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button data-slider-prev=".testimonial-slider1" class="slider-arrow prev-btn"><i class="fas fa-arrow-left"></i></button>
+                    <button data-slider-next=".testimonial-slider1" class="slider-arrow next-btn"><i class="fas fa-arrow-right"></i></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--==============================
+    Cta Area 2
+    ==============================-->
+    <div class="pt-140 pb-140 position-relative z-index-common">
+        <div class="bg-gradient-5"></div>
+        <div class="cta-2-shape1 alltuchtopdown"><img src="{% static 'codedictionapp/assets/img/update/bg/cta-2-shape1.png' %}" alt="img"></div>
+        <div class="cta-2-shape2 alltuchtopdown"></div>
+        <div class="cta-2-shape3 leftToRight"></div>
+        <div class="container">
+            <div class="cta-wrap2 pt-140 pb-140" style="background-image: url({% static 'codedictionapp/assets/img/update/bg/cta-2-bg.png' %}); background-size: cover;">
+                <div class="row gy-40 align-items-center">
+                    <div class="col-xl-6 col-lg-8">
+                        <div class="section-title mb-50">
+                            <span class="sub-title text-white">TECHNOLOGY</span>
+                            <h2 class="title style2">How does blockchain work for business?</h2>
+                            <p class="sec-text text-white">We’ve worked with over 400 companies to build blockchain solutions for their business, and we are still growing.</p>
+                        </div>
+                        <a href="contact.html" class="btn btn3">
+                            Get started
+                        </a>
+                    </div>
+                    <div class="col-xl-6 col-lg-4">
+                        <div class="text-lg-center">
+                            <a href="https://www.youtube.com/watch?v=vvNwlRLjLkU" class="play-btn popup-video">
+                                <i>
+                                    <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1.66602 11.6553V7.50193C1.66602 2.34526 5.31768 0.233597 9.78602 2.81193L13.391 4.8886L16.996 6.96526C21.4643 9.5436 21.4643 13.7669 16.996 16.3453L13.391 18.4219L9.78602 20.4986C5.31768 23.0769 1.66602 20.9653 1.66602 15.8086V11.6553Z" stroke="white" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--==============================
+    Faq Area 2
+    ==============================-->
+    <div class="pt-140 pb-140 overflow-hidden position-relative z-index-common">
+        <div class="faq-2-shape-1"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 text-center">
+                    <div class="section-title mb-50">
+                        <span class="sub-title">FAQ</span>
+                        <h2 class="title style2">Popular questions about blockchain</h2>
+                        <p class="sec-text">We’ve worked with over 400 companies to build blockchain solutions for their business, and we are still growing.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="accordion-area accordion" id="faqAccordion">
+
+                        <div class="accordion-card style2">
+                            <div class="accordion-header" id="collapse-item-1">
+                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true" aria-controls="collapse-1">What is blockchain technology?</button>
+                            </div>
+                            <div id="collapse-1" class="accordion-collapse collapse show" aria-labelledby="collapse-item-1" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p class="faq-text">It's very simple! Register here. In your personal account, create a wallet where you can store your FOX tokens. Then just send any amount to the displayed address in your office.</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="accordion-card style2">
+                            <div class="accordion-header" id="collapse-item-2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-2" aria-expanded="false" aria-controls="collapse-2">What is Bitcoin?
+                                </button>
+                            </div>
+                            <div id="collapse-2" class="accordion-collapse collapse " aria-labelledby="collapse-item-2" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p class="faq-text">It's very simple! Register here. In your personal account, create a wallet where you can store your FOX tokens. Then just send any amount to the displayed address in your office.</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="accordion-card style2">
+                            <div class="accordion-header" id="collapse-item-3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-3" aria-expanded="false" aria-controls="collapse-3">Who created Bitcoin?</button>
+                            </div>
+                            <div id="collapse-3" class="accordion-collapse collapse " aria-labelledby="collapse-item-3" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p class="faq-text">It's very simple! Register here. In your personal account, create a wallet where you can store your FOX tokens. Then just send any amount to the displayed address in your office.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-card style2">
+                            <div class="accordion-header" id="collapse-item-4">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-4" aria-expanded="false" aria-controls="collapse-4">What is cryptocurrency?</button>
+                            </div>
+                            <div id="collapse-4" class="accordion-collapse collapse " aria-labelledby="collapse-item-4" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p class="faq-text">It's very simple! Register here. In your personal account, create a wallet where you can store your FOX tokens. Then just send any amount to the displayed address in your office.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-card style2">
+                            <div class="accordion-header" id="collapse-item-5">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-5" aria-expanded="false" aria-controls="collapse-5">How does cryptocurrency  work?</button>
+                            </div>
+                            <div id="collapse-5" class="accordion-collapse collapse " aria-labelledby="collapse-item-5" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    <p class="faq-text">It's very simple! Register here. In your personal account, create a wallet where you can store your FOX tokens. Then just send any amount to the displayed address in your office.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--==============================
+    CTA Area 3
+    ==============================-->
+    <div class="pb-120 position-relative z-index-common">
+        <div class="container">
+            <div class="cta-wrap3">
+                <div class="cta-wrap-details">
+                    <div class="section-title mb-20">
+                        <h2 class="title style2 text-title">Be part of the future</h2>
+                        <p class="sec-text text-title">We’ve worked with over 400 companies to build blockchain solutions for their business.</p>
+                    </div>
+                    <a href="contact.html" class="btn btn3">
+                        Get started
+                    </a>
+                </div>
+                <div class="cta-3-thumb movingX">
+                    <img src="{% static 'codedictionapp/assets/img/update/normal/cta_3-1.png' %}" alt="img">
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock content %}
+
+
+    {% block scripts %}
+    <script src="{% static 'codedictionapp/assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'codedictionapp/assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'codedictionapp/assets/js/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'codedictionapp/assets/js/jquery.appear.js' %}"></script>
+    <script src="{% static 'codedictionapp/assets/js/slick.min.js' %}"></script>
+    <script src="{% static 'codedictionapp/assets/js/ajax-form.js' %}"></script>
+    <script src="{% static 'codedictionapp/assets/js/jquery.easing.js' %}"></script>
+    <script src="{% static 'codedictionapp/assets/js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'codedictionapp/assets/js/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'codedictionapp/assets/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'codedictionapp/assets/js/wow.min.js' %}"></script>
+    <script src="{% static 'codedictionapp/assets/js/main.js' %}"></script>
+    {% endblock scripts %}

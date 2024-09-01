@@ -4,6 +4,7 @@ from .DashViews.BlogViews import *
 from .DashViews.BlogCategoryViews import *
 from .DashViews.ServicesViews import *
 from .DashViews.AuthViews import *
+from .DashViews.RegisterViews import *
 from .DashViews.SubjectTypeViews import *
 from .DashViews.SubjectsViews import *
 from .DashViews.CourseCategoriesViews import *
@@ -29,12 +30,6 @@ urlpatterns = [
                     path('delete/<int:category_id>/', DeleteBlogCategoryViews.as_view(), name='app.dashboard.blog.category.delete'),
                 ]
             )),
-            path('filter-by/', include(
-                [
-                    path('category/<slug:category_slug>/', BlogByCategoryView.as_view(), name='app.dashboard.blog.bycategory'),
-                    path('status/<str:status>/', BlogByStatusView.as_view(), name='app.dashboard.blog.bystatus'),
-                ]
-            )),
         ]
     )),
     path('services/', include(
@@ -51,6 +46,7 @@ urlpatterns = [
         [
             path('', CoursesViews.as_view(), name='app.dashboard.courses'),
             path('add/', AddCoursesViews.as_view(), name='app.dashboard.courses.add'),
+            path('status/<int:course_id>/', StatusCoursesViews.as_view(), name='app.dashboard.courses.status'),
             path('edit/<int:course_id>/', EditCoursesViews.as_view(), name='app.dashboard.courses.edit'),
             path('details/<slug:slug>/', CoursesDetailViews.as_view(), name='app.dashboard.courses.view'),
             path('details/<slug:slug>/curriculum/', CoursesCurriculumViews.as_view(), name='app.dashboard.courses.curriculum'),
@@ -102,5 +98,6 @@ urlpatterns = [
         ]
     )),
     path('login/', LoginViews.as_view(), name='app.dashboard.login'),
+    path('register/', RegisterView.as_view(), name='app.dashboard.register'),
     path('logout/', LogoutViews.as_view(), name='app.dashboard.logout'),
 ]

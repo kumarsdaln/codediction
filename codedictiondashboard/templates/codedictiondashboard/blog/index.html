@@ -78,9 +78,10 @@
                                         </div><!--end col-->
                                         <div class="col-lg-2">
                                             <div>
-                                                <select class="form-select" id="status-type-input" data-choices data-choices-search-false>
-                                                    <option value="Active">Active</option>
-                                                    <option value="Unactive">Unactive</option>
+                                                <select class="form-select" id="blog-status" data-choices data-choices-search-false>
+                                                    <option value="">Status</option>
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
                                                 </select>
                                             </div>
                                         </div><!--end col-->
@@ -392,4 +393,9 @@
 
     <!-- App js -->
     <script src="{% static 'codedictiondashboard/assets/js/app.js' %}"></script>
+    <script>
+        document.getElementById('blog-status').onchange = function() {
+            location.href = `{% url 'app.dashboard.blog' %}?status=${this.value}`;
+        }        
+    </script>
 {% endblock %}

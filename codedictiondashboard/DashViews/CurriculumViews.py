@@ -7,6 +7,8 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.contrib.admin.views.decorators import staff_member_required
+from codedictiondashboard.decorators import group_required
 from django.views import View
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -15,12 +17,14 @@ from codedictiondashboard.CustomLoginRequiredMixin import CustomLoginRequiredMix
 from codedictionapp.models import Subjects,Curriculum
 from codedictiondashboard.forms import CurriculumForm
 
+@method_decorator(group_required('Teacher', 'Student'), name='dispatch')
 class CurriculumViews(CustomLoginRequiredMixin,DetailView):
     model = Subjects
     template_name = 'codedictiondashboard/courses/curriculum/index.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context    
+@method_decorator(group_required('Teacher', 'Student'), name='dispatch')
 class CurriculumDetailViews(CustomLoginRequiredMixin,DetailView):
     model = Curriculum
     template_name = 'codedictiondashboard/courses/curriculum/view.html'
@@ -30,7 +34,7 @@ class CurriculumDetailViews(CustomLoginRequiredMixin,DetailView):
         context = super().get_context_data(**kwargs)
         return context  
         
-@method_decorator(csrf_exempt, name="dispatch") 
+@method_decorator([csrf_exempt, staff_member_required], name='dispatch') 
 class AddCurriculumViews(CustomLoginRequiredMixin,View):
 
     def get(self, request, slug):
@@ -52,7 +56,8 @@ class AddCurriculumViews(CustomLoginRequiredMixin,View):
                 'form':form,
                 'subject':subject
             })  
-@method_decorator(csrf_exempt, name="dispatch") 
+        
+@method_decorator([csrf_exempt, staff_member_required], name='dispatch') 
 class AddRelCurriculumViews(CustomLoginRequiredMixin,View):
 
     def get(self, request, slug, rel_cur_slug):
@@ -77,7 +82,8 @@ class AddRelCurriculumViews(CustomLoginRequiredMixin,View):
                 'form':form,
                 'subject':subject
             })    
-@method_decorator(csrf_exempt, name="dispatch") 
+        
+@method_decorator([csrf_exempt, staff_member_required], name='dispatch') 
 class EditCurriculumViews(CustomLoginRequiredMixin,View):  
     def get(self, request, slug, curriculum_slug):
         curriculum= get_object_or_404(Curriculum, slug=curriculum_slug)
@@ -102,8 +108,9 @@ class EditCurriculumViews(CustomLoginRequiredMixin,View):
                 'form':form,
                 'subjects':subjects,
                 'curriculum':curriculum
-            })    
-    
+            }) 
+           
+@method_decorator(staff_member_required, name='dispatch')    
 class DeleteCurriculumViews(CustomLoginRequiredMixin,View):
     def get(self, request, curriculum_id):
         curriculum = get_object_or_404(Curriculum, pk=curriculum_id)

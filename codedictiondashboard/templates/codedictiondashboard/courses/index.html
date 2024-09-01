@@ -78,9 +78,10 @@
                                         </div><!--end col-->
                                         <div class="col-lg-2">
                                             <div>
-                                                <select class="form-select" id="status-type-input" data-choices data-choices-search-false>
-                                                    <option value="Active">Active</option>
-                                                    <option value="Unactive">Unactive</option>
+                                                <select class="form-select" id="course-status">
+                                                    <option value="">Status</option>
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Unactive</option>
                                                 </select>
                                             </div>
                                         </div><!--end col-->
@@ -127,7 +128,7 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="{% url 'app.dashboard.courses.view' object.slug %}"><i class="bi bi-eye align-baseline me-1"></i> Overview</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'app.dashboard.blog.status' object.id %}"> {% if blog.status == 1 %}<i class="ri-eye-off-fill align-baseline me-1"></i> Hide {% else %}<i class="ri-eye-fill align-baseline me-1"></i> Active {% endif %} </a></li>
+                                            <li><a class="dropdown-item" href="{% url 'app.dashboard.courses.status' object.id %}"> {% if object.status == 1 %}<i class="ri-eye-off-fill align-baseline me-1"></i> Hide {% else %}<i class="ri-eye-fill align-baseline me-1"></i> Active {% endif %} </a></li>
                                             <li><a class="dropdown-item" href="{% url 'app.dashboard.courses.edit' object.id %}"><i class="bi bi-pencil-square align-baseline me-1"></i> Edit</a></li>
                                             <li><a class="dropdown-item delete-item" data-action="{% url 'app.dashboard.courses.delete' object.id %}" data-removeitem="object-{{object.id}}" href="#deleteRecordModal" data-bs-toggle="modal"><i class="bi bi-trash3 align-baseline me-1"></i> Delete</a></li>
                                         </ul>
@@ -145,7 +146,42 @@
                         </div>
                         {% endfor %}
                     </div><!--end row-->
-
+                    <div class="row align-items-center mb-3">
+                        <div class="col-sm">
+                            <div class="text-muted text-center text-sm-start">
+                                Showing <span class="fw-semibold">{{object_list.count}}</span> of <span class="fw-semibold">{{total_results}}</span> Results
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-sm-auto mt-3 mt-sm-0">
+                            <div class="pagination-wrap hstack justify-content-center gap-2">
+                                
+                                
+                                <ul class="pagination listjs-pagination mb-0">
+                                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                                    {% comment %} <li class="active"><a class="page" href="#" data-i="1" data-page="10">1</a></li>
+                                    <li><a class="page" href="#" data-i="2" data-page="10">2</a></li> {% endcomment %}
+                                </ul>
+                                {% if page_obj.has_previous %}
+                                <a class="page-item pagination-prev" href="?page={{ page_obj.previous_page_number }}">
+                                    Previous
+                                </a>
+                                {% else %}
+                                <a class="page-item pagination-prev disabled" href="#">
+                                    Previous
+                                </a>
+                                {% endif %}
+                                {% if page_obj.has_next %}
+                                <a class="page-item pagination-next" href="?page={{ page_obj.next_page_number }}">
+                                    Next
+                                </a>
+                                {% else %}
+                                <a class="page-item pagination-next disabled" href="#">
+                                    Next
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div><!--end col-->
+                    </div><!--end row-->
                 </div>
                 <!-- container-fluid -->
             </div>
@@ -346,4 +382,9 @@
 
     <!-- App js -->
     <script src="{% static 'codedictiondashboard/assets/js/app.js' %}"></script>
+    <script>
+        document.getElementById('course-status').onchange = function() {
+            location.href = `{% url 'app.dashboard.courses' %}?status=${this.value}`;
+        }        
+    </script>
 {% endblock %}

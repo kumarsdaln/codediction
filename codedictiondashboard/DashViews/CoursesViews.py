@@ -10,19 +10,51 @@ from django.views.generic.edit import FormView
 from django.core.paginator import Paginator
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.contrib.admin.views.decorators import staff_member_required
+from codedictiondashboard.decorators import group_required
 from codedictiondashboard.CustomLoginRequiredMixin import CustomLoginRequiredMixin
 from codedictionapp.models import SubjectType, Subjects, CourseCategories, Courses, CourseSubject
 from codedictiondashboard.forms import CoursesForm, CourseSubjectOrderForm
 
+@method_decorator(group_required('Teacher', 'Student'), name='dispatch')
 class CoursesViews(CustomLoginRequiredMixin, ListView):
+    paginate_by = 10
     model = Courses
     template_name = 'codedictiondashboard/courses/index.html'
-    queryset = Courses.objects.all().order_by('-id')
 
+    def get_queryset(self):
+        queryset = Courses.objects.all()
+
+        # Filtering by status (active/inactive)
+        status = self.request.GET.get('status', None)
+        if status is not None:
+            if status == 'active':
+                queryset = queryset.filter(status=True)
+            elif status == 'inactive':
+                queryset = queryset.filter(status=False)
+
+        # Sorting by 'id' or 'title' with direction
+        sort_by = self.request.GET.get('sort_by', 'id')
+        sort_direction = self.request.GET.get('sort_direction', 'desc')
+
+        if sort_by in ['id', 'name']:
+            if sort_direction == 'asc':
+                queryset = queryset.order_by(sort_by)
+            else:
+                queryset = queryset.order_by(f'-{sort_by}')
+        return queryset
+    def get(self, request, *args, **kwargs):
+        current_page = request.GET.get('page', 1)
+        total_pages = self.get_paginator(self.get_queryset(), self.paginate_by).num_pages
+        if int(current_page) > int(total_pages):
+            return redirect(f'{self.request.path}?page={total_pages}')
+        return super().get(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["total_results"] = self.get_queryset().count()
         return context
-
+    
+@method_decorator(group_required('Teacher', 'Student'), name='dispatch')
 class CoursesDetailViews(CustomLoginRequiredMixin, DetailView):
     model = Courses
     template_name = 'codedictiondashboard/courses/view.html'
@@ -30,7 +62,8 @@ class CoursesDetailViews(CustomLoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-
+    
+@method_decorator(group_required('Teacher', 'Student'), name='dispatch')
 class CoursesCurriculumViews(CustomLoginRequiredMixin, DetailView):
     model = Courses
     template_name = 'codedictiondashboard/courses/curriculum.html'
@@ -45,6 +78,7 @@ class CoursesCurriculumViews(CustomLoginRequiredMixin, DetailView):
         context['course_subjects'] = ordered_course_subjects
         return context
     
+@method_decorator(staff_member_required, name='dispatch')    
 class AddCoursesViews(CustomLoginRequiredMixin, View):
     def get(self, request):
         course_categories = CourseCategories.objects.all()
@@ -70,6 +104,7 @@ class AddCoursesViews(CustomLoginRequiredMixin, View):
                 'subjects': subjects
             })
 
+@method_decorator(staff_member_required, name='dispatch')
 class EditCoursesViews(CustomLoginRequiredMixin, View):
     def get(self, request, course_id):
         course = get_object_or_404(Courses, pk=course_id)
@@ -98,7 +133,8 @@ class EditCoursesViews(CustomLoginRequiredMixin, View):
                 'subjects': subjects,
                 'course': course
             })
-
+        
+@method_decorator(staff_member_required, name='dispatch')
 class DeleteCoursesViews(CustomLoginRequiredMixin, View):
     def get(self, request, category_id):
         course = get_object_or_404(Courses, pk=category_id)
@@ -108,6 +144,7 @@ class DeleteCoursesViews(CustomLoginRequiredMixin, View):
         }
         return JsonResponse(result, safe=False)
 
+@method_decorator(staff_member_required, name='dispatch')
 class UpdateCourseSubjectsOrder(CustomLoginRequiredMixin, FormView):
     template_name = 'codedictiondashboard/courses/update-course-subjects-order.html'
     form_class = CourseSubjectOrderForm
@@ -153,7 +190,15 @@ class UpdateCourseSubjectsOrder(CustomLoginRequiredMixin, FormView):
         return super().form_valid(form)
     
     def get_success_url(self):
-        return reverse('course_detail', kwargs={'course_id': self.kwargs['course_id']})
+        return reverse('app.dashboard.courses.view', kwargs={'course_id': self.kwargs['course_id']})
 
-
-
+@method_decorator(staff_member_required, name='dispatch')
+class StatusCoursesViews(CustomLoginRequiredMixin,View):
+    def get(self, request, course_id):
+        course = get_object_or_404(Courses, pk=course_id)
+        if course.status == 1:
+            course.status=0
+        else:
+            course.status=1
+        course.save()        
+        return redirect(request.META.get('HTTP_REFERER'))   

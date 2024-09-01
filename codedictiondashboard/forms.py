@@ -2,6 +2,8 @@ from django import forms
 from codedictionapp.models import *
 import readtime
 import datetime
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 
 class ServiceForm(forms.ModelForm):
     class Meta:
@@ -54,12 +56,33 @@ class CurriculumForm(forms.ModelForm):
 class OurBatchForm(forms.ModelForm):
     class Meta:
         model = OurBatch
-        fields = ['course','batch_name','slug','description','image','start_at','batch_time','language','meta_data']
-class OurStudentsForm(forms.ModelForm):
+        fields = ['course','batch_name','slug','description','image','start_at','batch_time','language','meta_data']  
+class WorkCategoriesForm(forms.ModelForm):
     class Meta:
-        model = OurStudents
-        fields = ['name','designation','photo','slug','batch']   
-                
+        model = WorkCategories
+        fields = ['name', 'slug', 'meta_data']
+class OurWorkForm(forms.ModelForm):
+    class Meta:
+        model = OurWork
+        fields = ['name', 'image', 'description', 'slug', 'work_category', 'meta_data']
+class OurClientsForm(forms.ModelForm):  
+    class Meta:
+        model = OurClients
+        fields = ['name', 'image']
+class TestimonialForm(forms.ModelForm):
+    class Meta:
+        model = Testimonial
+        fields = ['name', 'designation', 'photo', 'testimonial'] 
+
+class ContactusForm(forms.ModelForm):
+    class Meta:
+        model = Contactus
+        fields = ['name', 'email', 'phone', 'subject', 'message', 'uploaded_at']
+class SubscribeNewsletter(forms.ModelForm):
+    class Meta:
+        model = SubscribeNewsletter
+        fields = ['email', 'uploaded_at']                                 
+
 class CourseSubjectOrderForm(forms.Form):
     def __init__(self, *args, **kwargs):
         course = kwargs.pop('course', None)
@@ -89,3 +112,15 @@ class CourseSubjectOrderForm(forms.Form):
                         initial=subject_index,  # Set initial order based on index
                         widget=forms.HiddenInput
                     )
+
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    user_type = forms.ChoiceField(choices=[('S', 'Student'), ('T', 'Teacher')], required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2', 'user_type']
+    
+class CustomAuthenticationForm(AuthenticationForm):
+    username = forms.CharField(label='Username', max_length=254)
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)

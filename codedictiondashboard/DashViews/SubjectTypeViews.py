@@ -7,6 +7,8 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.contrib.admin.views.decorators import staff_member_required
+from codedictiondashboard.decorators import group_required
 from django.views import View
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -15,6 +17,7 @@ from codedictiondashboard.CustomLoginRequiredMixin import CustomLoginRequiredMix
 from codedictionapp.models import SubjectType
 from codedictiondashboard.forms import SubjectTypeForm
 
+@method_decorator(group_required('Teacher', 'Student'), name='dispatch')
 class SubjectTypeViews(CustomLoginRequiredMixin,ListView):
     model = SubjectType
     template_name = 'codedictiondashboard/courses/subjects/type/index.html'
@@ -24,7 +27,7 @@ class SubjectTypeViews(CustomLoginRequiredMixin,ListView):
         context = super().get_context_data(**kwargs)
         return context
     
-@method_decorator(csrf_exempt, name="dispatch") 
+@method_decorator([csrf_exempt, staff_member_required], name='dispatch') 
 class AddSubjectTypeViews(CustomLoginRequiredMixin,View):
 
     # def get(self, request):
@@ -35,13 +38,13 @@ class AddSubjectTypeViews(CustomLoginRequiredMixin,View):
         form = SubjectTypeForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('app.dashboard.courses.subjects.type')
+            return redirect(request.META.get('HTTP_REFERER', '/'))
         else:
             return render(request, 'codedictiondashboard/courses/subjects/type/index.html', {
                 'form':form
             })  
     
-@method_decorator(csrf_exempt, name="dispatch") 
+@method_decorator([csrf_exempt, staff_member_required], name='dispatch') 
 class EditSubjectTypeViews(CustomLoginRequiredMixin,View):  
     
     @method_decorator(csrf_protect)
@@ -55,7 +58,8 @@ class EditSubjectTypeViews(CustomLoginRequiredMixin,View):
             return render(request, 'codedictiondashboard/courses/subjects/type/index.html', {
                 'form':form
             })    
-    
+        
+@method_decorator(staff_member_required, name='dispatch')    
 class DeleteSubjectTypeViews(CustomLoginRequiredMixin,View):
     def get(self, request, category_id):
         category = get_object_or_404(SubjectType, pk=category_id)

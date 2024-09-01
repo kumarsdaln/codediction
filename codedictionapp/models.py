@@ -5,7 +5,7 @@ import datetime
 #Services
 class Services(models.Model):
     name = models.CharField(max_length=50)
-    brief = models.CharField(max_length=255)
+    brief = models.CharField(max_length=1000)
     description = models.TextField()
     icon = models.ImageField(upload_to='uploads/services/icon')
     image = models.ImageField(upload_to='uploads/services', default='')
@@ -51,6 +51,7 @@ class Courses(models.Model):
     subjects = models.ManyToManyField(Subjects)
     course_category = models.ForeignKey(CourseCategories, on_delete=models.CASCADE, null=True)
     meta_data = models.TextField(null=True)
+    status = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.name}"
 
@@ -93,22 +94,11 @@ class Curriculum(models.Model):
     slug = models.SlugField(max_length=255,unique=True,null=False,blank=False)
     description = models.TextField()
     relation_with = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
-    meta_data = models.TextField(null=True) 
-    position = models.PositiveIntegerField(default=1)
-    def save(self, *args, **kwargs):
-        # Check if position is not set
-        if not self.position:
-            # Get the maximum position from existing instances
-            max_position = Curriculum.objects.aggregate(models.Max('id'))['id__max'] or 0
-            # Increment the position for the current instance
-            self.position = max_position + 1
-        super().save(*args, **kwargs)
-    class Meta:
-        ordering = ['position']
+    meta_data = models.TextField(null=True)
     def __str__(self):
         return f"{self.title}"
 
-#Question Answer    
+#Question Answer
 class Question(models.Model):
     question = models.CharField(max_length=400)
     created_at = models.DateTimeField()
@@ -178,15 +168,46 @@ class OurClients(models.Model):
     image = models.ImageField(upload_to='uploads/clients') 
     def __str__(self):
         return f"{self.name}"
-
-class OurStudents(models.Model):
-    name = models.CharField(max_length=255)
-    designation = models.CharField(max_length=255)
-    photo = models.ImageField(upload_to='uploads/student')
-    slug = models.SlugField(max_length=255,unique=True,null=False,blank=False)
-    batch = models.CharField(max_length=255, default='One To One Mentorship')
+    
+class UserType(models.Model):
+    USER_TYPE_CHOICES = (
+        ('S', 'Student'),
+        ('T', 'Teacher'),
+    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_type')
+    user_type = models.CharField(max_length=2, choices=USER_TYPE_CHOICES)
+    def __str__(self):
+        return f'{self.user.username} - {self.user_type}'
+    
+class StudentProfile(models.Model):
+    user_type = models.OneToOneField(UserType, on_delete=models.CASCADE, related_name='student_profile')
+    designation = models.CharField(max_length=255, null=True)
+    phone = models.CharField(max_length=15, null=True)
+    bio = models.TextField(blank=True, null=True)
+    photo = models.ImageField(upload_to='uploads/student', null=True)
+    enrolled_courses = models.ManyToManyField(Courses, through='Enrollment', related_name='enrolled_students')
+    
     def __str__(self):
         return f"{self.name}"
+    
+class Enrollment(models.Model):
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE, related_name='enrollments')
+    course = models.ForeignKey(Courses, on_delete=models.CASCADE, related_name='enrollments')
+    enrolled_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.student.user.username} - {self.course.title}'
+    
+class TeacherProfile(models.Model):
+    user_type = models.OneToOneField(UserType, on_delete=models.CASCADE, related_name='teacher_profile')
+    designation = models.CharField(max_length=255, null=True)
+    phone = models.CharField(max_length=15, null=True)
+    bio = models.TextField(blank=True, null=True)
+    photo = models.ImageField(upload_to='uploads/student', null=True)
+    
+    def __str__(self):
+        return f"{self.user_type.user.first_name}"    
+    
 class OurTeam(models.Model):
     name = models.CharField(max_length=255)
     designation = models.CharField(max_length=255)
@@ -194,8 +215,8 @@ class OurTeam(models.Model):
     slug = models.SlugField(max_length=255,unique=True,null=False,blank=False)
     description = models.TextField()
     def __str__(self):
-        return f"{self.name}"    
-
+        return f"{self.name}" 
+    
 class Testimonial(models.Model):
     name = models.CharField(max_length=255)
     designation = models.CharField(max_length=255)
@@ -203,14 +224,6 @@ class Testimonial(models.Model):
     testimonial = models.TextField()
     def __str__(self):
         return f"{self.name}"
-    
-class EnrollStudent(models.Model):
-    name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255)
-    phone = models.CharField(max_length=20) 
-    batch = models.CharField(max_length=255,null=True,blank=True)
-    def __str__(self):
-        return f"{self.name}" 
 
 class Contactus(models.Model):
     name = models.CharField(max_length=255)
