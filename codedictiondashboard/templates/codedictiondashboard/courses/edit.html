@@ -31,6 +31,35 @@
     <link href="{% static 'codedictiondashboard/assets/css/app.min.css' %}" rel="stylesheet" type="text/css">
     <!-- custom Css-->
     <link href="{% static 'codedictiondashboard/assets/css/custom.min.css' %}" rel="stylesheet" type="text/css">
+    <style>
+        .list-group-item{
+            cursor:move;
+        }
+        #id_subjects option {
+            border: 1px solid #dde1ef;
+            padding: 0.7rem 1rem;
+            cursor: pointer;
+        }
+        
+        #id_subjects option:first-child {
+            border-top-left-radius: inherit;
+            border-top-right-radius: inherit;
+        }
+        
+        #id_subjects option:last-child {
+            border-bottom-left-radius: inherit;
+            border-bottom-right-radius: inherit;
+        }
+        
+        #id_subjects option:not(:first-child) {
+            border-top-width: 0;
+        }
+        #id_subjects option:disabled {
+            background-color: #f0f0f0;
+            color: #999;
+            cursor: not-allowed;
+        }
+    </style>
 {% endblock %}
 
 {% block main %}
@@ -46,7 +75,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Edit Blog</h4>
+                                <h4 class="mb-sm-0">Edit Course</h4>
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
@@ -62,10 +91,11 @@
                     <!-- end page title -->
                     <div class="container">
                         <div class="row">
+                            {% include "codedictiondashboard/message/message.html" %}
                             <div class="col-lg-8 mx-auto">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5>Edit Blog</h5>
+                                        <h5>Edit - {{form.name.value}}</h5>
                                     </div>
                                     <div class="card-body form-steps">
                                         <form action="{% url 'app.dashboard.courses.edit' course.id %}" method="POST" enctype="multipart/form-data">
@@ -102,19 +132,14 @@
                                                                 </ul>
                                                                 {% endif %}
                                                             </div>
-                                                        </div><!--end col-->
-                                                        <div class="col-lg-12">
+                                                        </div>
+                                                        {% comment %} <div class="col-lg-12">
                                                             <div>
                                                                 <label for="subjects" class="form-label">Subjects<span class="text-danger">*</span></label>
                                                                 <div class="d-flex">
                                                                     
                                                                     <div style="width:calc(100% - 112px);">
                                                                         {{form.subjects}}
-                                                                        {% comment %} <select class="form-select" id="subjects" data-choices name="subjects" multiple>
-                                                                            {% for subject in subjects %}
-                                                                            <option value="{{subject.id}}" {% if subject.id in form.subjects  %}selected{% endif %}>{{subject.name}}</option>
-                                                                            {% endfor %}
-                                                                        </select> {% endcomment %}
                                                                     </div>
                                                                     <div style="width:112px;">
                                                                         <div class="d-flex gap-2 justify-content-end">
@@ -133,12 +158,48 @@
                                                                 </ul>
                                                                 {% endif %}
                                                             </div>
-                                                        </div><!--end col-->
-                                                        <div class="col-lg-12">
+                                                        </div> {% endcomment %}
+                                                        <div class="col-12">
+                                                            <label for="subjects" class="form-label">Subjects<span class="text-danger">*</span></label>
+                                                            <div class="d-flex gap-2 justify-content-start">
+                                                                <a href="{% url 'app.dashboard.courses.subjects.add' %}" class="btn btn-secondary"><i class="bi bi-plus align-baseline me-1"></i></a>
+                                                                <a class="btn btn-secondary" href="{% url 'app.dashboard.courses.subjects' %}"><i class="bi bi-eye align-baseline me-1"></i></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
                                                             <div>
-                                                                <a href="{% url 'app.dashboard.courses.subjects.order' course.id %}" class="btn btn-secondary">Course Subjects Order</a>
+                                                                <div>
+                                                                    <select class="form-select form-control" id="id_subjects" multiple style="min-height:350px">
+                                                                        {% for subject in subjects %}
+                                                                        <option value="{{subject.id}}"  {% if subject.id in form.subjects.value %}  disabled {% endif %}>{{subject.name}}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-errors text-danger">
+                                                                {% if form.subjects.errors %}
+                                                                <ul>
+                                                                {% for error in form.subjects.errors %}
+                                                                    <li>{{ error }}</li>
+                                                                {% endfor %}
+                                                                </ul>
+                                                                {% endif %}
                                                             </div>
                                                         </div><!--end col-->
+                                                        <div class="col-md-6">
+                                                            <div>
+                                                                <ul id="subjects-list" class="list-group" style="min-height:350px; border:1px solid #dde1ef; padding:5px;">
+                                                                    {% for ordered_course_subject in ordered_course_subjects %}
+                                                                    <li class="list-group-item d-flex justify-content-between align-items-center" data-value="{{ordered_course_subject.subject.id}}" draggable="true">
+                                                                        {{ordered_course_subject.subject.name}}
+                                                                        <input type="hidden" value="{{ordered_course_subject.subject.id}}-{{ordered_course_subject.order}}" name="tags[]">
+                                                                        <input type="hidden" value="{{ordered_course_subject.subject.id}}" name="subjects" multiple>
+                                                                        <button type="button" class="btn btn-danger btn-sm remove-item">Remove</button>
+                                                                    </li>
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-lg-12">
                                                             <div>
                                                                 <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
@@ -163,6 +224,21 @@
                                                                 {% if form.slug.errors %}
                                                                 <ul>
                                                                 {% for error in form.slug.errors %}
+                                                                    <li>{{ error }}</li>
+                                                                {% endfor %}
+                                                                </ul>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div><!--end col-->
+                                                        <div class="col-lg-12">
+                                                            <div>
+                                                                <label for="price" class="form-label">Price<span class="text-danger">*</span></label>
+                                                                <input type="text" id="price" class="form-control" placeholder="Price" name="price" value="{{form.price.value}}" required>
+                                                            </div>
+                                                            <div class="form-errors text-danger">
+                                                                {% if form.price.errors %}
+                                                                <ul>
+                                                                {% for error in form.price.errors %}
                                                                     <li>{{ error }}</li>
                                                                 {% endfor %}
                                                                 </ul>
@@ -303,9 +379,103 @@
 {% endblock %}
 
 {% block js %}
-    <script>
-        document.getElementById('id_subjects').classList.add('form-select');
-    </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectBox = document.getElementById('id_subjects');
+        const list = document.getElementById('subjects-list');
+        var orderIndex = 0;
+        // Add item to the list
+        selectBox.addEventListener('change', function() {
+            orderIndex++;
+            const selectedValue = this.value;
+            const selectedText = this.options[this.selectedIndex].text;
+    
+            if (selectedValue) {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                listItem.setAttribute('data-value', selectedValue);
+                listItem.setAttribute('draggable', true);
+                listItem.innerHTML = `
+                    ${selectedText}
+                    <input type="hidden" value="${selectedValue}-${orderIndex}" name="tags[]">
+                    <input type="hidden" value="${selectedValue}" name="subjects" multiple>
+                    <button type="button" class="btn btn-danger btn-sm remove-item">Remove</button>
+                `;
+                list.appendChild(listItem);
+    
+                // Disable the selected option in the dropdown
+                this.options[this.selectedIndex].disabled = true;
+                
+    
+                // Clear the select box
+                this.value = '';
+            }
+        });
+    
+        // Remove item from the list
+        list.addEventListener('click', function(event) {
+            if (event.target.classList.contains('remove-item')) {
+                const listItem = event.target.parentElement;
+                const itemValue = listItem.getAttribute('data-value');
+    
+                // Re-enable the corresponding option in the select box
+                const option = selectBox.querySelector(`option[value="${itemValue}"]`);
+                if (option) {
+                    option.disabled = false;
+                }
+    
+                // Remove the list item
+                listItem.remove();
+            }
+        });
+    
+        // Drag and drop functionality
+        list.addEventListener('dragstart', function(event) {
+            event.target.classList.add('dragging');
+        });
+    
+        list.addEventListener('dragend', function(event) {
+            event.target.classList.remove('dragging');
+            updateOrder();
+        });
+    
+        list.addEventListener('dragover', function(event) {
+            event.preventDefault();
+            const draggingItem = document.querySelector('.dragging');
+            const afterElement = getDragAfterElement(list, event.clientY);
+            if (afterElement == null) {
+                list.appendChild(draggingItem);
+            } else {
+                list.insertBefore(draggingItem, afterElement);
+            }
+        });
+    
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.list-group-item:not(.dragging)')];
+    
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+        
+        function updateOrder() {
+            const items = list.querySelectorAll('#subjects-list li');
+            items.forEach((item, index) => {
+                const input = item.querySelector('input[name="tags[]"]');
+                const category_id = item.dataset.value;
+                if (input) {
+                    input.value = `${category_id}-${index + 1}`;
+                }
+            });
+        }
+    });
+</script>
     <!-- JAVASCRIPT -->
     <script src="{% static 'codedictiondashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'codedictiondashboard/assets/libs/simplebar/simplebar.min.js' %}"></script>

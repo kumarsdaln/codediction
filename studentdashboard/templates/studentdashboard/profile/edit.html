@@ -1,0 +1,231 @@
+{% extends 'studentdashboard/layouts/layout.html' %}
+{% load static %}
+
+{% block metatags %}
+    <title>Profile Settings Settings | Steex - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Minimal Admin & Dashboard Template" name="description">
+    <meta content="Themesbrand" name="author">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'codedictiondashboard/assets/images/favicon.ico' %}">
+{% endblock %}
+
+{% block css %}
+    <!-- Fonts css load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link id="fontsLink" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- Layout config Js -->
+    <script src="{% static 'codedictiondashboard/assets/js/layout.js' %}"></script>
+    <!-- Bootstrap Css -->
+    <link href="{% static 'codedictiondashboard/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- Icons Css -->
+    <link href="{% static 'codedictiondashboard/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- App Css-->
+    <link href="{% static 'codedictiondashboard/assets/css/app.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- custom Css-->
+    <link href="{% static 'codedictiondashboard/assets/css/custom.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block main %}
+
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0">Profile Settings</h4>
+
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="{% url "app.student.profile" %}">Profile</a></li>
+                                        <li class="breadcrumb-item active">Settings</li>
+                                        <li class="breadcrumb-item active">Personal Details</li>
+                                    </ol>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <!--end col-->
+                        {% include "studentdashboard/profile/profile-bar.html" %}
+                        <div class="col-xxl-9">
+                            <div class="d-flex align-items-center flex-wrap gap-2 mb-4">
+                                <ul class="nav nav-pills arrow-navtabs nav-secondary gap-2 flex-grow-1 order-2 order-lg-1" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link active" data-bs-toggle="tab" href="#personalDetails" role="tab" aria-selected="true">
+                                            Personal Details
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'app.student.profile.password-change' %}">
+                                            Changes Password
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'app.student.profile.education' %}">
+                                            Education
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card">
+                                <div class="tab-content">
+
+                                    <div class="tab-pane active" id="personalDetails" role="tabpanel">
+                                        <div class="card-header">
+                                            <h6 class="card-title mb-0">Personal Details</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <form action="{% url 'app.student.profile.edit' %}" method="POST">
+                                                {% csrf_token %}
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="firstnameInput" class="form-label">First Name</label>
+                                                            <input type="text" class="form-control" id="firstnameInput" placeholder="Enter your firstname" name="first_name" value="{{object.user.first_name}}">
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="lastnameInput" class="form-label">Last Name</label>
+                                                            <input type="text" class="form-control" id="lastnameInput" placeholder="Enter your last name" name="last_name" value="{{object.user.last_name}}">
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="phonenumberInput" class="form-label">Phone Number</label>
+                                                            <input type="text" class="form-control" id="phonenumberInput" placeholder="Enter your phone number" name="phone" value="{{object.phone}}">
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="emailInput" class="form-label">Email Address</label>
+                                                            <input type="email" class="form-control" id="emailInput" placeholder="Enter your email" value="{{object.user.email}}" readonly disabled>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="birthDateInput" class="form-label">Birth of Date</label>
+                                                            <input type="date" class="form-control" data-provider="flatpickr" id="birthDateInput" name="dob" value="{{object.dob|date:'Y-m-d'}}" placeholder="Select date" >
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label for="designationInput" class="form-label">Designation</label>
+                                                            <input type="text" class="form-control" id="designationInput" placeholder="Designation" name="designation" value="{{object.designation}}">
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3 pb-2">
+                                                            <label for="location" class="form-label">Address</label>
+                                                            <textarea class="form-control" id="location" placeholder="Enter your address" rows="2" name="location">{{object.location}} </textarea>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3 pb-2">
+                                                            <label for="exampleFormControlTextarea" class="form-label">About</label>
+                                                            <textarea class="form-control" id="exampleFormControlTextarea" placeholder="Enter your description" rows="5" name="bio">{{object.bio}} </textarea>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-12">
+                                                        <div class="hstack gap-2 justify-content-end">
+                                                            <button type="submit" class="btn btn-primary">Updates</button>
+                                                            <a href="{% url "app.student.profile" %}" class="btn btn-subtle-danger">Cancel</a>
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                </div>
+                                                <!--end row-->
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end col-->
+                    </div>
+                    <!--end row-->
+
+                </div>
+                <!-- container-fluid -->
+            </div><!-- End Page-content -->
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <script>document.write(new Date().getFullYear())</script> © Steex.
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-end d-none d-sm-block">
+                                Design & Develop by Themesbrand
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end main content-->
+{% endblock %}
+
+{% block popups %}
+{% endblock %}
+
+{% block js %}
+
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'codedictiondashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'codedictiondashboard/assets/libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'codedictiondashboard/assets/js/plugins.js' %}"></script>
+
+    <!-- password-create init -->
+    <script src="{% static 'codedictiondashboard/assets/js/pages/passowrd-create.init.js' %}"></script>
+
+    <!-- profile-setting init js -->
+    <script src="{% static 'codedictiondashboard/assets/js/pages/profile-setting.init.js' %}"></script>
+
+    <!-- App js -->
+    <script src="{% static 'codedictiondashboard/assets/js/app.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+    {% comment %} <script>
+        document.querySelectorAll('.socail-media-platfroms').forEach(element =>{
+            element.onclick = function(){
+                const div = document.createElement('div');
+                div.setAttribute('class', 'mb-3 d-flex');
+                div.innerHTML = `
+                            <div class="avatar-xs d-block flex-shrink-0 me-3">
+                                <span class="avatar-title rounded-circle bg-dark-subtle text-primary">
+                                    ${this.dataset.smicon}
+                                </span>
+                            </div>
+                            <form action="" method="POST" class="d-flex">
+                            {% csrf_token %}
+                            <input type="hidden" value="${this.dataset.smvalue}">
+                            <input type="text" class="form-control" id="websiteInput" placeholder="Socail Media Link" value="">
+                            <button class="btn btn-primary" type="submit">Save</button>
+                            </form>
+                            `;
+                document.getElementById('social-media').prepend(div)            
+            }
+        })
+    </script> {% endcomment %}
+{% endblock %}

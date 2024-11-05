@@ -5,18 +5,18 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView, DetailView, FormView
-from django.views.generic.edit import FormView
-from django.core.paginator import Paginator
+from django.views.generic import ListView, DetailView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.admin.views.decorators import staff_member_required
-from codedictiondashboard.decorators import group_required
 from codedictiondashboard.CustomLoginRequiredMixin import CustomLoginRequiredMixin
 from codedictionapp.models import SubjectType, Subjects, CourseCategories, Courses, CourseSubject
-from codedictiondashboard.forms import CoursesForm, CourseSubjectOrderForm
+from codedictiondashboard.forms import CoursesForm
+from django.contrib import messages
+from django.db.models import Sum
+from django.db.models import Q
 
-@method_decorator(group_required('Teacher', 'Student'), name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class CoursesViews(CustomLoginRequiredMixin, ListView):
     paginate_by = 10
     model = Courses
@@ -32,7 +32,16 @@ class CoursesViews(CustomLoginRequiredMixin, ListView):
                 queryset = queryset.filter(status=True)
             elif status == 'inactive':
                 queryset = queryset.filter(status=False)
-
+        # Searching
+        search = self.request.GET.get('q', None)
+        if search is not None:
+            search = search.strip()
+            queryset = queryset.filter(
+                Q(course_category__name__icontains=search) | 
+                Q(subjects__name__icontains=search) | 
+                Q(name__icontains=search) |
+                Q(description__icontains=search)
+            ).distinct()
         # Sorting by 'id' or 'title' with direction
         sort_by = self.request.GET.get('sort_by', 'id')
         sort_direction = self.request.GET.get('sort_direction', 'desc')
@@ -52,18 +61,29 @@ class CoursesViews(CustomLoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["total_results"] = self.get_queryset().count()
+        context['q'] = self.request.GET.get('q', None)
         return context
     
-@method_decorator(group_required('Teacher', 'Student'), name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class CoursesDetailViews(CustomLoginRequiredMixin, DetailView):
     model = Courses
     template_name = 'codedictiondashboard/courses/view.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        course = self.object 
+        total_price = course.subjects.aggregate(total_price=Sum('price'))['total_price']
+        total_price = total_price or 0
+        # Calculate the discount percentage if applicable
+        if total_price >= course.price:
+            discount_percentage = round(((total_price - course.price) / total_price) * 100)
+        else:
+            discount_percentage = 0
+        context['total_price'] = total_price
+        context['discount_percentage'] = discount_percentage
         return context
     
-@method_decorator(group_required('Teacher', 'Student'), name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class CoursesCurriculumViews(CustomLoginRequiredMixin, DetailView):
     model = Courses
     template_name = 'codedictiondashboard/courses/curriculum.html'
@@ -78,7 +98,7 @@ class CoursesCurriculumViews(CustomLoginRequiredMixin, DetailView):
         context['course_subjects'] = ordered_course_subjects
         return context
     
-@method_decorator(staff_member_required, name='dispatch')    
+@method_decorator(staff_member_required, name='dispatch')
 class AddCoursesViews(CustomLoginRequiredMixin, View):
     def get(self, request):
         course_categories = CourseCategories.objects.all()
@@ -87,22 +107,35 @@ class AddCoursesViews(CustomLoginRequiredMixin, View):
         return render(request, 'codedictiondashboard/courses/add.html', {
             'course_categories': course_categories,
             'subjects': subjects,
-            'form': form
+            'form': form,
         })
-    
+
     def post(self, request):
         form = CoursesForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('app.dashboard.courses')
-        else:
-            course_categories = CourseCategories.objects.all()
-            subjects = Subjects.objects.all()
-            return render(request, 'codedictiondashboard/courses/add.html', {
-                'form': form,
-                'course_categories': course_categories,
-                'subjects': subjects
-            })
+            course = form.save()  
+            tags = request.POST.getlist('tags[]') 
+            
+            for tag in tags:
+                try:
+                    subject_id, order = map(int, tag.split('-'))
+                    CourseSubject.objects.create(
+                            course=course,
+                            subject_id=subject_id,
+                            order=order
+                        )
+                except (ValueError, CourseSubject.DoesNotExist):
+                    continue
+
+            messages.success(request, 'Course and subject order successfully added!')
+            return redirect('app.dashboard.courses') 
+        course_categories = CourseCategories.objects.all()
+        subjects = Subjects.objects.all()
+        return render(request, 'codedictiondashboard/courses/add.html', {
+            'form': form,
+            'course_categories': course_categories,
+            'subjects': subjects
+        })
 
 @method_decorator(staff_member_required, name='dispatch')
 class EditCoursesViews(CustomLoginRequiredMixin, View):
@@ -111,20 +144,55 @@ class EditCoursesViews(CustomLoginRequiredMixin, View):
         form = CoursesForm(instance=course)
         course_categories = CourseCategories.objects.all()
         subjects = Subjects.objects.all()
+        ordered_course_subjects = CourseSubject.objects.filter(course=course).order_by('order')
         return render(request, 'codedictiondashboard/courses/edit.html', {
             'form': form,
             'course_categories': course_categories,
             'subjects': subjects,
-            'course': course
+            'course': course,
+            'ordered_course_subjects':ordered_course_subjects
         })
     
     def post(self, request, course_id):
         course = get_object_or_404(Courses, pk=course_id)
         form = CoursesForm(request.POST, request.FILES, instance=course)
         if form.is_valid():
-            form.save()
+            course = form.save()  # Save the course first
+            
+            # Retrieve current CourseSubject records for this course
+            current_course_subjects = CourseSubject.objects.filter(course=course)
+            current_subject_ids = set(current_course_subjects.values_list('subject_id', flat=True))
+            
+            # Get subject and order from 'tags[]'
+            new_subject_orders = request.POST.getlist('tags[]')
+            new_subject_ids = set()
+
+            for tag in new_subject_orders:
+                try:
+                    # Split the subject_id and order from the format 'subject_id-order'
+                    subject_id, order = map(int, tag.split('-'))
+                    new_subject_ids.add(subject_id)
+                    
+                    # If the subject already exists, update its order
+                    if subject_id in current_subject_ids:
+                        course_subject = CourseSubject.objects.get(course=course, subject_id=subject_id)
+                        course_subject.order = order
+                        course_subject.save()
+                    else:
+                        # Add new subject if it doesn't exist
+                        CourseSubject.objects.create(course=course, subject_id=subject_id, order=order)
+                except (ValueError, CourseSubject.DoesNotExist):
+                    # Ignore invalid data or errors
+                    continue
+
+            # Remove subjects that are no longer in the updated list
+            subjects_to_remove = current_subject_ids - new_subject_ids
+            CourseSubject.objects.filter(course=course, subject_id__in=subjects_to_remove).delete()
+
+            messages.success(request, 'Course and subject order successfully updated!')
             return redirect('app.dashboard.courses')
         else:
+            # Re-render the page if form is invalid
             course_categories = CourseCategories.objects.all()
             subjects = Subjects.objects.all()
             return render(request, 'codedictiondashboard/courses/edit.html', {
@@ -145,54 +213,6 @@ class DeleteCoursesViews(CustomLoginRequiredMixin, View):
         return JsonResponse(result, safe=False)
 
 @method_decorator(staff_member_required, name='dispatch')
-class UpdateCourseSubjectsOrder(CustomLoginRequiredMixin, FormView):
-    template_name = 'codedictiondashboard/courses/update-course-subjects-order.html'
-    form_class = CourseSubjectOrderForm
-    
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        course = get_object_or_404(Courses, id=self.kwargs['course_id'])
-        kwargs['course'] = course
-        return kwargs
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        course = get_object_or_404(Courses, id=self.kwargs['course_id'])
-        context['course'] = course
-        return context
-    
-    def form_valid(self, form):
-        course = get_object_or_404(Courses, id=self.kwargs['course_id'])
-        existing_subject_ids = set()
-        
-        for key, value in form.cleaned_data.items():
-            if key.startswith('order_new_'):
-                try:
-                    subject_id = int(key.split('_')[2])
-                    if subject_id not in existing_subject_ids:
-                        course_subject = CourseSubject(
-                            course=course,
-                            subject_id=subject_id,
-                            order=value
-                        )
-                        course_subject.save()
-                except ValueError:
-                    continue  # Ignore if the conversion fails
-            elif key.startswith('order_'):
-                try:
-                    subject_id = int(key.split('_')[1])
-                    course_subject = CourseSubject.objects.get(id=subject_id, course=course)
-                    course_subject.order = value
-                    course_subject.save()
-                    existing_subject_ids.add(subject_id)
-                except CourseSubject.DoesNotExist:
-                    continue
-        return super().form_valid(form)
-    
-    def get_success_url(self):
-        return reverse('app.dashboard.courses.view', kwargs={'course_id': self.kwargs['course_id']})
-
-@method_decorator(staff_member_required, name='dispatch')
 class StatusCoursesViews(CustomLoginRequiredMixin,View):
     def get(self, request, course_id):
         course = get_object_or_404(Courses, pk=course_id)
@@ -201,4 +221,4 @@ class StatusCoursesViews(CustomLoginRequiredMixin,View):
         else:
             course.status=1
         course.save()        
-        return redirect(request.META.get('HTTP_REFERER'))   
+        return redirect(request.META.get('HTTP_REFERER'))

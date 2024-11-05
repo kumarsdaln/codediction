@@ -10,12 +10,9 @@ from django.views import View
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from codedictionapp.models import BlogCategory, Blog
-from django.core.paginator import Paginator
-import math
-import readtime
-import datetime
 from codedictiondashboard.CustomLoginRequiredMixin import CustomLoginRequiredMixin
 from codedictiondashboard.forms import BlogForm
+from django.db.models import Q
 
 @method_decorator(staff_member_required, name='dispatch')
 class BlogViews(CustomLoginRequiredMixin,ListView):
@@ -33,7 +30,16 @@ class BlogViews(CustomLoginRequiredMixin,ListView):
                 queryset = queryset.filter(status=True)
             elif status == 'inactive':
                 queryset = queryset.filter(status=False)
-
+        # Searching
+        search = self.request.GET.get('q', None)
+        if search is not None:
+            search = search.strip()
+            queryset = queryset.filter(
+                Q(category__name__icontains=search) | 
+                Q(title__icontains=search) | 
+                Q(brief__icontains=search) |
+                Q(description__icontains=search)
+            ).distinct()
         # Sorting by 'id' or 'title' with direction
         sort_by = self.request.GET.get('sort_by', 'uploaded_at')
         sort_direction = self.request.GET.get('sort_direction', 'desc')
@@ -54,6 +60,7 @@ class BlogViews(CustomLoginRequiredMixin,ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["total_blog"] = self.get_queryset().count()
+        context['q'] = self.request.GET.get('q', None)
         return context
     
 @method_decorator(staff_member_required, name='dispatch')    

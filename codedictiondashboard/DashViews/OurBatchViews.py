@@ -11,7 +11,6 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.views import View
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
-from django.core.paginator import Paginator
 from codedictiondashboard.CustomLoginRequiredMixin import CustomLoginRequiredMixin
 from codedictionapp.models import Courses, OurBatch
 from codedictiondashboard.forms import OurBatchForm

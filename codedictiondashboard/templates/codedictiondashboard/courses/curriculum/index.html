@@ -33,6 +33,24 @@
     <link href="{% static 'codedictiondashboard/assets/css/app.min.css' %}" rel="stylesheet" type="text/css">
     <!-- custom Css-->
     <link href="{% static 'codedictiondashboard/assets/css/custom.min.css' %}" rel="stylesheet" type="text/css">
+    
+    <style>
+        .accordion-item {
+            transition: background-color 0.3s; /* Smooth background color change */
+        }
+    
+        .accordion-item.dragging {
+            opacity: 0.5; /* Fade effect for dragged item */
+        }
+    
+        .drop-placeholder {
+            border: 2px dashed #ccc; /* Dashed border for placeholder */
+            background-color: #f9f9f9; /* Light background for placeholder */
+            height: 40px; /* Set height to match items */
+            margin: 5px 0; /* Space around the placeholder */
+        }
+    </style>
+    
 {% endblock %}
 
 {% block main %}
@@ -88,7 +106,7 @@
                             <div class="accordion accordion-border-box" id="accordionlefticon">
                                 {% with s_fiter_args='{"relation_with":null}' %}
                                 {% for curriculum in subjects.curriculum_set|in_filter_by:s_fiter_args %}
-                                <div class="accordion-item {% if forloop.counter > 1 %}mt-2{% endif %}">
+                                <div class="accordion-item {% if forloop.counter > 1 %}mt-2{% endif %}" draggable="true" data-id="{{ forloop.counter }}">
                                     <h2 class="accordion-header" id="accordionlefticonExample{{curriculum.id}}">
                                         <a class="accordion-button collapsed" href="{% url 'app.dashboard.courses.subjects.curriculum.details' subjects.slug curriculum.slug %}">
                                             {{curriculum.title}} <small class="ms-1 align-baseline"></small>
@@ -381,4 +399,112 @@
 
     <!-- App js -->
     <script src="{% static 'codedictiondashboard/assets/js/app.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        let draggedItem = null;
+        const placeholder = document.createElement('div');
+        placeholder.classList.add('drop-placeholder'); // Placeholder styling for visual feedback
+    
+        accordionItems.forEach(item => {
+            item.setAttribute('draggable', true); // Make each item draggable
+            item.addEventListener('dragstart', handleDragStart);
+            item.addEventListener('dragover', handleDragOver);
+            item.addEventListener('drop', handleDrop);
+            item.addEventListener('dragend', handleDragEnd);
+        });
+    
+        function handleDragStart(e) {
+            draggedItem = this;
+            this.classList.add('dragging'); // Highlight the dragged item
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', this.dataset.id);
+        }
+    
+        function handleDragOver(e) {
+            e.preventDefault(); // Necessary to allow dropping
+            const targetItem = e.target.closest('.accordion-item');
+    
+            if (targetItem && targetItem !== draggedItem) {
+                const bounding = targetItem.getBoundingClientRect();
+                const offset = bounding.y + bounding.height / 2;
+                if (e.clientY < offset) {
+                    targetItem.parentNode.insertBefore(placeholder, targetItem); // Insert above
+                } else {
+                    targetItem.parentNode.insertBefore(placeholder, targetItem.nextSibling); // Insert below
+                }
+            }
+        }
+    
+        function handleDrop(e) {
+            e.preventDefault();
+            const targetItem = e.target.closest('.accordion-item');
+    
+            if (targetItem && draggedItem !== targetItem) {
+                // Insert the dragged item at the new position
+                reorderItems(targetItem);
+            }
+            resetDragState();
+        }
+    
+        function handleDragEnd() {
+            resetDragState();
+        }
+    
+        function resetDragState() {
+            if (draggedItem) {
+                draggedItem.classList.remove('dragging'); // Remove dragging visual feedback
+            }
+            if (placeholder.parentNode) {
+                placeholder.parentNode.removeChild(placeholder); // Remove placeholder
+            }
+            draggedItem = null; // Reset dragged item
+        }
+    
+        function reorderItems(targetItem) {
+            if (placeholder.nextSibling === targetItem) {
+                targetItem.parentNode.insertBefore(draggedItem, targetItem.nextSibling); // Move below
+            } else {
+                targetItem.parentNode.insertBefore(draggedItem, targetItem); // Move above
+            }
+    
+            // Call the function to update the order in the backend
+            updateOrder();
+        }
+    
+        function updateOrder() {
+            const apiUrl = "{% url 'app.dashboard.courses.subjects.update-order' subjects.slug %}";
+            const data = [];
+    
+            document.querySelectorAll('.accordion-item').forEach((item, index) => {
+                data.push({
+                    'id': item.dataset.id,
+                    'order': index + 1 // New order based on position
+                });
+            });
+    
+            // Send the updated order to the server
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Order updated successfully');
+                } else {
+                    console.error('Failed to update order:', data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error updating order:', error);
+            });
+        }
+    });    
+        </script>
+        
 {% endblock %}

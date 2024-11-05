@@ -52,11 +52,12 @@ class Courses(models.Model):
     course_category = models.ForeignKey(CourseCategories, on_delete=models.CASCADE, null=True)
     meta_data = models.TextField(null=True)
     status = models.BooleanField(default=True)
+    price = models.FloatField(default=0)
     def __str__(self):
         return f"{self.name}"
 
 class CourseSubject(models.Model):
-    course = models.ForeignKey(Courses, on_delete=models.CASCADE)
+    course = models.ForeignKey(Courses, on_delete=models.CASCADE, related_name='course_subject')
     subject = models.ForeignKey(Subjects, on_delete=models.CASCADE)
     order = models.PositiveIntegerField()
 
@@ -95,6 +96,11 @@ class Curriculum(models.Model):
     description = models.TextField()
     relation_with = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     meta_data = models.TextField(null=True)
+    order = models.PositiveIntegerField(default=1)
+    
+    class Meta:
+        ordering = ['order']
+
     def __str__(self):
         return f"{self.title}"
 
@@ -169,45 +175,6 @@ class OurClients(models.Model):
     def __str__(self):
         return f"{self.name}"
     
-class UserType(models.Model):
-    USER_TYPE_CHOICES = (
-        ('S', 'Student'),
-        ('T', 'Teacher'),
-    )
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_type')
-    user_type = models.CharField(max_length=2, choices=USER_TYPE_CHOICES)
-    def __str__(self):
-        return f'{self.user.username} - {self.user_type}'
-    
-class StudentProfile(models.Model):
-    user_type = models.OneToOneField(UserType, on_delete=models.CASCADE, related_name='student_profile')
-    designation = models.CharField(max_length=255, null=True)
-    phone = models.CharField(max_length=15, null=True)
-    bio = models.TextField(blank=True, null=True)
-    photo = models.ImageField(upload_to='uploads/student', null=True)
-    enrolled_courses = models.ManyToManyField(Courses, through='Enrollment', related_name='enrolled_students')
-    
-    def __str__(self):
-        return f"{self.name}"
-    
-class Enrollment(models.Model):
-    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE, related_name='enrollments')
-    course = models.ForeignKey(Courses, on_delete=models.CASCADE, related_name='enrollments')
-    enrolled_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'{self.student.user.username} - {self.course.title}'
-    
-class TeacherProfile(models.Model):
-    user_type = models.OneToOneField(UserType, on_delete=models.CASCADE, related_name='teacher_profile')
-    designation = models.CharField(max_length=255, null=True)
-    phone = models.CharField(max_length=15, null=True)
-    bio = models.TextField(blank=True, null=True)
-    photo = models.ImageField(upload_to='uploads/student', null=True)
-    
-    def __str__(self):
-        return f"{self.user_type.user.first_name}"    
-    
 class OurTeam(models.Model):
     name = models.CharField(max_length=255)
     designation = models.CharField(max_length=255)
@@ -240,3 +207,16 @@ class SubscribeNewsletter(models.Model):
     uploaded_at = models.DateTimeField() 
     def __str__(self):
         return f"{self.email}"  
+    
+class SocialMediaPlatform(models.Model):
+    name = models.CharField(max_length=100)
+    icon = models.TextField()
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'Notification for {self.user.username}'    

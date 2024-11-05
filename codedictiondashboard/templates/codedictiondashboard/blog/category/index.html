@@ -72,7 +72,7 @@
                                 
                                         <div class="col-lg-auto text-end">
                                             <div class="d-flex gap-2">
-                                                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCourse"><i class="bi bi-plus align-baseline me-1"></i> Add New</button>
+                                                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCourse" id="add-category"><i class="bi bi-plus align-baseline me-1"></i> Add New</button>
                                             </div>
                                         </div><!--end col-->
                                     </div><!--end row-->
@@ -99,7 +99,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="price"><a href="{% url 'app.dashboard.blog.bycategory' category.slug %}">{{category.blog_set.count}}</a></td>
+                                            <td class="price"><a href="">{{category.blog_set.count}}</a></td>
                                             <td>
                                                 <button class="btn btn-warning edit-category" data-name="{{category.name}}" data-slug="{{category.slug}}" data-metatags="{{category.meta_tags}}" data-action="{% url 'app.dashboard.blog.category.edit' category.id %}" data-bs-toggle="modal" data-bs-target="#addCourse"><i class="bi bi-pencil align-baseline me-1"></i> Edit</button>
                                                 <button class="btn btn-danger delete-item" data-action="{% url 'app.dashboard.blog.category.delete' category.id %}" data-removeitem="cat-{{category.id}}" data-bs-toggle="modal" data-bs-target="#deleteRecordModal"><i class="bi bi-trash align-baseline me-1"></i> Delete</button>
@@ -227,6 +227,14 @@
                 document.getElementById('add-btn').innerHTML='Edit Category'
             }
         })
+        document.getElementById('add-category').onclick = function(){
+                document.getElementById('name').value='';
+                document.getElementById('slug').value='';
+                document.getElementById('meta_tags').value='';
+                document.getElementById('add-edit-form').action="{% url 'app.dashboard.blog.category.add' %}";
+                document.getElementById('addCourseLabel').innerHTML='Add Category'
+                document.getElementById('add-btn').innerHTML='Add Category'
+            }
     </script>
     <!-- JAVASCRIPT -->
     <script src="{% static "codedictiondashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js" %}"></script>

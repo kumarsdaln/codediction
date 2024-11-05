@@ -1,0 +1,142 @@
+{% extends 'studentdashboard/layouts/layout.html' %}
+{% load static %}
+{% load mathematical_tags %}
+{% load orm_tags %}
+
+{% block metatags %}
+    <meta charset="utf-8">
+    <title>Overview | Steex - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Minimal Admin & Dashboard Template" name="description">
+    <meta content="Themesbrand" name="author">
+{% endblock %}
+
+{% block css %}
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'codedictiondashboard/assets/images/favicon.ico' %}">
+
+    <!-- Fonts css load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link id="fontsLink" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- dropzone css -->
+    <link href="{% static 'codedictiondashboard/assets/libs/dropzone/dropzone.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Layout config Js -->
+    <script src="{% static 'codedictiondashboard/assets/js/layout.js' %}"></script>
+    <!-- Bootstrap Css -->
+    <link href="{% static 'codedictiondashboard/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- Icons Css -->
+    <link href="{% static 'codedictiondashboard/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- App Css-->
+    <link href="{% static 'codedictiondashboard/assets/css/app.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- custom Css-->
+    <link href="{% static 'codedictiondashboard/assets/css/custom.min.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block main %}
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0">Curriculum</h4>
+
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Courses</a></li>
+                                        <li class="breadcrumb-item active">Curriculum</li>
+                                    </ol>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>{{courses.name}}</h4>
+                                </div>
+                            </div><!--end card-->
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="description" role="tabpanel">
+                                            {% autoescape off %}
+                                            {{courses.description}}
+                                            {% endautoescape %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="accordion accordion-border-box" id="accordionlefticon">
+                                {% for subject in course_subjects %}
+                                <div class="accordion-item {% if forloop.counter > 1 %}mt-2{% endif %}">
+                                    <h2 class="accordion-header" id="accordionlefticonExample{{curriculum.id}}">
+                                        <a class="accordion-button collapsed" href="{% url 'app.student.courses.subjects.curriculum' subject.subject.slug %}">
+                                            {{subject.subject.name}} <small class="ms-1 align-baseline"></small>
+                                        </a>
+                                    </h2>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div><!--end col-->
+                    </div><!--end row-->
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <script>document.write(new Date().getFullYear())</script> © Steex.
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-end d-none d-sm-block">
+                                Design & Develop by Themesbrand
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end main content-->
+{% endblock %}
+
+{% block popups %}
+{% endblock %}
+
+{% block js %}
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'codedictiondashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'codedictiondashboard/assets/libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'codedictiondashboard/assets/js/plugins.js' %}"></script>
+
+    <!-- dropzone js -->
+    <script src="{% static 'codedictiondashboard/assets/libs/dropzone/dropzone-min.js' %}"></script>
+
+    <!-- rater-js plugin -->
+    <script src="{% static 'codedictiondashboard/assets/libs/rater-js/index.js' %}"></script>
+    
+    <!-- Learning overview js -->
+    <script src="{% static 'codedictiondashboard/assets/js/pages/learning-overview.init.js' %}"></script>
+
+    <!-- App js -->
+    <script src="{% static 'codedictiondashboard/assets/js/app.js' %}"></script>
+{% endblock %}

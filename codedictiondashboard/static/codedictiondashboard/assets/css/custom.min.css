@@ -1,8 +1,0 @@
-
-/*# sourceMappingURL=custom.min.css.map */
-.text-truncate-2{
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-}

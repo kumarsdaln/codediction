@@ -169,7 +169,7 @@
                                         <div class="accordion-body">
                                             <ul class="list-group list">
                                                 {% for rel_curriculum in acurriculum.curriculum_set.all %}
-                                                <li class="list-group-item position-relative">
+                                                <li class="list-group-item position-relative" draggable>
                                                     <div class="d-flex align-items-center">
                                                         <div class="flex-grow-1 ms-2">
                                                             <a href="{% url 'app.dashboard.courses.subjects.curriculum.details' rel_curriculum.subject.slug rel_curriculum.slug %}" class="stretched-link text-reset">{{rel_curriculum.title}}</a>

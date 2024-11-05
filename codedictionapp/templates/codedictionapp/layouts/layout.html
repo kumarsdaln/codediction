@@ -13,6 +13,11 @@
 
     {% block styles %}
     {% endblock styles %}
+    <style>
+        #newsletter_error{
+            display:none;
+        }
+    </style>
 </head>
 
 <body class="home-purple-gradient">
@@ -36,25 +41,13 @@
                         <div class="menu-wrap">
                             <nav class="menu-nav">
                                 <div class="logo">
-                                    <a href="index-2.html"><img src="{% static 'codedictionapp/assets/img/logo/logo-light.png' %}" style="height: 60px;" alt="Logo"></a>
+                                    <a href="{% url "app.index" %}"><img src="{% static 'codedictionapp/assets/img/logo/logo-light.png' %}" style="height: 60px;" alt="Logo"></a>
                                 </div>
                                 <div class="navbar-wrap main-menu d-none d-lg-flex">
                                     <ul class="navigation">
-                                        <li class="active menu-item-has-children"><a class="section-link" href="#header">Home</a>
-                                            <ul class="sub-menu">
-                                                <li class="active"><a href="index-2.html">ICO Investment</a></li>
-                                                <li><a href="index-3.html">Blockchain</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#feature" class="section-link">Feature</a></li>
-                                        <li><a href="#roadMap" class="section-link">RoadMap</a></li>
-                                        <li class="menu-item-has-children"><a href="#">blog</a>
-                                            <ul class="sub-menu">
-                                                <li><a href="blog.html">Our Blog</a></li>
-                                                <li><a href="blog-details.html">Blog Details</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li class="active"><a class="section-link" href="{% url "app.index" %}">Home</a></li>
+                                        <li><a href="{% url "app.blog" %}" class="section-link">Blog</a></li>
+                                        <li><a href="{% url "app.contact" %}">Contact</a></li>
                                     </ul>
                                 </div>
                                 <div class="header-action">
@@ -150,27 +143,63 @@
                     <div class="footer-widget widget-newsletter">
                         <h3 class="fw-title">SIGN UP FOR EMAIL UPDATES</h3>
                         <p class="newsletter-text">Sign up with your email address to receive news and updates</p>
-                        <form class="newsletter-form">
+                        <form class="newsletter-form" id="newsletter-form">
                             <div class="form-group">
-                                <input class="form-control" type="email" placeholder="Your Email Address" required="">
+                                {% csrf_token %}
+                                <input class="form-control" type="email" id="email_newsletter" placeholder="Your Email Address" required="">
                             </div>
-                            <button type="submit" class="btn btn5">Subscribe</button>
+                            <button type="button" class="btn btn5" id="send_newsletter">Subscribe</button>
                         </form>
+                        <span class="text-danger" id="newsletter_error">Please Enter Valid Email</span>
                     </div>
                 </div>
                 <div class="col-xl-auto col-lg-6 order-xl-2">
                     <div class="footer-widget widget-contact">
                         <h3 class="fw-title">CONTACT US</h3>
                         <p class="contact-info-text">202 Helga Springs Rd, Crawford, TN 38554</p>
-                        <div class="contact-info-link">Call Us: <a href="tel:8002758777">800.275.8777</a></div>
-                        <div class="contact-info-link"><a href="mailto:iko@company.com">iko@company.com</a></div>
-                        <p class="copyright-text">Copyright © 2024 <a href="#">IKO.</a> All rights reserved.</p>
+                        <div class="contact-info-link">Call Us: <a href="tel:8002758777">+91-8218444136</a></div>
+                        <div class="contact-info-link"><a href="mailto:iko@company.com">business@codediction.com</a></div>
+                        <p class="copyright-text">Copyright © 2024 <a href="#">Codediction</a> All rights reserved.</p>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
-
+    <script>
+        var submitBtn = document.getElementById('send_newsletter');
+        submitBtn.onclick = function() {
+            var _token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+            var email  = document.getElementById('email_newsletter').value;
+            console.log('j');
+            submitForm(_token, email);
+        }
+        function submitForm(_token, email){
+            const formData = new FormData();
+            formData.append('csrfmiddlewaretoken', _token);
+            formData.append('email', email);
+            fetch("{% url 'app.newsletter.sendform' %}", {
+              method: 'POST',
+              body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if(result.status == true){
+                    document.getElementById('newsletter_error').style.display = 'none';
+                    document.getElementById('newsletter-form').innerHTML = `
+                    <div id="newsletter-success" class="newsletter-success success" style="
+                                border: 2px solid #28d366;
+                                padding: 16px 60px 17px 16px;
+                                text-align: center;
+                                font-size: 20px;
+                                border-radius: 30px;">
+                                    Subscribed
+                                </div>`;
+                } else {
+                    document.getElementById('newsletter_error').style.display = 'block';
+                }
+            })
+        }
+    </script>
     {% block scripts %}
     {% endblock scripts %}
 </body>

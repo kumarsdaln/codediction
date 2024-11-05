@@ -20,6 +20,6 @@ def group_required(*group_names):
                 else:
                     raise PermissionDenied
             else:
-                return redirect('login')
+                return redirect('app.student.login')
         return _wrapped_view
     return decorator

@@ -63,6 +63,7 @@
                     <!-- end page title -->
 
                     <div class="row">
+                        {% include "codedictiondashboard/message/message.html" %}
                         <div class="col-xl-8 col-lg-7">
                             <div class="card">
                                 <div class="card-body">
@@ -82,17 +83,17 @@
                             </div>
                         </div><!--end col-->
                         <div class="col-xl-4 col-lg-5">
-                            <div class="accordion accordion-border-box" id="accordionlefticon">
+                            <ul class="accordion accordion-border-box" id="accordionlefticon">
                                 {% for subject in course_subjects %}
-                                <div class="accordion-item {% if forloop.counter > 1 %}mt-2{% endif %}">
+                                <li class="accordion-item {% if forloop.counter > 1 %}mt-2{% endif %}" draggable>
                                     <h2 class="accordion-header" id="accordionlefticonExample{{curriculum.id}}">
                                         <a class="accordion-button collapsed" href="{% url 'app.dashboard.courses.subjects.curriculum' subject.subject.slug %}">
                                             {{subject.subject.name}} <small class="ms-1 align-baseline"></small>
                                         </a>
                                     </h2>
-                                </div>
+                                </li>
                                 {% endfor %}
-                            </div>
+                            </ul>
                         </div><!--end col-->
                     </div><!--end row-->
 

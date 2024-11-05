@@ -63,6 +63,7 @@
                     <!-- end page title -->
 
                     <div class="row justify-content-center">
+                        {% include "codedictiondashboard/message/message.html" %}
                         <div class="col-xl-9">
                             <div class="card">
                                 <div class="card-body">
@@ -453,35 +454,18 @@
                                 </div>
                             </div>
                         </div><!--end col-->
-                        {% comment %} <div class="col-xl-3 col-lg-4">
+                        <div class="col-xl-3 col-lg-4">
                             <div class="card overflow-hidden ribbon-box">
-                                <span class="ribbon ribbon-danger rounded-end">Off 20%</span>
-                                <div class="card-body bg-info-subtle text-center learning-widgets d-flex align-items-center justify-content-center">
-                                    <img src="assets/images/learning/react.png" alt="" class="avatar-lg">
-                                    <img src="assets/images/learning/react.png" alt="" class="effect">
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="text-truncate text-capitalize">$245.95 <small class="text-decoration-line-through fs-xs text-muted align-baseline">499.99</small></h4>
-                                    <p class="text-danger"><i class="bi bi-clock me-2"></i> <b>10</b> days left at this price</p>
-                                    <div class="hstack gap-2">
-                                        <button class="btn btn-secondary w-100">Free Trial</button>
-                                        <button class="btn btn-primary w-100"><i class="bi bi-bag align-baseline me-1"></i> Buy Now</button>
-                                    </div>
-                                </div>
-                            </div><!--end card-->
-                            <div class="card">
-                                <div class="card-header">
-                                    <h6 class="card-title mb-0">This course includes</h6>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="list-unstyled vstack gap-2 mb-0">
+                                {% if total_price >= courses.price %}<span class="ribbon ribbon-danger rounded-end">Off {{discount_percentage}}%</span>{% endif %}
+                                <div class="card-body bg-info-subtle learning-widgets d-flex align-items-center justify-content-center" style="padding-top: 47px;">
+                                     <ul class="list-unstyled vstack gap-2 mb-0">
                                         <li>
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-grow-1">
                                                     <i class="ph ph-book-open align-middle me-1 text-primary-emphasis"></i> Lessons
                                                 </div>
                                                 <div class="flex-shrink-0 text-muted">
-                                                    35
+                                                    {{courses.subjects.count}}
                                                 </div>
                                             </div>
                                         </li>
@@ -498,10 +482,10 @@
                                         <li>
                                             <div class="d-flex align-items-center">
                                                 <div class="flex-grow-1">
-                                                    <i class="ph ph-chart-bar align-middle me-1 text-primary-emphasis"></i> Skills
+                                                    <i class="ph ph-chart-bar align-middle me-1 text-primary-emphasis"></i> Course Level
                                                 </div>
                                                 <div class="flex-shrink-0 text-muted">
-                                                    Beginner
+                                                    Intermidiate
                                                 </div>
                                             </div>
                                         </li>
@@ -511,7 +495,7 @@
                                                     <i class="ph ph-book-open align-middle me-1 text-primary-emphasis"></i> Language
                                                 </div>
                                                 <div class="flex-shrink-0 text-muted">
-                                                    English
+                                                    Hindi/English
                                                 </div>
                                             </div>
                                         </li>
@@ -527,35 +511,11 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header">
-                                    <a href="apps-instructors-overview.html" class="float-end link-effect">View More <i class="bi bi-arrow-right align-baseline ms-1"></i></a>
-                                    <h6 class="card-title mb-0">Instructor Details</h6>
-                                </div>
                                 <div class="card-body">
-                                    <div class="d-flex gap-2 align-items-center mb-3">
-                                        <div class="flex-shrink-0">
-                                            <img src="assets/images/users/48/avatar-2.jpg" alt="" class="avatar-sm rounded">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h6 class="fs-md">Morton Satterfield</h6>
-                                            <p class="text-muted mb-0">Software Engineering</p>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-subtle-info w-100" id="agent-chat"><i class="bi bi-chat-text align-baseline me-1"></i> Get In Touch</button>
+                                    <h4 class="text-truncate text-capitalize">₹{{courses.price}} {% if total_price >= courses.price %}<small class="text-decoration-line-through fs-xs text-muted align-baseline">₹{{total_price}}</small>{% endif %}</h4>
                                 </div>
-                            </div>
-                            <div class="card card-primary file-manager-widgets">
-                                <div class="card-body">
-                                    <h6 class="card-title text-reset"> Join Membership</h6>
-                                    <p class="text-white-50 mb-5">Access all course anywhere and any time</p>
-                                    <div class="mt-4">
-                                        <a href="pages-pricing.html" class="btn btn-light w-md">Join Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!--end col--> {% endcomment %}
+                            </div><!--end card-->
+                        </div><!--end col--> 
                     </div><!--end row-->
 
                 </div>

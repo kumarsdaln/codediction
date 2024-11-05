@@ -72,7 +72,7 @@
                                 
                                         <div class="col-lg-auto text-end">
                                             <div class="d-flex gap-2">
-                                                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCourse"><i class="bi bi-plus align-baseline me-1"></i> Add New</button>
+                                                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCourse" id="add-category"><i class="bi bi-plus align-baseline me-1"></i> Add New</button>
                                             </div>
                                         </div><!--end col-->
                                     </div><!--end row-->
@@ -223,10 +223,18 @@
                 document.getElementById('slug').value=this.dataset.slug
                 document.getElementById('meta_data').value=this.dataset.metatags
                 document.getElementById('add-edit-form').action=this.dataset.action
-                document.getElementById('addCourseLabel').innerHTML='Edit Category'
-                document.getElementById('add-btn').innerHTML='Edit Category'
+                document.getElementById('addCourseLabel').innerHTML='Edit Subject Type'
+                document.getElementById('add-btn').innerHTML='Edit Subject Type'
             }
         })
+        document.getElementById('add-category').onclick = function(){
+            document.getElementById('name').value='';
+            document.getElementById('slug').value='';
+            document.getElementById('meta_data').value='';
+            document.getElementById('add-edit-form').action="{% url 'app.dashboard.courses.subjects.type.add' %}";
+            document.getElementById('addCourseLabel').innerHTML='Add Subject Type'
+            document.getElementById('add-btn').innerHTML='Add Subject Type'
+        }
     </script>
     <!-- JAVASCRIPT -->
     <script src="{% static "codedictiondashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js" %}"></script>

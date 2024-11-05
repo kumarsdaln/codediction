@@ -71,10 +71,12 @@
                                 <div class="card-body">
                                     <div class="row align-items-center gy-3">
                                         <div class="col-lg-3 order-last order-md-first me-auto">
-                                            <div class="search-box">
-                                                <input type="text" class="form-control search" placeholder="Search for agent, email, address or something...">
-                                                <i class="ri-search-line search-icon"></i>
-                                            </div>
+                                            <form action="{% url "app.dashboard.blog" %}" method="GET">
+                                                <div class="search-box">
+                                                    <input type="text" class="form-control search" placeholder="Search..." name="q" value="{% if q is not None %}{{q}}{% endif %}">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div>
+                                            </form>
                                         </div><!--end col-->
                                         <div class="col-lg-2">
                                             <div>
@@ -147,52 +149,18 @@
                             </div><!--end card-->
                         </div><!--end col-->
                         {% empty %}
-                        <div class="noresult" style="display: none">
-                            <div class="text-center py-4">
-                                <i class="ph-magnifying-glass fs-1 text-primary"></i>
-                                <h5 class="mt-2">Sorry! No Result Found</h5>
-                                <p class="text-muted mb-0">We've searched more than 164+ courses We did not find any courses for you search.</p>
+                        <div class="col mx-auto">
+                            <div class="noresult">
+                                <div class="text-center py-4">
+                                    <i class="ph-magnifying-glass fs-1 text-primary"></i>
+                                    <h5 class="mt-2">Sorry! No Result Found</h5>
+                                    <p class="text-muted mb-0">We've searched, We did not find any related query for you search.</p>
+                                </div>
                             </div>
                         </div>
                         {% endfor %}
                     </div><!--end row-->
-                    <div class="row align-items-center mb-3">
-                        <div class="col-sm">
-                            <div class="text-muted text-center text-sm-start">
-                                Showing <span class="fw-semibold">{{blog_list.count}}</span> of <span class="fw-semibold">{{total_blog}}</span> Results
-                            </div>
-                        </div><!--end col-->
-                        <div class="col-sm-auto mt-3 mt-sm-0">
-                            <div class="pagination-wrap hstack justify-content-center gap-2">
-                                
-                                
-                                <ul class="pagination listjs-pagination mb-0">
-                                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                                    {% comment %} <li class="active"><a class="page" href="#" data-i="1" data-page="10">1</a></li>
-                                    <li><a class="page" href="#" data-i="2" data-page="10">2</a></li> {% endcomment %}
-                                </ul>
-                                {% if page_obj.has_previous %}
-                                <a class="page-item pagination-prev" href="?page={{ page_obj.previous_page_number }}">
-                                    Previous
-                                </a>
-                                {% else %}
-                                <a class="page-item pagination-prev disabled" href="#">
-                                    Previous
-                                </a>
-                                {% endif %}
-                                {% if page_obj.has_next %}
-                                <a class="page-item pagination-next" href="?page={{ page_obj.next_page_number }}">
-                                    Next
-                                </a>
-                                {% else %}
-                                <a class="page-item pagination-next disabled" href="#">
-                                    Next
-                                </a>
-                                {% endif %}
-                            </div>
-                        </div><!--end col-->
-                    </div><!--end row-->
-
+                    {% include "codedictiondashboard/paginator/paginator.html" %}
                 </div>
                 <!-- container-fluid -->
             </div>

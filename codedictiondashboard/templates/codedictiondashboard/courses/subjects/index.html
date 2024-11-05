@@ -71,19 +71,14 @@
                                 <div class="card-body">
                                     <div class="row align-items-center gy-3">
                                         <div class="col-lg-3 order-last order-md-first me-auto">
-                                            <div class="search-box">
-                                                <input type="text" class="form-control search" placeholder="Search for agent, email, address or something...">
-                                                <i class="ri-search-line search-icon"></i>
-                                            </div>
+                                            <form action="{% url "app.dashboard.courses.subjects" %}" method="GET">
+                                                <div class="search-box">
+                                                    <input type="text" class="form-control search" placeholder="Search..." name="q" value="{% if q is not None %}{{q}}{% endif %}">
+                                                    <i class="ri-search-line search-icon"></i>
+                                                </div>
+                                            </form>
                                         </div><!--end col-->
-                                        <div class="col-lg-2">
-                                            <div>
-                                                <select class="form-select" id="status-type-input" data-choices data-choices-search-false>
-                                                    <option value="Active">Active</option>
-                                                    <option value="Unactive">Unactive</option>
-                                                </select>
-                                            </div>
-                                        </div><!--end col-->
+                                        
                                         <div class="col-lg-auto text-end">
                                             <div class="d-flex gap-2">
                                                 <a class="btn btn-secondary" href="{% url 'app.dashboard.courses.subjects.add' %}"><i class="bi bi-plus align-baseline me-1"></i> Add Subject</a>
@@ -143,16 +138,18 @@
                             </div><!--end card-->
                         </div><!--end col-->
                         {% empty %}
-                        <div class="noresult" style="display: none">
-                            <div class="text-center py-4">
-                                <i class="ph-magnifying-glass fs-1 text-primary"></i>
-                                <h5 class="mt-2">Sorry! No Result Found</h5>
-                                <p class="text-muted mb-0">We've searched more than 164+ courses We did not find any courses for you search.</p>
+                        <div class="col mx-auto">
+                            <div class="noresult">
+                                <div class="text-center py-4">
+                                    <i class="ph-magnifying-glass fs-1 text-primary"></i>
+                                    <h5 class="mt-2">Sorry! No Result Found</h5>
+                                    <p class="text-muted mb-0">We've searched, We did not find any related query for you search.</p>
+                                </div>
                             </div>
                         </div>
                         {% endfor %}
                     </div><!--end row-->
-
+                    {% include "codedictiondashboard/paginator/paginator.html" %}
                 </div>
                 <!-- container-fluid -->
             </div>

@@ -1,6 +1,3 @@
-import math
-import readtime
-import datetime
 from django.http import HttpResponse,JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -10,9 +7,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.admin.views.decorators import staff_member_required
 from codedictiondashboard.decorators import group_required
 from django.views import View
-from django.views.generic import ListView
 from django.views.generic.detail import DetailView
-from django.core.paginator import Paginator
 from codedictiondashboard.CustomLoginRequiredMixin import CustomLoginRequiredMixin
 from codedictionapp.models import Subjects,Curriculum
 from codedictiondashboard.forms import CurriculumForm

@@ -1,0 +1,138 @@
+{% extends 'codedictionapp/layouts/layout.html' %}
+{% load static %}
+    {% block metatags %}
+        <title>IKO - ICO & Crypto Landing Page Template</title>
+        <meta name="description" content="IKO - ICO & Crypto Landing Page Template">
+    {% endblock metatags %}
+
+    {% block styles %}
+        <!-- CSS here -->
+        <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/animate.min.css' %}">
+        <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/fontawesome-all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/slick.css' %}">
+        <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/default.css' %}">
+        <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'codedictionapp/assets/css/responsive.css' %}">
+    {% endblock styles %}
+
+    {% block content %}
+        <!-- main-area -->
+        <main>
+
+            <!-- breadcrumb-area -->
+            <section class="breadcrumb-area breadcrumb-bg" data-background="{% static 'codedictionapp/assets/img/bg/breadcrumb_bg.png' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="breadcrumb-content">
+                                <h2 class="title">Blog Details</h2>
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{% url "app.index" %}">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Blog Details</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="breadcrumb-shape-wrap">
+                    <img src="{% static 'codedictionapp/assets/img/images/breadcrumb_shape01.png' %}" alt="" class="alltuchtopdown">
+                    <img src="{% static 'codedictionapp/assets/img/images/breadcrumb_shape02.png' %}" alt="" class="rotateme">
+                </div>
+            </section>
+            <!-- breadcrumb-area-end -->
+
+            <!-- blog-details-area -->
+            <section class="blog-details-area pt-140 pb-140">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="blog-details-wrap">
+                                <div class="blog-details-thumb">
+                                    <img src="{{blog.image.url}}" alt="">
+                                </div>
+                                <div class="blog-details-content">
+                                    <div class="blog-meta">
+                                        <ul class="list-wrap">
+                                            <li class="blog-author"><a href="blog-details.html">{{blog.uploaded_by.get_full_name}}</a></li>
+                                            <li><i class="far fa-clock"></i>{{blog.uploaded_at}}</li>
+                                            {% comment %} <li><a href="blog-details.html"><i class="far fa-comment"></i>07</a></li>
+                                            <li><i class="far fa-eye"></i>1,752Viewers</li> {% endcomment %}
+                                        </ul>
+                                    </div>
+                                    <h1 class="title">{{blog.title}}</h1>
+                                    {% autoescape off %}
+                                    {{blog.description}}
+                                    {% endautoescape %}
+                                    <div class="blog-details-bottom">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-7">
+                                                <div class="post-tags">
+                                                    <ul class="list-wrap">
+                                                        <li><a href="#">{{blog.category.name}}</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="blog-post-share">
+                                                    <ul class="list-wrap">
+                                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                                        <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                                        <li>
+                                                            <a href="#">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                                    <path
+                                                                        d="M10.0596 7.34522L15.8879 0.570312H14.5068L9.44607 6.45287L5.40411 0.570312H0.742188L6.85442 9.46578L0.742188 16.5703H2.12338L7.4676 10.3581L11.7362 16.5703H16.3981L10.0593 7.34522H10.0596ZM8.16787 9.54415L7.54857 8.65836L2.62104 1.61005H4.74248L8.71905 7.29827L9.33834 8.18405L14.5074 15.5779H12.386L8.16787 9.54449V9.54415Z"
+                                                                        fill="currentColor"></path>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <aside class="blog-sidebar">
+                                <div class="blog-widget">
+                                    <h4 class="widget-title">Categories</h4>
+                                    <div class="sidebar-cat-list">
+                                        <ul class="list-wrap">
+                                            {% for b_category in blog_categories %}
+                                                <li><a href="{% url 'app.blog.bycategory' b_category.slug %}">{{b_category.name}}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- blog-details-area-end -->
+
+        </main>
+        <!-- main-area-end -->
+    {% endblock content %}
+
+    {% block scripts %}
+        <!-- JS here -->
+        <script src="{% static 'codedictionapp/assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
+        <script src="{% static 'codedictionapp/assets/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'codedictionapp/assets/js/jquery.countdown.min.js' %}"></script>
+        <script src="{% static 'codedictionapp/assets/js/jquery.appear.js' %}"></script>
+        <script src="{% static 'codedictionapp/assets/js/slick.min.js' %}"></script>
+        <script src="{% static 'codedictionapp/assets/js/ajax-form.js' %}"></script>
+        <script src="{% static 'codedictionapp/assets/js/jquery.easing.js' %}"></script>
+        <script src="{% static 'codedictionapp/assets/js/imagesloaded.pkgd.min.js' %}"></script>
+        <script src="{% static 'codedictionapp/assets/js/isotope.pkgd.min.js' %}"></script>
+        <script src="{% static 'codedictionapp/assets/js/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'codedictionapp/assets/js/wow.min.js' %}"></script>
+        <script src="{% static 'codedictionapp/assets/js/main.js' %}"></script>
+    {% endblock scripts %}

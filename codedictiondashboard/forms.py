@@ -4,6 +4,7 @@ import readtime
 import datetime
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
+from studentdashboard.models import StudentProfile,Education
 
 class ServiceForm(forms.ModelForm):
     class Meta:
@@ -48,7 +49,7 @@ class CourseCategoriesForm(forms.ModelForm):
 class CoursesForm(forms.ModelForm):
     class Meta:
         model = Courses
-        fields = ['name','image','description','slug','subjects','course_category','meta_data']   
+        fields = ['name','image','description','slug','subjects','course_category','meta_data', 'price']       
 class CurriculumForm(forms.ModelForm):
     class Meta:
         model = Curriculum
@@ -81,37 +82,7 @@ class ContactusForm(forms.ModelForm):
 class SubscribeNewsletter(forms.ModelForm):
     class Meta:
         model = SubscribeNewsletter
-        fields = ['email', 'uploaded_at']                                 
-
-class CourseSubjectOrderForm(forms.Form):
-    def __init__(self, *args, **kwargs):
-        course = kwargs.pop('course', None)
-        super().__init__(*args, **kwargs)
-        
-        if course:
-            course_subjects = CourseSubject.objects.filter(course=course).order_by('order')
-            existing_subject_ids = set()
-
-            # Add existing course subjects to the form
-            for cs_index, cs in enumerate(course_subjects, start=1):
-                self.fields[f'order_{cs.id}'] = forms.IntegerField(
-                    initial=cs.order,
-                    label=f'{cs.subject.name}',
-                    widget=forms.HiddenInput
-                )
-                existing_subject_ids.add(cs.subject.id)
-
-            # Add new subjects not yet associated with the course
-            all_subjects = course.subjects.all()  # Assuming 'subjects' is a related field in Course model
-            new_subject_index = len(course_subjects) + 1  # Start new subjects after existing ones
-
-            for subject_index, subject in enumerate(all_subjects, start=new_subject_index):
-                if subject.id not in existing_subject_ids:
-                    self.fields[f'order_new_{subject.id}'] = forms.IntegerField(
-                        label=f'{subject.name}',
-                        initial=subject_index,  # Set initial order based on index
-                        widget=forms.HiddenInput
-                    )
+        fields = ['email', 'uploaded_at']
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -124,3 +95,58 @@ class RegistrationForm(UserCreationForm):
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(label='Username', max_length=254)
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
+
+class SocialMediaPlatformForm(forms.ModelForm):
+    class Meta:
+        model = SocialMediaPlatform
+        fields = ['name', 'icon']
+
+class StudentProfileForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    email = forms.EmailField(max_length=100)
+    username = forms.CharField(max_length=55)
+
+    class Meta:
+        model = StudentProfile
+        fields = [
+            'first_name', 'last_name', 'designation', 'phone', 'bio', 
+            'photo', 'dob', 'location', 'email', 'username'
+        ]
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super(StudentProfileForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].initial = user.first_name
+        self.fields['last_name'].initial = user.last_name
+        self.fields['email'].initial = user.email
+        self.fields['username'].initial = user.username
+
+    def save(self, commit=True):
+        profile = super(StudentProfileForm, self).save(commit=False)
+        user = profile.user
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.last_name = self.cleaned_data['email']
+        user.last_name = self.cleaned_data['username']
+        if commit:
+            user.save()
+            profile.save()
+        return profile  
+    
+class EducationForm(forms.ModelForm):
+    class Meta:
+        model = Education
+        fields = ['degree', 'institution', 'start_year', 'end_year', 'description']
+
+    def __init__(self, *args, **kwargs):
+        self.student_profile = kwargs.pop('student_profile', None)
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if self.student_profile:
+            instance.student = self.student_profile
+        if commit:
+            instance.save()
+        return instance
+    

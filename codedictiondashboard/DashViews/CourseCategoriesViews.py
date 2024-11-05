@@ -1,6 +1,3 @@
-import math
-import readtime
-import datetime
 from django.http import HttpResponse,JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -11,13 +8,11 @@ from django.contrib.admin.views.decorators import staff_member_required
 from codedictiondashboard.decorators import group_required
 from django.views import View
 from django.views.generic import ListView
-from django.views.generic.detail import DetailView
-from django.core.paginator import Paginator
 from codedictiondashboard.CustomLoginRequiredMixin import CustomLoginRequiredMixin
 from codedictionapp.models import CourseCategories
 from codedictiondashboard.forms import CourseCategoriesForm
 
-@method_decorator(group_required('Teacher', 'Student'), name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class CourseCategoriesViews(CustomLoginRequiredMixin,ListView):
     model = CourseCategories
     template_name = 'codedictiondashboard/courses/category/index.html'

@@ -1,0 +1,386 @@
+{% extends 'studentdashboard/layouts/layout.html' %}
+{% load static %}
+{% load mathematical_tags %}
+{% load orm_tags %}
+
+{% block metatags %}
+    <meta charset="utf-8">
+    <title>Overview | Steex - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Minimal Admin & Dashboard Template" name="description">
+    <meta content="Themesbrand" name="author">
+{% endblock %}
+
+{% block css %}
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'codedictiondashboard/assets/images/favicon.ico' %}">
+
+    <!-- Fonts css load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link id="fontsLink" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- dropzone css -->
+    <link href="{% static 'codedictiondashboard/assets/libs/dropzone/dropzone.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Layout config Js -->
+    <script src="{% static 'codedictiondashboard/assets/js/layout.js' %}"></script>
+    <!-- Bootstrap Css -->
+    <link href="{% static 'codedictiondashboard/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- Icons Css -->
+    <link href="{% static 'codedictiondashboard/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- App Css-->
+    <link href="{% static 'codedictiondashboard/assets/css/app.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- custom Css-->
+    <link href="{% static 'codedictiondashboard/assets/css/custom.min.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block main %}
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0">Curriculum</h4>
+
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Courses</a></li>
+                                        <li class="breadcrumb-item active">Curriculum</li>
+                                    </ol>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>{{subjects.name}}</h4>
+                                </div>
+                            </div><!--end card-->
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="description" role="tabpanel">
+                                            {% autoescape off %}
+                                            {{subjects.description}}
+                                            {% endautoescape %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--end col-->
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="text-end">
+                                <a href="javascript:;" onclick="history.back()" class="text-end">
+                                    <i class="ri-arrow-go-back-line"></i> Back
+                                </a>
+                            </div>
+                            <div class="accordion accordion-border-box" id="accordionlefticon">
+                                {% with s_fiter_args='{"relation_with":null}' %}
+                                {% for curriculum in subjects.curriculum_set|in_filter_by:s_fiter_args %}
+                                <div class="accordion-item {% if forloop.counter > 1 %}mt-2{% endif %}">
+                                    <h2 class="accordion-header" id="accordionlefticonExample{{curriculum.id}}">
+                                        <a class="accordion-button collapsed" href="{% url 'app.student.courses.subjects.curriculum.details' subjects.slug curriculum.slug %}">
+                                            {{curriculum.title}} <small class="ms-1 align-baseline"></small>
+                                        </a>
+                                    </h2>
+                                </div>
+                                {% endfor %}
+                                {% endwith %}
+                            </div>
+                        </div><!--end col-->
+                    </div><!--end row-->
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <script>document.write(new Date().getFullYear())</script> © Steex.
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="text-sm-end d-none d-sm-block">
+                                Design & Develop by Themesbrand
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end main content-->
+{% endblock %}
+
+{% block popups %}
+    <div class="email-chat-detail" id="emailchat-detailElem">
+        <div class="card mb-0 overflow-hidden">
+            <div class="card-header align-items-center d-flex bg-primary-subtle text-primary p-3">
+                <div class="flex-grow-1">
+                    <h5 class="fs-md text-primary-emphasis profile-username">Morton Satterfield</h5>
+                    <p class="mb-0 fs-sm lh-1">Active</p>
+                </div>
+                <div class="flex-shrink-0">
+                    <div class="mt-n1">
+                        <button type="button" class="btn btn-link btn-icon btn-sm text-primary fs-lg text-decoration-none rounded-circle bg-primary-subtle bg-opacity-10" id="emailchat-btn-close"><i class="ri-close-fill"></i></button>
+                    </div>
+                </div>
+            </div><!-- end card header -->
+
+            <div class="card-body p-0">
+                <div id="users-chat">
+                    <div class="chat-conversation p-3" id="chat-conversation" data-simplebar style="height: 250px;">
+                        <ul class="list-unstyled chat-conversation-list chat-sm" id="users-conversation">
+                            <li class="chat-list left">
+                                <div class="conversation-list">
+                                    <div class="chat-avatar">
+                                        <img src="assets/images/users/avatar-2.jpg" alt="">
+                                    </div>
+                                    <div class="user-chat-content">
+                                        <div class="ctext-wrap">
+                                            <div class="ctext-wrap-content">
+                                                <p class="mb-0 ctext-content">Good morning 😊</p>
+                                            </div>
+                                            <div class="dropdown align-self-start message-box-drop">
+                                                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="ri-more-2-fill"></i>
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#"><i class="ri-reply-line me-2 text-muted align-bottom"></i>Reply</a>
+                                                    <a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2 text-muted align-bottom"></i>Copy</a>
+                                                    <a class="dropdown-item delete-item" href="#"><i class="ri-delete-bin-5-line me-2 text-muted align-bottom"></i>Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="conversation-name"><small class="text-muted time">09:07 am</small> <span class="text-success check-message-icon"><i class="ri-check-double-line align-bottom"></i></span></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- chat-list -->
+
+                            <li class="chat-list right">
+                                <div class="conversation-list">
+                                    <div class="user-chat-content">
+                                        <div class="ctext-wrap">
+                                            <div class="ctext-wrap-content">
+                                                <p class="mb-0 ctext-content">Good morning, How are you? What about our next meeting?</p>
+                                            </div>
+                                            <div class="dropdown align-self-start message-box-drop">
+                                                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="ri-more-2-fill"></i>
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#"><i class="ri-reply-line me-2 text-muted align-bottom"></i>Reply</a>
+                                                    <a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2 text-muted align-bottom"></i>Copy</a>
+                                                    <a class="dropdown-item delete-item" href="#"><i class="ri-delete-bin-5-line me-2 text-muted align-bottom"></i>Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="conversation-name"><small class="text-muted time">09:08 am</small> <span class="text-success check-message-icon"><i class="ri-check-double-line align-bottom"></i></span></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- chat-list -->
+
+                            <li class="chat-list left">
+                                <div class="conversation-list">
+                                    <div class="chat-avatar">
+                                        <img src="assets/images/users/avatar-2.jpg" alt="">
+                                    </div>
+                                    <div class="user-chat-content">
+                                        <div class="ctext-wrap">
+                                            <div class="ctext-wrap-content">
+                                                <p class="mb-0 ctext-content">Yeah everything is fine. Our next meeting tomorrow at 10.00 AM</p>
+                                            </div>
+                                            <div class="dropdown align-self-start message-box-drop">
+                                                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="ri-more-2-fill"></i>
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#"><i class="ri-reply-line me-2 text-muted align-bottom"></i>Reply</a>
+                                                    <a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2 text-muted align-bottom"></i>Copy</a>
+                                                    <a class="dropdown-item delete-item" href="#"><i class="ri-delete-bin-5-line me-2 text-muted align-bottom"></i>Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="conversation-name"><small class="text-muted time">09:10 am</small> <span class="text-success check-message-icon"><i class="ri-check-double-line align-bottom"></i></span></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- chat-list -->
+
+                            <li class="chat-list right">
+                                <div class="conversation-list">
+                                    <div class="user-chat-content">
+                                        <div class="ctext-wrap">
+                                            <div class="ctext-wrap-content">
+                                                <p class="mb-0 ctext-content">Wow that's great</p>
+                                            </div>
+                                            <div class="dropdown align-self-start message-box-drop">
+                                                <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="ri-more-2-fill"></i>
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="#"><i class="ri-reply-line me-2 text-muted align-bottom"></i>Reply</a>
+                                                    <a class="dropdown-item" href="#"><i class="ri-file-copy-line me-2 text-muted align-bottom"></i>Copy</a>
+                                                    <a class="dropdown-item delete-item" href="#"><i class="ri-delete-bin-5-line me-2 text-muted align-bottom"></i>Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="conversation-name"><small class="text-muted time">09:12 am</small> <span class="text-success check-message-icon"><i class="ri-check-double-line align-bottom"></i></span></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- chat-list -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="border-top border-top-dashed">
+                    <div class="row g-2 mx-3 mt-2 mb-3">
+                        <div class="col">
+                            <div class="position-relative">
+                                <input type="text" class="form-control border-light bg-light" placeholder="Enter Message...">
+                            </div>
+                        </div><!-- end col -->
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-secondary"><i class="mdi mdi-send"></i></button>
+                        </div><!-- end col -->
+                    </div><!-- end row -->
+                </div>
+            </div><!-- end cardbody -->
+        </div>
+    </div><!--END CHAT-->
+
+    <!-- addReview Modal -->
+    <div class="modal fade" id="addReview" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addReviewLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addReviewLabel">Add Review</h1>
+                    <button type="button" class="btn-close" id="review-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="tablelist-form" novalidate autocomplete="off">
+                    <div class="modal-body">
+                        <div id="alert-error-msg" class="d-none alert alert-danger py-2"></div>
+                        <input type="hidden" id="id-field">
+                        <div class="mb-3">
+                            <label class="form-label d-block">Select Review <span class="text-danger">*</span></label>
+                            <div id="basic-rater" class="mx-auto" dir="ltr"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewTitle-input" class="form-label">Review Title <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="reviewTitle-input" placeholder="Title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reviewDesc-input" class="form-label">Review <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="reviewDesc-input" rows="4" placeholder="Enter review" required></textarea>
+                        </div>
+                        <div>
+                            <label class="form-label">Product Images</label>
+                            <div class="dropzone my-dropzone" style="min-height: 180px;">
+                                <div class="dz-message my-2">
+                                    <div class="mb-3">
+                                        <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
+                                    </div>
+
+                                    <h5>Drop files here or click to upload.</h5>
+                                </div>
+                            </div>
+
+                            <ul class="list-unstyled mb-0" id="dropzone-preview">
+                                <li class="mt-2" id="dropzone-preview-list">
+                                    <!-- This is used as the file preview template -->
+                                    <div class="border rounded">
+                                        <div class="d-flex p-2">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar-sm bg-light rounded">
+                                                    <img data-dz-thumbnail class="img-fluid rounded d-block" src="assets/images/new-document.png" alt="Dropzone-Image">
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="pt-1">
+                                                    <h5 class="fs-md mb-1" data-dz-name>&nbsp;</h5>
+                                                    <p class="fs-sm text-muted mb-0" data-dz-size></p>
+                                                    <strong class="error text-danger" data-dz-errormessage></strong>
+                                                </div>
+                                            </div>
+                                            <div class="flex-shrink-0 ms-3">
+                                                <button data-dz-remove class="btn btn-sm btn-danger">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- end dropzon-preview -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-ghost-danger" data-bs-dismiss="modal"><i class="ph-x align-middle me-1"></i> Close</button>
+                        <button type="submit" class="btn btn-primary">Add Review</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end addReview modal -->
+    
+    <!-- removeItemModal -->
+    <div id="removeItemModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal-review"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <div class="text-danger">
+                            <i class="bi bi-trash display-4"></i>
+                        </div>
+                        <div class="mt-4 fs-base">
+                            <h4 class="mb-1">Are you sure ?</h4>
+                            <p class="text-muted mx-4 mb-0">Are you sure you want to remove this Notification ?</p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                        <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn w-sm btn-danger" id="remove-product">Yes, Delete It!</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endblock %}
+
+{% block js %}
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'codedictiondashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'codedictiondashboard/assets/libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'codedictiondashboard/assets/js/plugins.js' %}"></script>
+
+    <!-- dropzone js -->
+    <script src="{% static 'codedictiondashboard/assets/libs/dropzone/dropzone-min.js' %}"></script>
+
+    <!-- rater-js plugin -->
+    <script src="{% static 'codedictiondashboard/assets/libs/rater-js/index.js' %}"></script>
+    
+    <!-- Learning overview js -->
+    <script src="{% static 'codedictiondashboard/assets/js/pages/learning-overview.init.js' %}"></script>
+
+    <!-- App js -->
+    <script src="{% static 'codedictiondashboard/assets/js/app.js' %}"></script>
+{% endblock %}

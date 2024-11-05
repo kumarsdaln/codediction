@@ -1,6 +1,7 @@
 import math
-import readtime
-import datetime
+from typing import Any
+from django.db.models.query import QuerySet
+import json
 from django.http import HttpResponse,JsonResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -14,25 +15,57 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.core.paginator import Paginator
 from codedictiondashboard.CustomLoginRequiredMixin import CustomLoginRequiredMixin
-from codedictionapp.models import SubjectType,Subjects
+from codedictionapp.models import SubjectType,Subjects, Curriculum
 from codedictiondashboard.forms import SubjectsForm
-@method_decorator(group_required('Teacher', 'Student'), name='dispatch')
+from django.db.models import Q
+@method_decorator(staff_member_required, name='dispatch')
 class SubjectsViews(CustomLoginRequiredMixin,ListView):
+    paginate_by = 12
     model = Subjects
     template_name = 'codedictiondashboard/courses/subjects/index.html'
-    queryset = Subjects.objects.all().order_by('-id')
 
+    def get_queryset(self):
+        queryset = Subjects.objects.all()
+
+         # Searching
+        search = self.request.GET.get('q', None)
+        if search is not None:
+            search = search.strip()
+            queryset = queryset.filter(
+                Q(subject_type__name__icontains=search) |
+                Q(name__icontains=search) |
+                Q(description__icontains=search)
+            ).distinct()
+        # Sorting by 'id' or 'title' with direction
+        sort_by = self.request.GET.get('sort_by', 'id')
+        sort_direction = self.request.GET.get('sort_direction', 'desc')
+
+        if sort_by in ['id', 'name']:
+            if sort_direction == 'asc':
+                queryset = queryset.order_by(sort_by)
+            else:
+                queryset = queryset.order_by(f'-{sort_by}')
+        return queryset
+    def get(self, request, *args, **kwargs):
+        current_page = request.GET.get('page', 1)
+        total_pages = self.get_paginator(self.get_queryset(), self.paginate_by).num_pages
+        if int(current_page) > int(total_pages):
+            return redirect(f'{self.request.path}?page={total_pages}')
+        return super().get(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["total_results"] = self.get_queryset().count()
+        context['q'] = self.request.GET.get('q', None)
         return context
-@method_decorator(group_required('Teacher', 'Student'), name='dispatch')
+    
+@method_decorator(staff_member_required, name='dispatch')
 class SubjectsDetailViews(CustomLoginRequiredMixin,DetailView):
     model = Subjects
     template_name = 'codedictiondashboard/courses/subjects/view.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context     
-@method_decorator(group_required('Teacher', 'Student'), name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class SubjectsCurriculumViews(CustomLoginRequiredMixin,DetailView):
     model = Subjects
     template_name = 'codedictiondashboard/courses/subjects/curriculum.html'
@@ -99,3 +132,22 @@ class DeleteSubjectTypeViews(CustomLoginRequiredMixin,View):
             'status':True
         }
         return JsonResponse(result, safe=False)  
+    
+class UpdateCurriculumOrderViews(CustomLoginRequiredMixin, View):
+    def post(self, request, slug):
+        try:
+            # Parse the JSON data from the request body
+            data = json.loads(request.body)
+            for item in data:
+                curriculum_id = item.get('id')
+                new_order = item.get('order')
+
+                # Update the curriculum order in the database
+                Curriculum.objects.filter(id=curriculum_id).update(order=new_order)
+
+            return JsonResponse({'success': True})
+        
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Invalid JSON'}, status=400)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)

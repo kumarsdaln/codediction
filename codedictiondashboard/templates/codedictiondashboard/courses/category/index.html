@@ -72,7 +72,7 @@
                                 
                                         <div class="col-lg-auto text-end">
                                             <div class="d-flex gap-2">
-                                                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCourse"><i class="bi bi-plus align-baseline me-1"></i> Add New</button>
+                                                <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCourse" id="add-category"><i class="bi bi-plus align-baseline me-1"></i> Add New</button>
                                             </div>
                                         </div><!--end col-->
                                     </div><!--end row-->
@@ -227,6 +227,14 @@
                 document.getElementById('add-btn').innerHTML='Edit Category'
             }
         })
+        document.getElementById('add-category').onclick = function(){
+            document.getElementById('name').value='';
+            document.getElementById('slug').value='';
+            document.getElementById('meta_data').value='';
+            document.getElementById('add-edit-form').action="{% url 'app.dashboard.courses.category.add' %}";
+            document.getElementById('addCourseLabel').innerHTML='Add Category'
+            document.getElementById('add-btn').innerHTML='Add Category'
+        }
     </script>
     <!-- JAVASCRIPT -->
     <script src="{% static "codedictiondashboard/assets/libs/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
